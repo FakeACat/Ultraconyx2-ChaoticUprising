@@ -6,6 +6,8 @@ using Terraria.ID;
 using ChaoticUprising.Content.Projectiles;
 using ChaoticUprising.Common.GlobalProjectiles;
 using ChaoticUprising.Projectiles;
+using Terraria.GameContent.Bestiary;
+using System.Collections.Generic;
 
 namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
 {
@@ -14,8 +16,18 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Bloodlust Eye");
+            NPCID.Sets.BossBestiaryPriority.Add(Type);
+            NPCID.Sets.MPAllowedEnemies[Type] = true;
         }
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+                new MoonLordPortraitBackgroundProviderBestiaryInfoElement(),
+                new FlavorTextBestiaryInfoElement("A Wandering Eye augmented by the Abyssal Chaos to disintegrate any threats.")
+            });
+        }
+
         public override void SetDefaults()
         {
             base.SetDefaults();

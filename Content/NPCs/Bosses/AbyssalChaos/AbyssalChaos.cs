@@ -8,6 +8,8 @@ using Terraria.Audio;
 using ChaoticUprising.Common.GlobalNPCs;
 using ChaoticUprising.Content.Projectiles;
 using Terraria.Graphics.Effects;
+using Terraria.GameContent.Bestiary;
+using System.Collections.Generic;
 
 namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
 {
@@ -42,6 +44,15 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Assets/Music/Hellish Intent");
         }
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+                new MoonLordPortraitBackgroundProviderBestiaryInfoElement(),
+				new FlavorTextBestiaryInfoElement("A replacement Guardian after the death of the Wall of Flesh. The transformation is incomplete and its destruction will have catastrophic implications on the world.")
+            });
+        }
+
         public override bool CheckActive()
         {
             return !Target().active || Target().dead;

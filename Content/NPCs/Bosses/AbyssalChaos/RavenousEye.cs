@@ -4,6 +4,8 @@ using Terraria;
 using Microsoft.Xna.Framework;
 using System;
 using ChaoticUprising.Content.Projectiles;
+using Terraria.GameContent.Bestiary;
+using System.Collections.Generic;
 
 namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
 {
@@ -12,7 +14,8 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ravenous Eye");
+            NPCID.Sets.BossBestiaryPriority.Add(Type);
+            NPCID.Sets.MPAllowedEnemies[Type] = true;
         }
         public override void SetDefaults()
         {
@@ -20,6 +23,15 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
             NPC.width = 52;
             NPC.height = 94;
         }
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+                new MoonLordPortraitBackgroundProviderBestiaryInfoElement(),
+                new FlavorTextBestiaryInfoElement("A Wandering Eye augmented by the Abyssal Chaos to incinerate any threats.")
+            });
+        }
+
         public Player Target()
         {
             return Main.player[NPC.target];

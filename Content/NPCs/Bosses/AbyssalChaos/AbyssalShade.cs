@@ -5,12 +5,19 @@ using Terraria.ID;
 using System;
 using ChaoticUprising.Common.GlobalNPCs;
 using Terraria.Audio;
+using Terraria.GameContent.Bestiary;
+using System.Collections.Generic;
 
 namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
 {
     [AutoloadBossHead]
     public class AbyssalShade : ModNPC
     {
+        public override void SetStaticDefaults()
+        {
+            NPCID.Sets.BossBestiaryPriority.Add(Type);
+            NPCID.Sets.MPAllowedEnemies[Type] = true;
+        }
         public override void SetDefaults()
         {
             NPC.dontTakeDamage = false;
@@ -33,6 +40,15 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
                 Music = MusicLoader.GetMusicSlot(Mod, "Assets/Music/Hellish Intent");
             NPC.GetGlobalNPC<ChaosNPC>().shouldBeBuffedInChaosMode = false;
         }
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+                new MoonLordPortraitBackgroundProviderBestiaryInfoElement(),
+                new FlavorTextBestiaryInfoElement("An extension of the Abyssal Chaos. Given hundreds of years it may mature into a distinct entity.")
+            });
+        }
+
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
             NPC.lifeMax = (int)(27500 * bossLifeScale);
