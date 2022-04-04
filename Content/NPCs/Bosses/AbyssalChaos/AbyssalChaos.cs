@@ -343,21 +343,21 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            /*NPC connected1 = NPC.AnyNPCs(ModContent.NPCType<AbyssalShade>()) ? Main.npc[NPC.FindFirstNPC(ModContent.NPCType<AbyssalShade>())] : null;
+            NPC connected1 = NPC.AnyNPCs(ModContent.NPCType<AbyssalShade>()) ? Main.npc[NPC.FindFirstNPC(ModContent.NPCType<AbyssalShade>())] : null;
             if (connected1 != null)
                 DrawConnector(connected1.Center, spriteBatch);
-            NPC connected2 = NPC.AnyNPCs(ModContent.NPCType<TorturedEye>()) ? Main.npc[NPC.FindFirstNPC(ModContent.NPCType<TorturedEye>())] : null;
+            NPC connected2 = NPC.AnyNPCs(ModContent.NPCType<BloodlustEye>()) ? Main.npc[NPC.FindFirstNPC(ModContent.NPCType<BloodlustEye>())] : null;
             if (connected2 != null)
                 DrawConnector(connected2.Center, spriteBatch);
-            NPC connected3 = NPC.AnyNPCs(ModContent.NPCType<TorturedEye2>()) ? Main.npc[NPC.FindFirstNPC(ModContent.NPCType<TorturedEye2>())] : null;
+            NPC connected3 = NPC.AnyNPCs(ModContent.NPCType<RavenousEye>()) ? Main.npc[NPC.FindFirstNPC(ModContent.NPCType<RavenousEye>())] : null;
             if (connected3 != null)
-                DrawConnector(connected3.Center, spriteBatch);*/
+                DrawConnector(connected3.Center, spriteBatch);
             return base.PreDraw(spriteBatch, screenPos, drawColor);
         }
 
         public void DrawConnector(Vector2 connectorTarget, SpriteBatch spriteBatch)
         {
-            /*Texture2D texture = Main.chain4Texture;
+            Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("ChaoticUprising/Content/NPCs/Bosses/AbyssalChaos/ConnectorTentacle");
             int l = texture.Height;
             Vector2 connectorOrigin = NPC.Center;
             bool lineComplete = false;
@@ -369,7 +369,7 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
                 connectorTarget = nextPosition;
                 if (Vector2.Distance(connectorTarget, connectorOrigin) < NPC.width / 3)
                     lineComplete = true;
-            }*/
+            }
         }
     }
 }
