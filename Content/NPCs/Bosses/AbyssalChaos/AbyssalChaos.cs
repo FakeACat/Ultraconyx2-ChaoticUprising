@@ -7,7 +7,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.Audio;
 using ChaoticUprising.Common.GlobalNPCs;
 using ChaoticUprising.Content.Projectiles;
-using Terraria.DataStructures;
 using Terraria.Graphics.Effects;
 
 namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
@@ -306,19 +305,32 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
                     switch (minion)
                     {
                         case 0:
-                            NPC.SpawnOnPlayer(NPC.target, ModContent.NPCType<AbyssalShade>());
+                            SpawnMiniboss(NPC.target, ModContent.NPCType<AbyssalShade>());
                             break;
                         case 1:
-                            NPC.SpawnOnPlayer(NPC.target, ModContent.NPCType<BloodlustEye>());
+                            SpawnMiniboss(NPC.target, ModContent.NPCType<BloodlustEye>());
                             break;
                         case 2:
-                            NPC.SpawnOnPlayer(NPC.target, ModContent.NPCType<RavenousEye>());
+                            SpawnMiniboss(NPC.target, ModContent.NPCType<RavenousEye>());
                             break;
                     }
                     minion++;
                     if (minion > 2)
                         minion = 0;
                 }
+            }
+        }
+
+        private void SpawnMiniboss(int player, int type)
+        {
+            if (player == Main.myPlayer)
+            {
+                Player p = Main.player[player];
+                SoundEngine.PlaySound(SoundID.Roar, p.position, 0);
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                    NPC.SpawnOnPlayer(p.whoAmI, type);
+                else
+                    NetMessage.SendData(MessageID.SpawnBoss, number: p.whoAmI, number2: type);
             }
         }
 
