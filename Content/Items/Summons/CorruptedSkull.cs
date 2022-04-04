@@ -11,6 +11,7 @@ namespace ChaoticUprising.Content.Items.Summons
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("Summons the Abyssal Chaos\nRequires the world to be in Hardmode\nNot consumable");
+            ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
         }
 
         public override void SetDefaults()
@@ -27,9 +28,17 @@ namespace ChaoticUprising.Content.Items.Summons
 
         public override bool? UseItem(Player player)
         {
-            NPC.SpawnOnPlayer(player.whoAmI, ModContent.NPCType<AbyssalChaos>());
             Main.NewText("Music: Hellish Intent by ENNWAY", 0, 0, 255);
-            SoundEngine.PlaySound(15, (int)player.position.X, (int)player.position.Y, 0);
+            if (player.whoAmI == Main.myPlayer)
+            {
+                SoundEngine.PlaySound(SoundID.Roar, player.position, 0);
+                int type = ModContent.NPCType<AbyssalChaos>();
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                    NPC.SpawnOnPlayer(player.whoAmI, type);
+                else
+                    NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
+            }
+
             return true;
         }
 

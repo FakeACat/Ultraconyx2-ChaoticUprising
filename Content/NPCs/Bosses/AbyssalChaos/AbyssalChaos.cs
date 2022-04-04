@@ -19,6 +19,7 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
         {
             NPCID.Sets.TrailingMode[NPC.type] = 1;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
+            NPCID.Sets.MPAllowedEnemies[Type] = true;
         }
         public override void SetDefaults()
         {
