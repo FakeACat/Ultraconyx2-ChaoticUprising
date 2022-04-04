@@ -203,7 +203,7 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
             StayAbovePlayer(new Vector2(0, -400), 0.6f, 0.96f, 120);
             NPC.rotation = NPC.velocity.X / 30;
             NPC.ai[1]++;
-            if (NPC.ai[1] >= (PercentHealth() + 20) && Main.netMode != 1)
+            if (NPC.ai[1] >= (PercentHealth() + 20) && Main.netMode != NetmodeID.MultiplayerClient)
             {
                 NPC.ai[1] = 0;
                 NPC.ai[2]++;
@@ -247,7 +247,7 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
             NPC.rotation = NPC.velocity.X / 30;
 
             NPC.ai[1] += 1 + ((100 - PercentHealth()) / 50);
-            if (NPC.ai[1] > 200 && Main.netMode != 1)
+            if (NPC.ai[1] > 200 && Main.netMode != NetmodeID.MultiplayerClient)
             {
                 NPC.ai[1] = 0;
                 int numProj = 30;
@@ -274,7 +274,7 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
             if (NPC.ai[1] > (Main.expertMode ? 150 : 300))
             {
                 SwitchAI();
-                if (Main.netMode == 1)
+                if (Main.netMode == NetmodeID.MultiplayerClient)
                     return;
                 int n = 0;
                 if (NPC.AnyNPCs(ModContent.NPCType<AbyssalShade>()))

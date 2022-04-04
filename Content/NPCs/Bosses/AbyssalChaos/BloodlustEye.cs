@@ -64,7 +64,7 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
             NPC.velocity *= 0.96f;
             NPC.rotation = (Target().Center - NPC.Center).ToRotation() - (float)(Math.PI / 2);
             NPC.ai[1]++;
-            if (NPC.ai[1] > 60 && Main.netMode != 1)
+            if (NPC.ai[1] > 60 && Main.netMode != NetmodeID.MultiplayerClient)
             {
                 NPC.ai[1] = 0;
                 int dmg = 90;
@@ -87,7 +87,7 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
             NPC.rotation = (Target().Center - NPC.Center).ToRotation() - (float)(Math.PI / 2);
             NPC.velocity *= 0.96f;
             NPC.ai[1]++;
-            if (Main.netMode != 1)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 if (NPC.ai[1] == 25)
                 {
