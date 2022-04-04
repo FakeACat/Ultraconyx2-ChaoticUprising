@@ -4,7 +4,7 @@ using Terraria.ID;
 using Terraria.Audio;
 using ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos;
 
-namespace ChaoticUprising.Content.Items.Summons
+namespace ChaoticUprising.Content.Items.Consumables
 {
     public class CorruptedSkull : ModItem
     {
