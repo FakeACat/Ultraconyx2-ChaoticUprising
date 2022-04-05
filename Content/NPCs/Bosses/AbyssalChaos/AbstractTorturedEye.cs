@@ -2,6 +2,7 @@
 using Terraria;
 using Terraria.ID;
 using ChaoticUprising.Common.GlobalNPCs;
+using ChaoticUprising.Common;
 
 namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
 {
@@ -10,8 +11,8 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
         public override void SetDefaults()
         {
             NPC.aiStyle = -1;
-            NPC.lifeMax = 15000;
-            NPC.damage = 100;
+            NPC.lifeMax = CUUtils.ConvenientBossHealthScaling(15000, 20000);
+            NPC.damage = CUUtils.ConvenientBossDamageScaling(100, 150);
             NPC.defense = 50;
             NPC.knockBackResist = 0f;
             NPC.npcSlots = 1;
@@ -29,11 +30,6 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
         public override void BossLoot(ref string name, ref int potionType)
         {
             potionType = ItemID.SuperHealingPotion;
-        }
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
-        {
-            NPC.lifeMax = (int)(20000 * bossLifeScale);
-            NPC.damage = 150;
         }
         int frame = 0;
         int frameChange = 0;

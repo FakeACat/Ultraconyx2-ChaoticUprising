@@ -10,6 +10,8 @@ using ChaoticUprising.Content.Projectiles;
 using Terraria.Graphics.Effects;
 using Terraria.GameContent.Bestiary;
 using System.Collections.Generic;
+using Terraria.GameContent.ItemDropRules;
+using ChaoticUprising.Common;
 
 namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
 {
@@ -25,8 +27,8 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
         public override void SetDefaults()
         {
             NPC.aiStyle = -1;
-            NPC.lifeMax = 220000;
-            NPC.damage = 170;
+            NPC.lifeMax = CUUtils.ConvenientBossHealthScaling(220000, 320000);
+            NPC.damage = CUUtils.ConvenientBossDamageScaling(170, 220);
             NPC.defense = 50;
             NPC.width = 142;
             NPC.knockBackResist = 0f;
@@ -63,44 +65,20 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
         public override void BossLoot(ref string name, ref int potionType)
         {
             potionType = ItemID.SuperHealingPotion;
-            DeathFX(NPC);
-            /*if (!ChaoticUprisingWorld.downedChaos) // chaos mode
-            {
-                ChaoticUprisingWorld.downedChaos = true;
-                Main.NewText("The ancient spirits of light and dark have been enraged!", 255, 0, 155);
-                Main.NewText("The shock has weakened the abyssal barrier between dimensions.", 0, 0, 255);
-            }
-            if (Main.expertMode) // expert drop
-            {
-                npc.DropBossBags();
-            }
-            else // not expert drops
-            {
-                Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<BloodstainedMoonstone>(), Main.rand.Next(5, 8));
-                int r = Main.rand.Next(3);
-                if (r == 0)
-                {
-                    Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<HellfireTrident>());
-                }
-                else if (r == 1)
-                {
-                    Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<BladeofFlesh>());
-                }
-                else if (r == 2)
-                {
-                    Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<HellBow>());
-                }
-                Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemID.SoulofNight, Main.rand.Next(20, 31));
-                if (Main.rand.Next(7) == 0)
-                {
-                    Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<AbyssalChaosMask>());
-                }
-            }
-            if (Main.rand.Next(10) == 0)
-            {
-                Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<AbyssalChaosTrophy>());
-            }*/
         }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Placeables.AbyssalChaosTrophy>(), 10));
+        }
+
+        public override void HitEffect(int hitDirection, double damage)
+        {
+            if (NPC.life <= 0) 
+                DeathEffects(NPC);
+        }
+
         public override void FindFrame(int frameHeight)
         {
             frameChange++;
@@ -118,13 +96,8 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
             }
             NPC.frame.Y = frame * frameHeight;
         }
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
-        {
-            NPC.lifeMax = (int)(320000 * bossLifeScale);
-            NPC.damage = 220;
-        }
 
-        public static void DeathFX(NPC npc)
+        public static void DeathEffects(NPC npc)
         {
             int bloodQuantity = 10;
             for (int i = 0; i < bloodQuantity; i++)
@@ -218,11 +191,7 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
             {
                 NPC.ai[1] = 0;
                 NPC.ai[2]++;
-                int dmg = 100;
-                if (Main.expertMode)
-                {
-                    dmg /= 2;
-                }
+                int dmg = CUUtils.ConvenientBossDamageScaling(100, 160);
                 int speed = 12;
                 int p = Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), new Vector2(NPC.Center.X, NPC.position.Y + NPC.height), Vector2.Normalize(Target().Center - new Vector2(NPC.Center.X, NPC.position.Y + NPC.height)) * speed, ModContent.ProjectileType<AbyssalFlamesBig>(), dmg, 1);
                 Main.projectile[p].tileCollide = PercentHealth() > 80;
@@ -267,7 +236,7 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
                 {
                     int type = ModContent.ProjectileType<LightRay>();
                     float Speed = 7;
-                    int damage = 120;
+                    int damage = CUUtils.ConvenientBossDamageScaling(120, 180);
                     float rotation = (pi * 2 / numProj * (I + 1)) + (float)Math.Atan2(NPC.Center.Y - (Target().position.Y + (Target().height * 0.5f)), NPC.Center.X - (Target().position.X + (Target().width * 0.5f)));
                     Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center.X, NPC.Center.Y, (float)(Math.Cos(rotation) * Speed * -1) / 5, (float)(Math.Sin(rotation) * Speed * -1) / 5, type, damage, 1.0f);
                 }

@@ -8,6 +8,7 @@ using ChaoticUprising.Common.GlobalProjectiles;
 using ChaoticUprising.Projectiles;
 using Terraria.GameContent.Bestiary;
 using System.Collections.Generic;
+using ChaoticUprising.Common;
 
 namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
 {
@@ -79,11 +80,7 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
             if (NPC.ai[1] > 60 && Main.netMode != NetmodeID.MultiplayerClient)
             {
                 NPC.ai[1] = 0;
-                int dmg = 90;
-                if (Main.expertMode)
-                {
-                    dmg /= 2;
-                }
+                int dmg = CUUtils.ConvenientBossDamageScaling(90, 150);
                 int fireball = Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<AbyssalFlames>(), dmg, 1);
                 Main.projectile[fireball].timeLeft = 300;
                 Main.projectile[fireball].GetGlobalProjectile<ProjectileFeatures>().homing = true;
@@ -109,11 +106,7 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
                     {
                         int type = ModContent.ProjectileType<AbyssalFlames>();
                         float Speed = 25;
-                        int damage = 120;
-                        if (Main.expertMode)
-                        {
-                            damage /= 2;
-                        }
+                        int damage = CUUtils.ConvenientBossDamageScaling(150, 200);
                         float rotation = (pi * 2 / numProj * (I + 1)) + (float)Math.Atan2(NPC.Center.Y - (Target().position.Y + (Target().height * 0.5f)), NPC.Center.X - (Target().position.X + (Target().width * 0.5f)));
                         int p = Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center.X, NPC.Center.Y, (float)(Math.Cos(rotation) * Speed * -1) / 5, (float)(Math.Sin(rotation) * Speed * -1) / 5, type, damage, 1.0f);
                         Main.projectile[p].timeLeft = 60;

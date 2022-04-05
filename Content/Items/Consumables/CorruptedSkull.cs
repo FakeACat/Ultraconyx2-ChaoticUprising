@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.Audio;
 using ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos;
+using Terraria.GameContent.Creative;
 
 namespace ChaoticUprising.Content.Items.Consumables
 {
@@ -12,6 +13,7 @@ namespace ChaoticUprising.Content.Items.Consumables
         {
             Tooltip.SetDefault("Summons the Abyssal Chaos\nRequires the world to be in Hardmode\nNot consumable");
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
@@ -24,6 +26,7 @@ namespace ChaoticUprising.Content.Items.Consumables
             Item.useTime = 45;
             Item.useStyle = ItemUseStyleID.HoldUp;
             Item.UseSound = SoundID.Item44;
+            Item.value = Item.buyPrice(0, 20);
         }
 
         public override bool? UseItem(Player player)
