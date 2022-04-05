@@ -27,7 +27,7 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
         public override void SetDefaults()
         {
             NPC.aiStyle = -1;
-            NPC.lifeMax = CUUtils.ConvenientBossHealthScaling(220000, 320000);
+            NPC.lifeMax = CUUtils.ConvenientBossHealthScaling(160000, 240000);
             NPC.damage = CUUtils.ConvenientBossDamageScaling(170, 220);
             NPC.defense = 50;
             NPC.width = 142;
