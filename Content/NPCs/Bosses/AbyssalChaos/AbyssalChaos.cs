@@ -12,6 +12,7 @@ using Terraria.GameContent.Bestiary;
 using System.Collections.Generic;
 using Terraria.GameContent.ItemDropRules;
 using ChaoticUprising.Common;
+using ChaoticUprising.Content.Items.Consumables;
 
 namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
 {
@@ -42,7 +43,6 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
             NPC.DeathSound = SoundID.NPCDeath6;
             Main.npcFrameCount[NPC.type] = 5;
             NPC.GetGlobalNPC<ChaosNPC>().shouldBeBuffedInChaosMode = false;
-            //bossBag = mod.ItemType("AbyssalChaosTreasureBag");
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Assets/Music/Hellish Intent");
         }
@@ -69,7 +69,7 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-
+            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<AbyssalChaosBossBag>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Placeables.AbyssalChaosTrophy>(), 10));
         }
 
