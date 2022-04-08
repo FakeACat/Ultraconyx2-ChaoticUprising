@@ -1,8 +1,6 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.GameContent.Generation;
 using Terraria.ID;
@@ -24,6 +22,7 @@ namespace ChaoticUprising.Common.Systems
         {
             progress.Message = "Making the world eviler";
 
+            var spikes = new List<Vector2>();
             ushort tile;
             ushort ore;
             ushort wall;
@@ -44,7 +43,7 @@ namespace ChaoticUprising.Common.Systems
             }
             int width = 32;
             int width3 = width;
-            for (int y = 0; y < Main.maxTilesY - 150; y++)
+            for (int y = (int)Main.worldSurface - 400; y < Main.maxTilesY - 150; y++)
             {
                 if (!WorldGen.TileEmpty(X, y))
                     tileDensity++;
@@ -68,6 +67,10 @@ namespace ChaoticUprising.Common.Systems
                         {
                             WorldGen.PlaceTile(x, y, WorldGen.genRand.Next(120) == 0 ? ore : tile, false, true);
                             Main.tile[x, y].WallType = wall;
+                            if (WorldGen.genRand.Next(128) == 0 && Math.Abs(X - x) > width2)
+                            {
+                                spikes.Add(new Vector2(x, y));
+                            }
                         }
                     }
                     if (((x == X - width2 || x == X + width2) && WorldGen.genRand.Next(2) == 0) || (x > X - width2 && x < X + width2))
@@ -75,6 +78,10 @@ namespace ChaoticUprising.Common.Systems
                         WorldGen.KillTile(x, y, false, false, false);
                     }
                 }
+            }
+
+            foreach (Vector2 spike in spikes) {
+                WorldGen.TileRunner((int)spike.X, (int)spike.Y, 7, 60, tile, true);
             }
         }
     }
