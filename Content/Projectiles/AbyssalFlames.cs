@@ -10,8 +10,8 @@ namespace ChaoticUprising.Content.Projectiles
     {
         public override void SetDefaults()
         {
-            Projectile.width = 16;
-            Projectile.height = 16;
+            Projectile.width = 30;
+            Projectile.height = 28;
             Projectile.friendly = false;
             Projectile.tileCollide = false;
             Projectile.penetrate = 1;

@@ -12,8 +12,8 @@ namespace ChaoticUprising.Content.Projectiles
     {
         public override void SetDefaults()
         {
-            Projectile.width = 16;
-            Projectile.height = 16;
+            Projectile.width = 40;
+            Projectile.height = 40;
             Projectile.friendly = false;
             Projectile.DamageType = DamageClass.Magic;
             Projectile.tileCollide = false;
@@ -22,7 +22,6 @@ namespace ChaoticUprising.Content.Projectiles
             Projectile.timeLeft = 300;
             Projectile.light = 0.8f;
             Projectile.extraUpdates = 1;
-            Projectile.scale = 1.5f;
             Projectile.GetGlobalProjectile<ChaosProjectile>().shouldBeBuffedInChaosMode = false;
         }
         Vector2[] prevPos = new Vector2[30];
