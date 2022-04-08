@@ -71,6 +71,7 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
         {
             npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<AbyssalChaosBossBag>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Placeables.AbyssalChaosTrophy>(), 10));
+            npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<Items.Placeables.AbyssalChaosRelic>()));
         }
 
         public override void HitEffect(int hitDirection, double damage)
