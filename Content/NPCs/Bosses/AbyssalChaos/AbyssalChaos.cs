@@ -347,9 +347,12 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
 
                 if (NPC.ai[1] % 200 == 0 && NPC.ai[1] != 0 && NPC.ai[1] != 1000)
                 {
-                    NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<AbyssalShade>(), 0, 0, Main.rand.NextFloat(MathHelper.TwoPi), 0, 1);
-                    NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<BloodlustEye>(), 0, 0, Main.rand.NextFloat(MathHelper.TwoPi), 0, 1);
-                    NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<RavenousEye>(), 0, 0, Main.rand.NextFloat(MathHelper.TwoPi), 0, 1);
+                    int a = NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<AbyssalShade>(), 0, 0, Main.rand.NextFloat(MathHelper.TwoPi), 0, 1);
+                    int b = NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<BloodlustEye>(), 0, 0, Main.rand.NextFloat(MathHelper.TwoPi), 0, 1);
+                    int c = NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<RavenousEye>(), 0, 0, Main.rand.NextFloat(MathHelper.TwoPi), 0, 1);
+                    Main.npc[a].alpha = 255; 
+                    Main.npc[b].alpha = 255; 
+                    Main.npc[c].alpha = 255;
                 }
 
                 if (NPC.ai[1] > 1100)
