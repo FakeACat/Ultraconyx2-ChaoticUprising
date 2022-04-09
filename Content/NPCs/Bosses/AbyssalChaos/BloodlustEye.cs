@@ -46,28 +46,35 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
 
         public override void AI()
         {
-            if ((NPC.target < 0 || NPC.target >= 255 || Target().dead || !Target().active || !NPC.AnyNPCs(ModContent.NPCType<AbyssalChaos>())) && NPC.ai[0] != AI_DESPAWN)
+            if ((NPC.target < 0 || NPC.target >= 255 || Target().dead || !Target().active || !NPC.AnyNPCs(ModContent.NPCType<AbyssalChaos>()) || ExpertSecondPhase()) && NPC.ai[0] != AI_DESPAWN)
             {
                 NPC.TargetClosest(true);
                 NPC.netUpdate = true;
-                if (NPC.target < 0 || NPC.target >= 255 || Target().dead || !Target().active || !NPC.AnyNPCs(ModContent.NPCType<AbyssalChaos>()))
+                if (NPC.target < 0 || NPC.target >= 255 || Target().dead || !Target().active || !NPC.AnyNPCs(ModContent.NPCType<AbyssalChaos>()) || ExpertSecondPhase())
                 {
                     NPC.ai[0] = AI_DESPAWN;
                     NPC.ai[1] = NPC.position.Y + 3000;
                 }
             }
 
-            switch (NPC.ai[0])
+            if (NPC.ai[3] == 1)
             {
-                case AI_HOMINGFIREBALL:
-                    AI_HomingFireball();
-                    break;
-                case AI_WARP:
-                    AI_Warp();
-                    break;
-                case AI_DESPAWN:
-                    AI_Despawn();
-                    break;
+                AbyssalChaos.AI_ExpertSpecialMinion(NPC);
+            }
+            else
+            {
+                switch (NPC.ai[0])
+                {
+                    case AI_HOMINGFIREBALL:
+                        AI_HomingFireball();
+                        break;
+                    case AI_WARP:
+                        AI_Warp();
+                        break;
+                    case AI_DESPAWN:
+                        AI_Despawn();
+                        break;
+                }
             }
         }
 
@@ -80,7 +87,7 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
             if (NPC.ai[1] > 60 && Main.netMode != NetmodeID.MultiplayerClient)
             {
                 NPC.ai[1] = 0;
-                int dmg = CUUtils.ConvenientBossDamageScaling(90, 150);
+                int dmg = CUUtils.ConvenientBossDamage(90, 150, true);
                 int fireball = Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<AbyssalFlames>(), dmg, 1);
                 Main.projectile[fireball].timeLeft = 300;
                 Main.projectile[fireball].GetGlobalProjectile<ProjectileFeatures>().homing = true;
@@ -106,7 +113,7 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
                     {
                         int type = ModContent.ProjectileType<AbyssalFlames>();
                         float Speed = 25;
-                        int damage = CUUtils.ConvenientBossDamageScaling(150, 200);
+                        int damage = CUUtils.ConvenientBossDamage(150, 200, true);
                         float rotation = (pi * 2 / numProj * (I + 1)) + (float)Math.Atan2(NPC.Center.Y - (Target().position.Y + (Target().height * 0.5f)), NPC.Center.X - (Target().position.X + (Target().width * 0.5f)));
                         int p = Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center.X, NPC.Center.Y, (float)(Math.Cos(rotation) * Speed * -1) / 5, (float)(Math.Sin(rotation) * Speed * -1) / 5, type, damage, 1.0f);
                         Main.projectile[p].timeLeft = 60;
@@ -144,7 +151,6 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
                 NPC.ai[0] = AI_HOMINGFIREBALL;
             NPC.ai[1] = 0;
             NPC.ai[2] = 0;
-            NPC.ai[3] = 0;
         }
     }
 }

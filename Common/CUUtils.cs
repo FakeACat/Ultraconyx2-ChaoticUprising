@@ -4,11 +4,11 @@ namespace ChaoticUprising.Common
 {
     public class CUUtils
     {
-        public static int ConvenientBossHealthScaling(int normalHealth, int expertHealth)
+        public static int ConvenientBossHealth(int normalHealth, int expertHealth)
         {
             if (Main.masterMode)
             {
-                return (int)(expertHealth * 1.275f) / 3;
+                return (int)(expertHealth * 0.425f);
             }
             if (Main.expertMode)
             {
@@ -17,17 +17,20 @@ namespace ChaoticUprising.Common
             return normalHealth;
         }
 
-        public static int ConvenientBossDamageScaling(int normalDamage, int expertDamage)
+        public static int ConvenientBossDamage(int normalDamage, int expertDamage, bool projectile)
         {
+            int divideBy = projectile ? 2 : 1;
             if (Main.masterMode)
             {
-                return (int)(expertDamage * 1.5f) / 3;
+                divideBy *= 3;
+                return (int)(expertDamage * 1.5f) / divideBy;
             }
             if (Main.expertMode)
             {
-                return expertDamage / 2;
+                divideBy *= 2;
+                return expertDamage / divideBy;
             }
-            return normalDamage;
+            return normalDamage / divideBy;
         }
     }
 }

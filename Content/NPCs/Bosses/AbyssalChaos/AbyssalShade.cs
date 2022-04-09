@@ -23,8 +23,8 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
         {
             NPC.dontTakeDamage = false;
             NPC.aiStyle = -1;
-            NPC.lifeMax = CUUtils.ConvenientBossHealthScaling(22500, 27500);
-            NPC.damage = CUUtils.ConvenientBossDamageScaling(100, 150);
+            NPC.lifeMax = CUUtils.ConvenientBossHealth(22500, 27500);
+            NPC.damage = CUUtils.ConvenientBossDamage(100, 150, false);
             NPC.defense = 60;
             NPC.width = 94;
             NPC.knockBackResist = 0f;
@@ -59,34 +59,48 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
             return Main.player[NPC.target];
         }
 
+        private bool ExpertSecondPhase()
+        {
+            NPC boss = NPC.AnyNPCs(ModContent.NPCType<AbyssalChaos>()) ? Main.npc[NPC.FindFirstNPC(ModContent.NPCType<AbyssalChaos>())] : null;
+            return Main.expertMode && boss.life < boss.lifeMax / 2 && NPC.ai[3] != 1;
+        }
+
         private const int AI_CONTACT = 0;
         private const int AI_CHARGE = 1;
         private const int AI_DESPAWN = 2;
 
         public override void AI()
         {
-            if ((NPC.target < 0 || NPC.target >= 255 || Target().dead || !Target().active || !NPC.AnyNPCs(ModContent.NPCType<AbyssalChaos>())) && NPC.ai[0] != AI_DESPAWN)
+
+            if ((NPC.target < 0 || NPC.target >= 255 || Target().dead || !Target().active || !NPC.AnyNPCs(ModContent.NPCType<AbyssalChaos>()) || ExpertSecondPhase()) && NPC.ai[0] != AI_DESPAWN)
             {
                 NPC.TargetClosest(true);
                 NPC.netUpdate = true;
-                if (NPC.target < 0 || NPC.target >= 255 || Target().dead || !Target().active || !NPC.AnyNPCs(ModContent.NPCType<AbyssalChaos>()))
+                if (NPC.target < 0 || NPC.target >= 255 || Target().dead || !Target().active || !NPC.AnyNPCs(ModContent.NPCType<AbyssalChaos>()) || ExpertSecondPhase())
                 {
                     NPC.ai[0] = AI_DESPAWN;
                     NPC.ai[1] = NPC.position.Y + 3000;
                 }
             }
 
-            switch (NPC.ai[0])
+            if (NPC.ai[3] == 1)
             {
-                case AI_CONTACT:
-                    AI_Contact();
-                    break;
-                case AI_CHARGE:
-                    AI_Charge();
-                    break;
-                case AI_DESPAWN:
-                    AI_Despawn();
-                    break;
+                AbyssalChaos.AI_ExpertSpecialMinion(NPC);
+            }
+            else
+            {
+                switch (NPC.ai[0])
+                {
+                    case AI_CONTACT:
+                        AI_Contact();
+                        break;
+                    case AI_CHARGE:
+                        AI_Charge();
+                        break;
+                    case AI_DESPAWN:
+                        AI_Despawn();
+                        break;
+                }
             }
         }
 
@@ -136,7 +150,6 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
                 NPC.ai[0] = AI_CONTACT;
             NPC.ai[1] = 0;
             NPC.ai[2] = 0;
-            NPC.ai[3] = 0;
         }
     }
 }

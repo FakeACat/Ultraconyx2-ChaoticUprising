@@ -1,10 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.Graphics.Effects;
 using Terraria.ModLoader;
@@ -15,7 +10,7 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
     {
         bool active;
         float intensity;
-        float maxIntensity = 0.8f;
+        float maxIntensity = 0.6f;
         public override void Activate(Vector2 position, params object[] args)
         {
             active = true;

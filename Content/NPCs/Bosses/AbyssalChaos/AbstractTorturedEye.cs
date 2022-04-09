@@ -11,8 +11,8 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
         public override void SetDefaults()
         {
             NPC.aiStyle = -1;
-            NPC.lifeMax = CUUtils.ConvenientBossHealthScaling(15000, 20000);
-            NPC.damage = CUUtils.ConvenientBossDamageScaling(100, 150);
+            NPC.lifeMax = CUUtils.ConvenientBossHealth(15000, 20000);
+            NPC.damage = CUUtils.ConvenientBossDamage(100, 150, false);
             NPC.defense = 50;
             NPC.knockBackResist = 0f;
             NPC.npcSlots = 1;
@@ -49,6 +49,11 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
                 frameChange = 0;
             }
             NPC.frame.Y = frame * frameHeight;
+        }
+        public bool ExpertSecondPhase()
+        {
+            NPC boss = NPC.AnyNPCs(ModContent.NPCType<AbyssalChaos>()) ? Main.npc[NPC.FindFirstNPC(ModContent.NPCType<AbyssalChaos>())] : null;
+            return Main.expertMode && boss.life < boss.lifeMax / 2 && NPC.ai[3] != 1;
         }
     }
 }

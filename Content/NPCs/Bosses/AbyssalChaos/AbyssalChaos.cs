@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using Terraria.GameContent.ItemDropRules;
 using ChaoticUprising.Common;
 using ChaoticUprising.Content.Items.Consumables;
+using Terraria.GameContent;
 
 namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
 {
@@ -28,8 +29,8 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
         public override void SetDefaults()
         {
             NPC.aiStyle = -1;
-            NPC.lifeMax = CUUtils.ConvenientBossHealthScaling(160000, 240000);
-            NPC.damage = CUUtils.ConvenientBossDamageScaling(170, 220);
+            NPC.lifeMax = CUUtils.ConvenientBossHealth(160000, 240000);
+            NPC.damage = CUUtils.ConvenientBossDamage(170, 220, false);
             NPC.defense = 50;
             NPC.width = 142;
             NPC.knockBackResist = 0f;
@@ -123,18 +124,19 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
         private const int AI_SUMMONER = 3;
         private const int AI_DESPAWN = 4;
 
+        private bool ExpertSecondPhase()
+        {
+            return Main.expertMode && NPC.life < NPC.lifeMax / 2;
+        }
+
         public Player Target()
         {
             return Main.player[NPC.target];
         }
-
-        public int PercentHealth()
-        {
-            return (int)(100 * (float)NPC.life / NPC.lifeMax);
-        }
-
+        int age = 0;
         public override void AI()
         {
+            age++;
             if (!SkyManager.Instance["ChaoticUprising:AbyssalChaos"].IsActive())
             {
                 SkyManager.Instance.Activate("ChaoticUprising:AbyssalChaos");
@@ -178,43 +180,102 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
                 NPC.ai[0] = AI_RANGED;
             NPC.ai[1] = 0;
             NPC.ai[2] = 0;
-            NPC.ai[3] = 0;
+            if (ExpertSecondPhase())
+            {
+                NPC.ai[3]++;
+                if (NPC.ai[3] > 2)
+                    NPC.ai[3] = 0;
+            }
 
             NPC.GetGlobalNPC<NPCEffects>().trail = NPC.ai[0] == AI_MELEE;
         }
 
+        Vector2 offset = new Vector2(0, -400);
         public void AI_Ranged()
         {
-            StayAbovePlayer(new Vector2(0, -400), 0.6f, 0.96f, 120);
+            StayAbovePlayer(offset, ExpertSecondPhase() ? 0.7f : 0.6f, 0.96f, 120);
             NPC.rotation = NPC.velocity.X / 30;
             NPC.ai[1]++;
-            if (NPC.ai[1] >= (PercentHealth() + 20) && Main.netMode != NetmodeID.MultiplayerClient)
+            if (NPC.ai[1] >= (ExpertSecondPhase() ? 50 : 70) && Main.netMode != NetmodeID.MultiplayerClient)
             {
                 NPC.ai[1] = 0;
                 NPC.ai[2]++;
-                int dmg = CUUtils.ConvenientBossDamageScaling(100, 160);
+                int dmg = CUUtils.ConvenientBossDamage(100, 150, true);
                 int speed = 12;
                 int p = Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), new Vector2(NPC.Center.X, NPC.position.Y + NPC.height), Vector2.Normalize(Target().Center - new Vector2(NPC.Center.X, NPC.position.Y + NPC.height)) * speed, ModContent.ProjectileType<AbyssalFlamesBig>(), dmg, 1);
-                Main.projectile[p].tileCollide = PercentHealth() > 80;
                 Main.projectile[p].timeLeft = 320;
                 Main.projectile[p].netUpdate = true;
             }
             if (NPC.ai[2] > 7)
+            {
+                if (ExpertSecondPhase())
+                {
+                    int nextOffsetX = ((int)NPC.ai[3] - 1) * 400;
+                    int nextOffsetY = nextOffsetX == 0 ? -400 : 0;
+                    offset = new Vector2(nextOffsetX, nextOffsetY);
+                }
                 SwitchAI();
+            }
         }
 
         public void AI_Melee()
         {
+            if (ExpertSecondPhase())
+            {
+                if (NPC.ai[3] == 1)
+                {
+                    NPC.ai[1]++;
+                    if (NPC.ai[2] > 2)
+                    {
+                        NPC.ai[1] += 2;
+                    }
+                    if (NPC.ai[1] >= 75)
+                    {
+                        NPC.velocity *= 0.94f;
+                        NPC.rotation = (Target().Center - NPC.Center).ToRotation() - (float)(Math.PI / 2);
+                        if (NPC.ai[1] >= 100)
+                        {
+                            NPC.ai[1] = 0;
+                            NPC.ai[2]++;
+                            NPC.velocity = Vector2.Normalize(Target().Center - NPC.Center) * 22;
+                            SoundEngine.PlaySound(SoundID.ForceRoar, (int)NPC.Center.X, (int)NPC.Center.Y, 0);
+                            if (NPC.ai[2] > 6)
+                                SwitchAI();
+                        }
+                    }
+                    return;
+                }
+                if (NPC.ai[3] == 2)
+                {
+                    NPC.ai[1]++;
+                    if (NPC.ai[1] >= 40)
+                    {
+                        NPC.velocity *= 0.94f;
+                        if (NPC.ai[1] >= 50)
+                        {
+                            NPC.ai[1] = 0;
+                            NPC.ai[2]++;
+                            NPC.velocity.X = Target().Center.X > NPC.Center.X ? 20 : -20;
+                            NPC.velocity.Y = Target().Center.Y > NPC.Center.Y ? 20 : -20;
+                            NPC.rotation = NPC.velocity.ToRotation() - (float)(Math.PI / 2);
+                            SoundEngine.PlaySound(SoundID.ForceRoar, (int)NPC.Center.X, (int)NPC.Center.Y, 0);
+                            if (NPC.ai[2] > 8)
+                                SwitchAI();
+                        }
+                    }
+                    return;
+                }
+            }
             NPC.ai[1]++;
-            if (NPC.ai[1] >= PercentHealth() + 20)
+            if (NPC.ai[1] >= 75)
             {
                 NPC.velocity *= 0.94f;
                 NPC.rotation = (Target().Center - NPC.Center).ToRotation() - (float)(Math.PI / 2);
-                if (NPC.ai[1] >= PercentHealth() + 40)
+                if (NPC.ai[1] >= 100)
                 {
                     NPC.ai[1] = 0;
                     NPC.ai[2]++;
-                    NPC.velocity = Vector2.Normalize(Target().Center - NPC.Center) * (30 - PercentHealth() / 10);
+                    NPC.velocity = Vector2.Normalize(Target().Center - NPC.Center) * 22;
                     SoundEngine.PlaySound(SoundID.Roar, (int)NPC.Center.X, (int)NPC.Center.Y, 0);
                     if (NPC.ai[2] > 4)
                         SwitchAI();
@@ -227,19 +288,48 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
             StayAbovePlayer(new Vector2(0, -300), 0.5f, 0.97f, 200);
             NPC.rotation = NPC.velocity.X / 30;
 
-            NPC.ai[1] += 1 + ((100 - PercentHealth()) / 50);
-            if (NPC.ai[1] > 200 && Main.netMode != NetmodeID.MultiplayerClient)
+            NPC.ai[1]++;
+            if (NPC.ai[1] > 160 && Main.netMode != NetmodeID.MultiplayerClient)
             {
                 NPC.ai[1] = 0;
                 int numProj = 30;
                 float pi = (float)Math.PI;
-                for (int I = 0; I < numProj; I++)
+                float Speed = 7;
+                if (ExpertSecondPhase())
                 {
-                    int type = ModContent.ProjectileType<LightRay>();
-                    float Speed = 7;
-                    int damage = CUUtils.ConvenientBossDamageScaling(120, 180);
-                    float rotation = (pi * 2 / numProj * (I + 1)) + (float)Math.Atan2(NPC.Center.Y - (Target().position.Y + (Target().height * 0.5f)), NPC.Center.X - (Target().position.X + (Target().width * 0.5f)));
-                    Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center.X, NPC.Center.Y, (float)(Math.Cos(rotation) * Speed * -1) / 5, (float)(Math.Sin(rotation) * Speed * -1) / 5, type, damage, 1.0f);
+                    if (NPC.ai[3] == 1)
+                    {
+                        Speed = 2;
+                        for (int I = 0; I < numProj; I++)
+                        {
+                            Vector2 pos = 2 * Target().Center - NPC.Center;
+                            int type = ModContent.ProjectileType<LightRay>();
+                            int damage = CUUtils.ConvenientBossDamage(120, 180, true);
+                            float rotation = (pi * 2 / numProj * (I + 1)) + (float)Math.Atan2(pos.Y - (Target().position.Y + (Target().height * 0.5f)), pos.X - (Target().position.X + (Target().width * 0.5f)));
+                            Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), pos.X, pos.Y, (float)(Math.Cos(rotation) * Speed * -1) / 5, (float)(Math.Sin(rotation) * Speed * -1) / 5, type, damage, 1.0f);
+                        }
+                    }
+                    else if (NPC.ai[3] == 2)
+                    {
+                        int dist = 96;
+                        for (int y = (int)Target().Center.Y - 1000; y < Target().Center.Y + 1000; y += dist)
+                        {
+                            int m = NPC.ai[2] % 2 == 0 ? 1 : -1;
+                            Vector2 pos = new Vector2(Target().Center.X + 1000 * m, y + Main.rand.Next(dist) - dist/2);
+                            int damage = CUUtils.ConvenientBossDamage(100, 150, true);
+                            Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), pos.X, pos.Y, -m, (Main.rand.NextFloat() - 0.5f) / 4, ModContent.ProjectileType<LightRay>(), damage, 1.0f);
+                        }
+                    }
+                }
+                if (NPC.ai[3] != 2 || !ExpertSecondPhase())
+                {
+                    for (int I = 0; I < numProj; I++)
+                    {
+                        int type = ModContent.ProjectileType<LightRay>();
+                        int damage = CUUtils.ConvenientBossDamage(120, 180, true);
+                        float rotation = (pi * 2 / numProj * (I + 1)) + (float)Math.Atan2(NPC.Center.Y - (Target().position.Y + (Target().height * 0.5f)), NPC.Center.X - (Target().position.X + (Target().width * 0.5f)));
+                        Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center.X, NPC.Center.Y, (float)(Math.Cos(rotation) * Speed * -1) / 5, (float)(Math.Sin(rotation) * Speed * -1) / 5, type, damage, 1.0f);
+                    }
                 }
                 NPC.ai[2]++;
                 if (NPC.ai[2] > 2)
@@ -252,52 +342,102 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
         {
             NPC.ai[1]++;
             NPC.velocity *= 0.94f;
-            if (NPC.ai[1] > (Main.expertMode ? 150 : 300))
+            if (ExpertSecondPhase())
             {
-                SwitchAI();
-                if (Main.netMode == NetmodeID.MultiplayerClient)
-                    return;
-                int n = 0;
-                if (NPC.AnyNPCs(ModContent.NPCType<AbyssalShade>()))
+
+                if (NPC.ai[1] % 200 == 0 && NPC.ai[1] != 0 && NPC.ai[1] != 1000)
                 {
-                    n++;
-                    if (minion == 0)
-                        minion++;
+                    NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<AbyssalShade>(), 0, 0, Main.rand.NextFloat(MathHelper.TwoPi), 0, 1);
+                    NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<BloodlustEye>(), 0, 0, Main.rand.NextFloat(MathHelper.TwoPi), 0, 1);
+                    NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<RavenousEye>(), 0, 0, Main.rand.NextFloat(MathHelper.TwoPi), 0, 1);
                 }
-                if (NPC.AnyNPCs(ModContent.NPCType<BloodlustEye>()))
+
+                if (NPC.ai[1] > 1100)
+                    SwitchAI();
+            }
+            else
+            {
+                if (NPC.ai[1] > 200)
                 {
-                    n++;
-                    if (minion == 1)
-                        minion++;
-                }
-                if (NPC.AnyNPCs(ModContent.NPCType<RavenousEye>()))
-                {
-                    n++;
-                    if (minion == 2)
+                    SwitchAI();
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
+                        return;
+                    int n = 0;
+                    if (NPC.AnyNPCs(ModContent.NPCType<AbyssalShade>()))
                     {
-                        if (NPC.AnyNPCs(ModContent.NPCType<AbyssalShade>()))
-                            minion = 1;
-                        else
+                        n++;
+                        if (minion == 0)
+                            minion++;
+                    }
+                    if (NPC.AnyNPCs(ModContent.NPCType<BloodlustEye>()))
+                    {
+                        n++;
+                        if (minion == 1)
+                            minion++;
+                    }
+                    if (NPC.AnyNPCs(ModContent.NPCType<RavenousEye>()))
+                    {
+                        n++;
+                        if (minion == 2)
+                        {
+                            if (NPC.AnyNPCs(ModContent.NPCType<AbyssalShade>()))
+                                minion = 1;
+                            else
+                                minion = 0;
+                        }
+                    }
+                    if (n < 2)
+                    {
+                        switch (minion)
+                        {
+                            case 0:
+                                SpawnMiniboss(NPC.target, ModContent.NPCType<AbyssalShade>());
+                                break;
+                            case 1:
+                                SpawnMiniboss(NPC.target, ModContent.NPCType<BloodlustEye>());
+                                break;
+                            case 2:
+                                SpawnMiniboss(NPC.target, ModContent.NPCType<RavenousEye>());
+                                break;
+                        }
+                        minion++;
+                        if (minion > 2)
                             minion = 0;
                     }
                 }
-                if (n < 2)
+            }
+        }
+
+        public static void AI_ExpertSpecialMinion(NPC npc)
+        {
+            if (Main.player[npc.target] != null)
+            {
+                if (npc.type != ModContent.NPCType<AbyssalShade>())
+                    npc.rotation = (Main.player[npc.target].Center - npc.Center).ToRotation() - (float)(Math.PI / 2);
+                if (npc.ai[0] == 0)
                 {
-                    switch (minion)
+                    npc.alpha = 255;
+                    npc.ai[0] = 1;
+                }
+                if (npc.ai[0] == 1)
+                {
+                    npc.position = Main.player[npc.target].Center - new Vector2(npc.width, npc.height) / 2 + npc.ai[1].ToRotationVector2() * 480;
+                    if (npc.alpha > 0)
+                        npc.alpha -= 3;
+                    else
                     {
-                        case 0:
-                            SpawnMiniboss(NPC.target, ModContent.NPCType<AbyssalShade>());
-                            break;
-                        case 1:
-                            SpawnMiniboss(NPC.target, ModContent.NPCType<BloodlustEye>());
-                            break;
-                        case 2:
-                            SpawnMiniboss(NPC.target, ModContent.NPCType<RavenousEye>());
-                            break;
+                        npc.ai[0] = 2;
+                        npc.velocity = Vector2.Normalize(Main.player[npc.target].Center - npc.Center) * 22;
                     }
-                    minion++;
-                    if (minion > 2)
-                        minion = 0;
+                }
+                if (npc.ai[0] == 2)
+                {
+                    npc.alpha += 5;
+                    if (npc.alpha > 255)
+                    {
+                        npc.active = false;
+                        npc.life = -1;
+                    }
                 }
             }
         }
@@ -337,21 +477,60 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            if (ExpertSecondPhase())
+            {
+                Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("ChaoticUprising/Content/NPCs/Bosses/AbyssalChaos/AbyssalChaosAura");
+
+                Vector2 frameOrigin = NPC.frame.Size() / 2f;
+                Vector2 offset = new Vector2(NPC.width / 2 - frameOrigin.X, NPC.height - NPC.frame.Height);
+                Vector2 drawPos = NPC.position - Main.screenPosition + frameOrigin + offset;
+
+                float time = Main.GlobalTimeWrappedHourly;
+                float timer = age / 240f + time * 0.04f;
+
+                time %= 4f;
+                time /= 2f;
+
+                if (time >= 1f)
+                {
+                    time = 2f - time;
+                }
+
+                time = time * 0.5f + 0.5f;
+
+                float scale = NPC.scale * 1.1f;
+
+                for (float i = 0f; i < 1f; i += 0.25f)
+                {
+                    float radians = (i + timer) * MathHelper.TwoPi;
+
+                    spriteBatch.Draw(texture, drawPos + new Vector2(0f, 8f).RotatedBy(radians) * time, NPC.frame, new Color(90, 70, 255, 50) * 0.5f, NPC.rotation, frameOrigin, scale, SpriteEffects.None, 0);
+                }
+
+                for (float i = 0f; i < 1f; i += 0.34f)
+                {
+                    float radians = (i + timer) * MathHelper.TwoPi;
+
+                    spriteBatch.Draw(texture, drawPos + new Vector2(0f, 4f).RotatedBy(radians) * time, NPC.frame, new Color(140, 120, 255, 77) * 0.5f, NPC.rotation, frameOrigin, scale, SpriteEffects.None, 0);
+                }
+            }
+
             NPC connected1 = NPC.AnyNPCs(ModContent.NPCType<AbyssalShade>()) ? Main.npc[NPC.FindFirstNPC(ModContent.NPCType<AbyssalShade>())] : null;
             if (connected1 != null)
-                DrawConnector(connected1.Center, spriteBatch);
+                DrawConnector(connected1.Center, spriteBatch, connected1.alpha);
             NPC connected2 = NPC.AnyNPCs(ModContent.NPCType<BloodlustEye>()) ? Main.npc[NPC.FindFirstNPC(ModContent.NPCType<BloodlustEye>())] : null;
             if (connected2 != null)
-                DrawConnector(connected2.Center, spriteBatch);
+                DrawConnector(connected2.Center, spriteBatch, connected2.alpha);
             NPC connected3 = NPC.AnyNPCs(ModContent.NPCType<RavenousEye>()) ? Main.npc[NPC.FindFirstNPC(ModContent.NPCType<RavenousEye>())] : null;
             if (connected3 != null)
-                DrawConnector(connected3.Center, spriteBatch);
+                DrawConnector(connected3.Center, spriteBatch, connected3.alpha);
             return base.PreDraw(spriteBatch, screenPos, drawColor);
         }
 
-        public void DrawConnector(Vector2 connectorTarget, SpriteBatch spriteBatch)
+        public void DrawConnector(Vector2 connectorTarget, SpriteBatch spriteBatch, int alpha)
         {
             Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("ChaoticUprising/Content/NPCs/Bosses/AbyssalChaos/ConnectorTentacle");
+            float a = (255f - alpha) / 255f;
             int l = texture.Height;
             Vector2 connectorOrigin = NPC.Center;
             bool lineComplete = false;
@@ -359,7 +538,7 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
             {
                 Vector2 nextPosition = connectorTarget + Vector2.Normalize(Vector2.Normalize(connectorOrigin - connectorTarget) * l + new Vector2(0, l * 0.75f)) * l;
                 float rotation = Vector2.Normalize(nextPosition - connectorTarget).ToRotation() + (float)(Math.PI / 2);
-                spriteBatch.Draw(texture, connectorTarget - Main.screenPosition, null, Lighting.GetColor((int)connectorTarget.X / 16, (int)connectorTarget.Y / 16), rotation, new Vector2(texture.Width / 2, texture.Height / 2), 1, SpriteEffects.None, 0);
+                spriteBatch.Draw(texture, connectorTarget - Main.screenPosition, null, Lighting.GetColor((int)connectorTarget.X / 16, (int)connectorTarget.Y / 16) * a, rotation, new Vector2(texture.Width / 2, texture.Height / 2), 1, SpriteEffects.None, 0);
                 connectorTarget = nextPosition;
                 if (Vector2.Distance(connectorTarget, connectorOrigin) < NPC.width / 3)
                     lineComplete = true;
