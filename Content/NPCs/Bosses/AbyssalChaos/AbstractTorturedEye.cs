@@ -27,6 +27,14 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
             NPC.boss = true;
             NPC.GetGlobalNPC<ChaosNPC>().shouldBeBuffedInChaosMode = false;
         }
+        public override void HitEffect(int hitDirection, double damage)
+        {
+            if (NPC.life <= 0 && NPC.AnyNPCs(ModContent.NPCType<AbyssalChaos>()))
+            {
+                NPC boss = Main.npc[NPC.FindFirstNPC(ModContent.NPCType<AbyssalChaos>())];
+                boss.localAI[0] = 1;
+            }
+        }
         public override void BossLoot(ref string name, ref int potionType)
         {
             potionType = ItemID.SuperHealingPotion;
@@ -49,11 +57,6 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
                 frameChange = 0;
             }
             NPC.frame.Y = frame * frameHeight;
-        }
-        public bool ExpertSecondPhase()
-        {
-            NPC boss = NPC.AnyNPCs(ModContent.NPCType<AbyssalChaos>()) ? Main.npc[NPC.FindFirstNPC(ModContent.NPCType<AbyssalChaos>())] : null;
-            return Main.expertMode && boss.life < boss.lifeMax / 2 && NPC.ai[3] != 1;
         }
     }
 }

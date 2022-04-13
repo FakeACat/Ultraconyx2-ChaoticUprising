@@ -54,15 +54,18 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
             potionType = ItemID.SuperHealingPotion;
         }
 
+        public override void HitEffect(int hitDirection, double damage)
+        {
+            if (NPC.life <= 0 && NPC.AnyNPCs(ModContent.NPCType<AbyssalChaos>()))
+            {
+                NPC boss = Main.npc[NPC.FindFirstNPC(ModContent.NPCType<AbyssalChaos>())];
+                boss.localAI[0] = 1;
+            }
+        }
+
         public Player Target()
         {
             return Main.player[NPC.target];
-        }
-
-        private bool ExpertSecondPhase()
-        {
-            NPC boss = NPC.AnyNPCs(ModContent.NPCType<AbyssalChaos>()) ? Main.npc[NPC.FindFirstNPC(ModContent.NPCType<AbyssalChaos>())] : null;
-            return Main.expertMode && boss.life < boss.lifeMax / 2 && NPC.ai[3] != 1;
         }
 
         private const int AI_CONTACT = 0;
@@ -71,36 +74,28 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
 
         public override void AI()
         {
-
-            if ((NPC.target < 0 || NPC.target >= 255 || Target().dead || !Target().active || !NPC.AnyNPCs(ModContent.NPCType<AbyssalChaos>()) || ExpertSecondPhase()) && NPC.ai[0] != AI_DESPAWN)
+            if ((NPC.target < 0 || NPC.target >= 255 || Target().dead || !Target().active || !NPC.AnyNPCs(ModContent.NPCType<AbyssalChaos>())) && NPC.ai[0] != AI_DESPAWN)
             {
                 NPC.TargetClosest(true);
                 NPC.netUpdate = true;
-                if (NPC.target < 0 || NPC.target >= 255 || Target().dead || !Target().active || !NPC.AnyNPCs(ModContent.NPCType<AbyssalChaos>()) || ExpertSecondPhase())
+                if (NPC.target < 0 || NPC.target >= 255 || Target().dead || !Target().active || !NPC.AnyNPCs(ModContent.NPCType<AbyssalChaos>()))
                 {
                     NPC.ai[0] = AI_DESPAWN;
                     NPC.ai[1] = NPC.position.Y + 3000;
                 }
             }
 
-            if (NPC.ai[3] == 1)
+            switch (NPC.ai[0])
             {
-                AbyssalChaos.AI_ExpertSpecialMinion(NPC);
-            }
-            else
-            {
-                switch (NPC.ai[0])
-                {
-                    case AI_CONTACT:
-                        AI_Contact();
-                        break;
-                    case AI_CHARGE:
-                        AI_Charge();
-                        break;
-                    case AI_DESPAWN:
-                        AI_Despawn();
-                        break;
-                }
+                case AI_CONTACT:
+                    AI_Contact();
+                    break;
+                case AI_CHARGE:
+                    AI_Charge();
+                    break;
+                case AI_DESPAWN:
+                    AI_Despawn();
+                    break;
             }
         }
 

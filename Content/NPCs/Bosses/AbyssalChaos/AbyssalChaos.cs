@@ -99,16 +99,17 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
             NPC.frame.Y = frame * frameHeight;
         }
 
-        public static void DeathEffects(NPC npc)
+        public void DeathEffects(NPC npc)
         {
             int bloodQuantity = 10;
+            int dust = (NPC.localAI[0] == 0) ? DustID.FireworkFountain_Pink : DustID.Blood;
             for (int i = 0; i < bloodQuantity; i++)
             {
                 Vector2 target = ((float)Math.PI * 2 / bloodQuantity * i + 1).ToRotationVector2() * 300;
                 int bloodQuantity2 = 150;
                 for (int a = 1; a <= bloodQuantity2; a++)
                 {
-                    Dust.NewDust(npc.Center, 0, 0, DustID.Blood, target.X / a, target.Y / a, 0, default, 3);
+                    Dust.NewDust(npc.Center, 0, 0, dust, target.X / a, target.Y / a, 0, default, 3);
                 }
             }
         }
@@ -227,7 +228,7 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
                     NPC.ai[1]++;
                     if (NPC.ai[2] > 2)
                     {
-                        NPC.ai[1] += 2;
+                        NPC.ai[1]++;
                     }
                     if (NPC.ai[1] >= 75)
                     {
@@ -255,8 +256,8 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
                         {
                             NPC.ai[1] = 0;
                             NPC.ai[2]++;
-                            NPC.velocity.X = Target().Center.X > NPC.Center.X ? 20 : -20;
-                            NPC.velocity.Y = Target().Center.Y > NPC.Center.Y ? 20 : -20;
+                            NPC.velocity.X = Target().Center.X > NPC.Center.X ? 30 : -30;
+                            NPC.velocity.Y = Target().Center.Y > NPC.Center.Y ? 30 : -30;
                             NPC.rotation = NPC.velocity.ToRotation() - (float)(Math.PI / 2);
                             SoundEngine.PlaySound(SoundID.ForceRoar, (int)NPC.Center.X, (int)NPC.Center.Y, 0);
                             if (NPC.ai[2] > 8)
@@ -342,105 +343,52 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
         {
             NPC.ai[1]++;
             NPC.velocity *= 0.94f;
-            if (ExpertSecondPhase())
+            if (NPC.ai[1] > 200)
             {
-
-                if (NPC.ai[1] % 200 == 0 && NPC.ai[1] != 0 && NPC.ai[1] != 1000)
+                SwitchAI();
+                if (Main.netMode == NetmodeID.MultiplayerClient)
+                    return;
+                int n = 0;
+                if (NPC.AnyNPCs(ModContent.NPCType<AbyssalShade>()))
                 {
-                    int a = NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<AbyssalShade>(), 0, 0, Main.rand.NextFloat(MathHelper.TwoPi), 0, 1);
-                    int b = NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<BloodlustEye>(), 0, 0, Main.rand.NextFloat(MathHelper.TwoPi), 0, 1);
-                    int c = NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<RavenousEye>(), 0, 0, Main.rand.NextFloat(MathHelper.TwoPi), 0, 1);
-                    Main.npc[a].alpha = 255; 
-                    Main.npc[b].alpha = 255; 
-                    Main.npc[c].alpha = 255;
-                }
-
-                if (NPC.ai[1] > 1100)
-                    SwitchAI();
-            }
-            else
-            {
-                if (NPC.ai[1] > 200)
-                {
-                    SwitchAI();
-                    if (Main.netMode == NetmodeID.MultiplayerClient)
-                        return;
-                    int n = 0;
-                    if (NPC.AnyNPCs(ModContent.NPCType<AbyssalShade>()))
-                    {
-                        n++;
-                        if (minion == 0)
-                            minion++;
-                    }
-                    if (NPC.AnyNPCs(ModContent.NPCType<BloodlustEye>()))
-                    {
-                        n++;
-                        if (minion == 1)
-                            minion++;
-                    }
-                    if (NPC.AnyNPCs(ModContent.NPCType<RavenousEye>()))
-                    {
-                        n++;
-                        if (minion == 2)
-                        {
-                            if (NPC.AnyNPCs(ModContent.NPCType<AbyssalShade>()))
-                                minion = 1;
-                            else
-                                minion = 0;
-                        }
-                    }
-                    if (n < 2)
-                    {
-                        switch (minion)
-                        {
-                            case 0:
-                                SpawnMiniboss(NPC.target, ModContent.NPCType<AbyssalShade>());
-                                break;
-                            case 1:
-                                SpawnMiniboss(NPC.target, ModContent.NPCType<BloodlustEye>());
-                                break;
-                            case 2:
-                                SpawnMiniboss(NPC.target, ModContent.NPCType<RavenousEye>());
-                                break;
-                        }
+                    n++;
+                    if (minion == 0)
                         minion++;
-                        if (minion > 2)
+                }
+                if (NPC.AnyNPCs(ModContent.NPCType<BloodlustEye>()))
+                {
+                    n++;
+                    if (minion == 1)
+                        minion++;
+                }
+                if (NPC.AnyNPCs(ModContent.NPCType<RavenousEye>()))
+                {
+                    n++;
+                    if (minion == 2)
+                    {
+                        if (NPC.AnyNPCs(ModContent.NPCType<AbyssalShade>()))
+                            minion = 1;
+                        else
                             minion = 0;
                     }
                 }
-            }
-        }
-
-        public static void AI_ExpertSpecialMinion(NPC npc)
-        {
-            if (Main.player[npc.target] != null)
-            {
-                if (npc.type != ModContent.NPCType<AbyssalShade>())
-                    npc.rotation = (Main.player[npc.target].Center - npc.Center).ToRotation() - (float)(Math.PI / 2);
-                if (npc.ai[0] == 0)
+                if (n < (NPC.localAI[0] == 1 ? 2 : 3))
                 {
-                    npc.alpha = 255;
-                    npc.ai[0] = 1;
-                }
-                if (npc.ai[0] == 1)
-                {
-                    npc.position = Main.player[npc.target].Center - new Vector2(npc.width, npc.height) / 2 + npc.ai[1].ToRotationVector2() * 480;
-                    if (npc.alpha > 0)
-                        npc.alpha -= 3;
-                    else
+                    switch (minion)
                     {
-                        npc.ai[0] = 2;
-                        npc.velocity = Vector2.Normalize(Main.player[npc.target].Center - npc.Center) * 22;
+                        case 0:
+                            SpawnMiniboss(NPC.target, ModContent.NPCType<AbyssalShade>());
+                            break;
+                        case 1:
+                            SpawnMiniboss(NPC.target, ModContent.NPCType<BloodlustEye>());
+                            break;
+                        case 2:
+                            SpawnMiniboss(NPC.target, ModContent.NPCType<RavenousEye>());
+                            break;
                     }
-                }
-                if (npc.ai[0] == 2)
-                {
-                    npc.alpha += 5;
-                    if (npc.alpha > 255)
-                    {
-                        npc.active = false;
-                        npc.life = -1;
-                    }
+                    minion++;
+                    if (minion > 2)
+                        minion = 0;
                 }
             }
         }
