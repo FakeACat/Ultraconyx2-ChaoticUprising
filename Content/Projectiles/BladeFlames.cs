@@ -50,7 +50,6 @@ namespace ChaoticUprising.Content.Projectiles
             {
                 realPosition = Projectile.Center;
                 Projectile.localAI[0] = 1f;
-                SoundEngine.PlaySound(SoundID.Item20, Projectile.position);
             }
             int d = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<AbyssDust>(), Projectile.velocity.X, Projectile.velocity.Y);
             Main.dust[d].noGravity = true;

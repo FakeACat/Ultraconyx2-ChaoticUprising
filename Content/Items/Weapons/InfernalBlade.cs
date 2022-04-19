@@ -2,6 +2,7 @@
 using ChaoticUprising.Content.Rarities;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
@@ -39,6 +40,7 @@ namespace ChaoticUprising.Content.Items.Weapons
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
+            SoundEngine.PlaySound(SoundID.Item20, position);
             if (player.altFunctionUse == 2)
             {
                 for (int i = 0; i < 6; i++)
