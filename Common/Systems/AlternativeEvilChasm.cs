@@ -73,7 +73,7 @@ namespace ChaoticUprising.Common.Systems
                             }
                         }
                     }
-                    if (((x == X - width2 || x == X + width2) && WorldGen.genRand.Next(2) == 0) || (x > X - width2 && x < X + width2))
+                    if ((((x == X - width2 || x == X + width2) && WorldGen.genRand.Next(2) == 0) || (x > X - width2 && x < X + width2)) && (y <= Main.maxTilesY - 200 || Main.tile[x, y].TileType == TileID.Ash || Main.tile[x, y].TileType == TileID.Stone))
                     {
                         WorldGen.KillTile(x, y, false, false, false);
                     }

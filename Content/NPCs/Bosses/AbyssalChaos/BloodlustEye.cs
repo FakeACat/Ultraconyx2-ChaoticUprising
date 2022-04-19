@@ -83,7 +83,7 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
                 int dmg = CUUtils.ConvenientBossDamage(90, 150, true);
                 int fireball = Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<AbyssalFlames>(), dmg, 1);
                 Main.projectile[fireball].timeLeft = 400;
-                Main.projectile[fireball].GetGlobalProjectile<ProjectileFeatures>().homing = true;
+                Main.projectile[fireball].GetGlobalProjectile<ProjectileFeatures>().hostileHoming = true;
                 Main.projectile[fireball].GetGlobalProjectile<ProjectileFeatures>().featureSpeed = 5.5f;
                 NPC.ai[2]++;
                 if (NPC.ai[2] > 6)
@@ -118,7 +118,7 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
                     int teleportationProjectile = Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<TeleportationBeam>(), 0, 0);
                     Main.projectile[teleportationProjectile].ai[1] = NPC.whoAmI;
                     Main.projectile[teleportationProjectile].timeLeft = 60;
-                    Main.projectile[teleportationProjectile].GetGlobalProjectile<ProjectileFeatures>().homing = true;
+                    Main.projectile[teleportationProjectile].GetGlobalProjectile<ProjectileFeatures>().hostileHoming = true;
                     Main.projectile[teleportationProjectile].GetGlobalProjectile<ProjectileFeatures>().featureSpeed = 12f;
                     NPC.ai[2]++;
                     if (NPC.ai[2] > 6)

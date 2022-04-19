@@ -18,8 +18,8 @@ namespace ChaoticUprising.Content.Items.Consumables
 
         public override void SetDefaults()
         {
-            Item.width = 30;
-            Item.height = 38;
+            Item.width = 50;
+            Item.height = 30;
             Item.maxStack = 1;
             Item.rare = ItemRarityID.Purple;
             Item.useAnimation = 45;

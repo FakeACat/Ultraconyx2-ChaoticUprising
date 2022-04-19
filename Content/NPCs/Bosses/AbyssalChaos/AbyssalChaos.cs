@@ -13,7 +13,8 @@ using System.Collections.Generic;
 using Terraria.GameContent.ItemDropRules;
 using ChaoticUprising.Common;
 using ChaoticUprising.Content.Items.Consumables;
-using Terraria.GameContent;
+using ChaoticUprising.Content.Items.Vanity;
+using ChaoticUprising.Content.Items.Weapons;
 
 namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
 {
@@ -31,7 +32,7 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
             NPC.aiStyle = -1;
             NPC.lifeMax = CUUtils.ConvenientBossHealth(160000, 240000);
             NPC.damage = CUUtils.ConvenientBossDamage(170, 220, false);
-            NPC.defense = 50;
+            NPC.defense = 80;
             NPC.width = 142;
             NPC.knockBackResist = 0f;
             NPC.height = 180;
@@ -73,6 +74,13 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
             npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<AbyssalChaosBossBag>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Placeables.AbyssalChaosTrophy>(), 10));
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<Items.Placeables.AbyssalChaosRelic>()));
+
+            LeadingConditionRule notExpertLoot = new LeadingConditionRule(new Conditions.NotExpert());
+            notExpertLoot.OnSuccess(ItemDropRule.Common(ModContent.ItemType<AbyssalChaosMask>(), 7));
+
+            notExpertLoot.OnSuccess(ItemDropRule.Common(ModContent.ItemType<RavenousBlaster>(), 4));
+            notExpertLoot.OnSuccess(ItemDropRule.Common(ModContent.ItemType<InfernalBlade>(), 4));
+            notExpertLoot.OnSuccess(ItemDropRule.Common(ModContent.ItemType<BloodlustWand>(), 4));
         }
 
         public override void HitEffect(int hitDirection, double damage)

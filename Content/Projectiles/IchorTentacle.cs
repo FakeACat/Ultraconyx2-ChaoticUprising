@@ -67,7 +67,7 @@ namespace ChaoticUprising.Content.Projectiles
             target.AddBuff(BuffID.Ichor, 300);
         }
 
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPvp(Player target, int damage, bool crit)
         {
             target.AddBuff(BuffID.Ichor, 300);
         }

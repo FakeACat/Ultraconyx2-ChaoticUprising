@@ -14,8 +14,8 @@ namespace ChaoticUprising.Content.Items.Placeables
         {
             Item.DefaultToPlaceableTile(ModContent.TileType<Tiles.Furniture.AbyssalChaosTrophy>());
 
-            Item.width = 48;
-            Item.height = 48;
+            Item.width = 32;
+            Item.height = 34;
             Item.maxStack = 99;
             Item.rare = ItemRarityID.Blue;
             Item.value = Terraria.Item.buyPrice(0, 1);

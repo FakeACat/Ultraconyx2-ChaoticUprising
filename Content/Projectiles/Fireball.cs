@@ -20,7 +20,6 @@ namespace ChaoticUprising.Content.Projectiles
             Projectile.penetrate = 2;
             Projectile.hostile = true;
             Projectile.timeLeft = 300;
-            Projectile.light = 0.8f;
             Projectile.extraUpdates = 1;
             Projectile.GetGlobalProjectile<ChaosProjectile>().shouldBeBuffedInChaosMode = false;
         }
@@ -28,6 +27,10 @@ namespace ChaoticUprising.Content.Projectiles
         float[] prevRot = new float[30];
         public override void AI()
         {
+            if (Main.netMode != NetmodeID.Server)
+            {
+                Lighting.AddLight(Projectile.Center, new Vector3(1, 0.5f, 0) * Projectile.scale);
+            }
             if (Projectile.ai[0] == 1)
             {
                 Projectile.velocity.Y += 0.05f;
@@ -46,6 +49,7 @@ namespace ChaoticUprising.Content.Projectiles
             }
             Projectile.rotation += 0.3f * Projectile.direction;
         }
+
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
             target.AddBuff(BuffID.OnFire, 600);

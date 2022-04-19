@@ -1,4 +1,6 @@
-﻿using ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos;
+﻿using ChaoticUprising.Content.Items.Vanity;
+using ChaoticUprising.Content.Items.Weapons;
+using ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -18,8 +20,17 @@ namespace ChaoticUprising.Content.Items.Consumables
         }
 
         public override void OpenBossBag(Player player)
-		{
+        {
+            var source = player.GetItemSource_OpenItem(Type);
+            if (Main.rand.NextBool(7))
+                player.QuickSpawnItem(source, ModContent.ItemType<AbyssalChaosMask>());
 
-		}
+            if (Main.rand.NextBool(4))
+                player.QuickSpawnItem(source, ModContent.ItemType<RavenousBlaster>());
+            if (Main.rand.NextBool(4))
+                player.QuickSpawnItem(source, ModContent.ItemType<InfernalBlade>());
+            if (Main.rand.NextBool(4))
+                player.QuickSpawnItem(source, ModContent.ItemType<BloodlustWand>());
+        }
 	}
 }
