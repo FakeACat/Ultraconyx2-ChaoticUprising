@@ -17,7 +17,6 @@ namespace ChaoticUprising.Content.Projectiles
             Projectile.height = 40;
             Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Ranged;
-            Projectile.tileCollide = false;
             Projectile.hostile = false;
             Projectile.timeLeft = 300;
             Projectile.extraUpdates = 1;

@@ -18,7 +18,6 @@ namespace ChaoticUprising.Content.Projectiles
             Projectile.width = 34;
             Projectile.height = 66;
             Projectile.friendly = true;
-            Projectile.tileCollide = false;
             Projectile.penetrate = 1;
             Projectile.hostile = false;
             Projectile.timeLeft = 300;
