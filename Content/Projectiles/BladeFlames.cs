@@ -36,6 +36,7 @@ namespace ChaoticUprising.Content.Projectiles
 
         public override void AI()
         {
+            Projectile.tileCollide = size > Projectile.ai[1] / 8;
             if (size < Projectile.ai[1])
             {
                 size += Projectile.ai[1] / 120;
