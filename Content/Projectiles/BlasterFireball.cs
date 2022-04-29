@@ -74,35 +74,45 @@ namespace ChaoticUprising.Content.Projectiles
             SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
             for (int num924 = 0; num924 < 50; num924++)
             {
-                int num925 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 31, 0f, 0f, 100, default(Color), 2f);
+                int num925 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Smoke, 0f, 0f, 100, default, 2f);
                 Dust dust = Main.dust[num925];
                 dust.velocity *= 1.4f;
             }
             for (int num926 = 0; num926 < 80; num926++)
             {
-                int num927 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 6, 0f, 0f, 100, default(Color), 3f);
+                int num927 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Torch, 0f, 0f, 100, default, 3f);
                 Main.dust[num927].noGravity = true;
                 Dust dust = Main.dust[num927];
                 dust.velocity *= 5f;
-                num927 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 6, 0f, 0f, 100, default(Color), 2f);
+                num927 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Torch, 0f, 0f, 100, default, 2f);
                 dust = Main.dust[num927];
                 dust.velocity *= 3f;
             }
+            float scale = Projectile.scale;
+            for (int i = 0; i < 30; i++)
+            {
+                Vector2 pos = prevPos[i];
+                scale *= 1.05f;
+                int num927 = Dust.NewDust(pos, 0, 0, DustID.Torch, 0f, 0f, 100, default, 3f * scale);
+                Main.dust[num927].noGravity = true;
+                Dust dust = Main.dust[num927];
+                dust.velocity *= 25f;
+            }
             for (int num928 = 0; num928 < 2; num928++)
             {
-                int num929 = Gore.NewGore(new Vector2(Projectile.position.X + (float)(Projectile.width / 2) - 24f, Projectile.position.Y + (float)(Projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64));
+                int num929 = Gore.NewGore(new Vector2(Projectile.position.X + Projectile.width / 2 - 24f, Projectile.position.Y + (Projectile.height / 2) - 24f), default, Main.rand.Next(61, 64));
                 Main.gore[num929].scale = 1.5f;
                 Main.gore[num929].velocity.X += 1.5f;
                 Main.gore[num929].velocity.Y += 1.5f;
-                num929 = Gore.NewGore(new Vector2(Projectile.position.X + (float)(Projectile.width / 2) - 24f, Projectile.position.Y + (float)(Projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64));
+                num929 = Gore.NewGore(new Vector2(Projectile.position.X + (Projectile.width / 2) - 24f, Projectile.position.Y + (Projectile.height / 2) - 24f), default, Main.rand.Next(61, 64));
                 Main.gore[num929].scale = 1.5f;
                 Main.gore[num929].velocity.X -= 1.5f;
                 Main.gore[num929].velocity.Y += 1.5f;
-                num929 = Gore.NewGore(new Vector2(Projectile.position.X + (float)(Projectile.width / 2) - 24f, Projectile.position.Y + (float)(Projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64));
+                num929 = Gore.NewGore(new Vector2(Projectile.position.X + (Projectile.width / 2) - 24f, Projectile.position.Y + (Projectile.height / 2) - 24f), default, Main.rand.Next(61, 64));
                 Main.gore[num929].scale = 1.5f;
                 Main.gore[num929].velocity.X += 1.5f;
                 Main.gore[num929].velocity.Y -= 1.5f;
-                num929 = Gore.NewGore(new Vector2(Projectile.position.X + (float)(Projectile.width / 2) - 24f, Projectile.position.Y + (float)(Projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64));
+                num929 = Gore.NewGore(new Vector2(Projectile.position.X + (Projectile.width / 2) - 24f, Projectile.position.Y + (Projectile.height / 2) - 24f), default, Main.rand.Next(61, 64));
                 Main.gore[num929].scale = 1.5f;
                 Main.gore[num929].velocity.X -= 1.5f;
                 Main.gore[num929].velocity.Y -= 1.5f;
