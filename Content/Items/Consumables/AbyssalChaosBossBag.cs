@@ -21,7 +21,7 @@ namespace ChaoticUprising.Content.Items.Consumables
 
         public override void OpenBossBag(Player player)
         {
-            var source = player.GetItemSource_OpenItem(Type);
+            var source = player.GetSource_OpenItem(Type);
             if (Main.rand.NextBool(7))
                 player.QuickSpawnItem(source, ModContent.ItemType<AbyssalChaosMask>());
 

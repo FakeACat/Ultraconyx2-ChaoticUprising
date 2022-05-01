@@ -98,21 +98,22 @@ namespace ChaoticUprising.Content.Projectiles
                 Dust dust = Main.dust[num927];
                 dust.velocity *= 25f;
             }
+            var source = Projectile.GetSource_FromThis();
             for (int num928 = 0; num928 < 2; num928++)
             {
-                int num929 = Gore.NewGore(new Vector2(Projectile.position.X + Projectile.width / 2 - 24f, Projectile.position.Y + (Projectile.height / 2) - 24f), default, Main.rand.Next(61, 64));
+                int num929 = Gore.NewGore(source, new Vector2(Projectile.position.X + Projectile.width / 2 - 24f, Projectile.position.Y + (Projectile.height / 2) - 24f), default, Main.rand.Next(61, 64));
                 Main.gore[num929].scale = 1.5f;
                 Main.gore[num929].velocity.X += 1.5f;
                 Main.gore[num929].velocity.Y += 1.5f;
-                num929 = Gore.NewGore(new Vector2(Projectile.position.X + (Projectile.width / 2) - 24f, Projectile.position.Y + (Projectile.height / 2) - 24f), default, Main.rand.Next(61, 64));
+                num929 = Gore.NewGore(source, new Vector2(Projectile.position.X + (Projectile.width / 2) - 24f, Projectile.position.Y + (Projectile.height / 2) - 24f), default, Main.rand.Next(61, 64));
                 Main.gore[num929].scale = 1.5f;
                 Main.gore[num929].velocity.X -= 1.5f;
                 Main.gore[num929].velocity.Y += 1.5f;
-                num929 = Gore.NewGore(new Vector2(Projectile.position.X + (Projectile.width / 2) - 24f, Projectile.position.Y + (Projectile.height / 2) - 24f), default, Main.rand.Next(61, 64));
+                num929 = Gore.NewGore(source, new Vector2(Projectile.position.X + (Projectile.width / 2) - 24f, Projectile.position.Y + (Projectile.height / 2) - 24f), default, Main.rand.Next(61, 64));
                 Main.gore[num929].scale = 1.5f;
                 Main.gore[num929].velocity.X += 1.5f;
                 Main.gore[num929].velocity.Y -= 1.5f;
-                num929 = Gore.NewGore(new Vector2(Projectile.position.X + (Projectile.width / 2) - 24f, Projectile.position.Y + (Projectile.height / 2) - 24f), default, Main.rand.Next(61, 64));
+                num929 = Gore.NewGore(source, new Vector2(Projectile.position.X + (Projectile.width / 2) - 24f, Projectile.position.Y + (Projectile.height / 2) - 24f), default, Main.rand.Next(61, 64));
                 Main.gore[num929].scale = 1.5f;
                 Main.gore[num929].velocity.X -= 1.5f;
                 Main.gore[num929].velocity.Y -= 1.5f;

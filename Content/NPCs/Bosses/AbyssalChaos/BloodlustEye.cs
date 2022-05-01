@@ -81,7 +81,7 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
             {
                 NPC.ai[1] = 0;
                 int dmg = CUUtils.ConvenientBossDamage(90, 150, true);
-                int fireball = Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<AbyssalFlames>(), dmg, 1);
+                int fireball = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<AbyssalFlames>(), dmg, 1);
                 Main.projectile[fireball].timeLeft = 400;
                 Main.projectile[fireball].GetGlobalProjectile<ProjectileFeatures>().hostileHoming = true;
                 Main.projectile[fireball].GetGlobalProjectile<ProjectileFeatures>().featureSpeed = 5.5f;
@@ -108,14 +108,14 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
                         float Speed = 25;
                         int damage = CUUtils.ConvenientBossDamage(150, 200, true);
                         float rotation = (pi * 2 / numProj * (I + 1)) + (float)Math.Atan2(NPC.Center.Y - (Target().position.Y + (Target().height * 0.5f)), NPC.Center.X - (Target().position.X + (Target().width * 0.5f)));
-                        int p = Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center.X, NPC.Center.Y, (float)(Math.Cos(rotation) * Speed * -1) / 5, (float)(Math.Sin(rotation) * Speed * -1) / 5, type, damage, 1.0f);
+                        int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center.X, NPC.Center.Y, (float)(Math.Cos(rotation) * Speed * -1) / 5, (float)(Math.Sin(rotation) * Speed * -1) / 5, type, damage, 1.0f);
                         Main.projectile[p].timeLeft = 120;
                     }
                 }
                 if (NPC.ai[1] > 75)
                 {
                     NPC.ai[1] = 0;
-                    int teleportationProjectile = Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<TeleportationBeam>(), 0, 0);
+                    int teleportationProjectile = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<TeleportationBeam>(), 0, 0);
                     Main.projectile[teleportationProjectile].ai[1] = NPC.whoAmI;
                     Main.projectile[teleportationProjectile].timeLeft = 60;
                     Main.projectile[teleportationProjectile].GetGlobalProjectile<ProjectileFeatures>().hostileHoming = true;

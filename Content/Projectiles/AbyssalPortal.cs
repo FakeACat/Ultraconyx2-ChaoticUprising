@@ -51,7 +51,7 @@ namespace ChaoticUprising.Content.Projectiles
                 int numProj = 7;
                 for (int i = 0; i < numProj; i++)
                 {
-                    Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), Projectile.Center, (i * MathHelper.TwoPi / numProj).ToRotationVector2() * 8f, ModContent.ProjectileType<WandFlames>(), Projectile.damage / 2, Projectile.knockBack, Projectile.owner);
+                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, (i * MathHelper.TwoPi / numProj).ToRotationVector2() * 8f, ModContent.ProjectileType<WandFlames>(), Projectile.damage / 2, Projectile.knockBack, Projectile.owner);
                 }
             }
         }

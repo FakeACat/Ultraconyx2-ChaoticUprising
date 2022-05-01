@@ -211,7 +211,7 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
                 NPC.ai[2]++;
                 int dmg = CUUtils.ConvenientBossDamage(100, 150, true);
                 int speed = 12;
-                int p = Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), new Vector2(NPC.Center.X, NPC.position.Y + NPC.height), Vector2.Normalize(Target().Center - new Vector2(NPC.Center.X, NPC.position.Y + NPC.height)) * speed, ModContent.ProjectileType<AbyssalFlamesBig>(), dmg, 1);
+                int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), new Vector2(NPC.Center.X, NPC.position.Y + NPC.height), Vector2.Normalize(Target().Center - new Vector2(NPC.Center.X, NPC.position.Y + NPC.height)) * speed, ModContent.ProjectileType<AbyssalFlamesBig>(), dmg, 1);
                 Main.projectile[p].timeLeft = 320;
                 Main.projectile[p].netUpdate = true;
             }
@@ -315,7 +315,7 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
                             int type = ModContent.ProjectileType<LightRay>();
                             int damage = CUUtils.ConvenientBossDamage(120, 180, true);
                             float rotation = (pi * 2 / numProj * (I + 1)) + (float)Math.Atan2(pos.Y - (Target().position.Y + (Target().height * 0.5f)), pos.X - (Target().position.X + (Target().width * 0.5f)));
-                            Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), pos.X, pos.Y, (float)(Math.Cos(rotation) * Speed * -1) / 5, (float)(Math.Sin(rotation) * Speed * -1) / 5, type, damage, 1.0f);
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), pos.X, pos.Y, (float)(Math.Cos(rotation) * Speed * -1) / 5, (float)(Math.Sin(rotation) * Speed * -1) / 5, type, damage, 1.0f);
                         }
                     }
                     else if (NPC.ai[3] == 2)
@@ -326,7 +326,7 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
                             int m = NPC.ai[2] % 2 == 0 ? 1 : -1;
                             Vector2 pos = new Vector2(Target().Center.X + 1000 * m, y + Main.rand.Next(dist) - dist/2);
                             int damage = CUUtils.ConvenientBossDamage(100, 150, true);
-                            Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), pos.X, pos.Y, -m, (Main.rand.NextFloat() - 0.5f) / 4, ModContent.ProjectileType<LightRay>(), damage, 1.0f);
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), pos.X, pos.Y, -m, (Main.rand.NextFloat() - 0.5f) / 4, ModContent.ProjectileType<LightRay>(), damage, 1.0f);
                         }
                     }
                 }
@@ -337,7 +337,7 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
                         int type = ModContent.ProjectileType<LightRay>();
                         int damage = CUUtils.ConvenientBossDamage(120, 180, true);
                         float rotation = (pi * 2 / numProj * (I + 1)) + (float)Math.Atan2(NPC.Center.Y - (Target().position.Y + (Target().height * 0.5f)), NPC.Center.X - (Target().position.X + (Target().width * 0.5f)));
-                        Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center.X, NPC.Center.Y, (float)(Math.Cos(rotation) * Speed * -1) / 5, (float)(Math.Sin(rotation) * Speed * -1) / 5, type, damage, 1.0f);
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center.X, NPC.Center.Y, (float)(Math.Cos(rotation) * Speed * -1) / 5, (float)(Math.Sin(rotation) * Speed * -1) / 5, type, damage, 1.0f);
                     }
                 }
                 NPC.ai[2]++;
