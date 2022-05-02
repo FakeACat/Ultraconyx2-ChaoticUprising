@@ -80,7 +80,7 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
                 int dmg = CUUtils.ConvenientBossDamage(100, 160, true);
                 for (int i = 0; i < 3; i++)
                 {
-                    int fireball = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, new Vector2(Main.rand.Next(-40, 41) / 20f, Main.rand.Next(-40, 41) / 20f) + Vector2.Normalize(Target().Center - new Vector2(NPC.Center.X, NPC.position.Y + NPC.height)) * 8, ModContent.ProjectileType<Fireball>(), dmg, 1);
+                    int fireball = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(Main.rand.Next(-40, 41) / 20f, Main.rand.Next(-40, 41) / 20f) + Vector2.Normalize(Target().Center - new Vector2(NPC.Center.X, NPC.position.Y + NPC.height)) * 8, ModContent.ProjectileType<Fireball>(), dmg, 1);
                     Main.projectile[fireball].timeLeft = 360;
                 }
                 NPC.ai[2]++;
@@ -99,7 +99,7 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
             {
                 NPC.ai[1] = 0;
                 int dmg = CUUtils.ConvenientBossDamage(110, 175, true);
-                int fireball = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Normalize(Target().Center - new Vector2(NPC.Center.X, NPC.position.Y + NPC.height)) * 10, ModContent.ProjectileType<Fireball>(), dmg, 1);
+                int fireball = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Normalize(Target().Center - new Vector2(NPC.Center.X, NPC.position.Y + NPC.height)) * 10, ModContent.ProjectileType<Fireball>(), dmg, 1);
                 Main.projectile[fireball].timeLeft = 90;
                 NPC.ai[2]++;
                 if (NPC.ai[2] > 80)

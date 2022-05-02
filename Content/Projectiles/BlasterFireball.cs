@@ -22,8 +22,13 @@ namespace ChaoticUprising.Content.Projectiles
             Projectile.extraUpdates = 1;
             Projectile.penetrate = -1;
         }
-        Vector2[] prevPos = new Vector2[30];
-        float[] prevRot = new float[30];
+        private Vector2[] prevPos;
+        private float[] prevRot;
+        public override void OnSpawn(Terraria.DataStructures.IEntitySource source)
+        {
+            prevPos = new Vector2[30];
+            prevRot = new float[30];
+        }
         public override void AI()
         {
             if (Main.netMode != NetmodeID.Server)

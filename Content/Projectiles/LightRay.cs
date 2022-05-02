@@ -28,8 +28,13 @@ namespace ChaoticUprising.Content.Projectiles
             Projectile.GetGlobalProjectile<ChaosProjectile>().shouldBeBuffedInChaosMode = false;
         }
         Vector2 spawnPos;
-        Vector2[] prevPos = new Vector2[30];
-        float[] prevRot = new float[30];
+        private Vector2[] prevPos;
+        private float[] prevRot;
+        public override void OnSpawn(Terraria.DataStructures.IEntitySource source)
+        {
+            prevPos = new Vector2[30];
+            prevRot = new float[30];
+        }
         float num1 = 0;
         float num2 = 120;
         public override void AI()
