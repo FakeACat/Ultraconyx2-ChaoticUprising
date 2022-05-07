@@ -9,7 +9,7 @@ namespace ChaoticUprising.Content.Items.Weapons
     {
         public override void SetDefaults()
         {
-            Item.DefaultToWhip(915, 250, 5f, 8f, 20);
+            Item.DefaultToWhip(ModContent.ProjectileType<Projectiles.Vertebrae>(), 250, 5f, 8f);
             Item.value = Item.sellPrice(0, 30);
             Item.rare = ModContent.RarityType<VeryEarlyChaos>();
         }

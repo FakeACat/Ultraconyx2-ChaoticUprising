@@ -78,9 +78,10 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
             LeadingConditionRule notExpertLoot = new LeadingConditionRule(new Conditions.NotExpert());
             notExpertLoot.OnSuccess(ItemDropRule.Common(ModContent.ItemType<AbyssalChaosMask>(), 7));
 
-            notExpertLoot.OnSuccess(ItemDropRule.Common(ModContent.ItemType<RavenousBlaster>(), 4));
-            notExpertLoot.OnSuccess(ItemDropRule.Common(ModContent.ItemType<InfernalBlade>(), 4));
-            notExpertLoot.OnSuccess(ItemDropRule.Common(ModContent.ItemType<BloodlustWand>(), 4));
+            notExpertLoot.OnSuccess(ItemDropRule.Common(ModContent.ItemType<RavenousBlaster>(), 3));
+            notExpertLoot.OnSuccess(ItemDropRule.Common(ModContent.ItemType<InfernalBlade>(), 3));
+            notExpertLoot.OnSuccess(ItemDropRule.Common(ModContent.ItemType<BloodlustWand>(), 3));
+            notExpertLoot.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Vertebrae>(), 3));
         }
 
         public override void HitEffect(int hitDirection, double damage)

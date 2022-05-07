@@ -25,12 +25,14 @@ namespace ChaoticUprising.Content.Items.Consumables
             if (Main.rand.NextBool(7))
                 player.QuickSpawnItem(source, ModContent.ItemType<AbyssalChaosMask>());
 
-            if (Main.rand.NextBool(4))
+            if (Main.rand.NextBool(3))
                 player.QuickSpawnItem(source, ModContent.ItemType<RavenousBlaster>());
-            if (Main.rand.NextBool(4))
+            if (Main.rand.NextBool(3))
                 player.QuickSpawnItem(source, ModContent.ItemType<InfernalBlade>());
-            if (Main.rand.NextBool(4))
+            if (Main.rand.NextBool(3))
                 player.QuickSpawnItem(source, ModContent.ItemType<BloodlustWand>());
+            if (Main.rand.NextBool(3))
+                player.QuickSpawnItem(source, ModContent.ItemType<Vertebrae>());
         }
 	}
 }
