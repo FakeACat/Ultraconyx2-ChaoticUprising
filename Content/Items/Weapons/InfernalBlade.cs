@@ -46,6 +46,7 @@ namespace ChaoticUprising.Content.Items.Weapons
                 for (int i = 0; i < 6; i++)
                 {
                     int p = Projectile.NewProjectile(source, position, velocity / 2, type, damage, knockback, player.whoAmI, MathHelper.Pi * 2 * i / 6, 256);
+                    Main.projectile[p].timeLeft = 100;
                 }
             }
             else

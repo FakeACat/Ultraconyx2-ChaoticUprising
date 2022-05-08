@@ -23,7 +23,7 @@ namespace ChaoticUprising.Content.Projectiles
             Projectile.friendly = true;
             Projectile.penetrate = 1;
             Projectile.hostile = false;
-            Projectile.timeLeft = 300;
+            Projectile.timeLeft = 40;
             Projectile.light = 1f;
             Projectile.extraUpdates = 1;
             Projectile.ignoreWater = true;
