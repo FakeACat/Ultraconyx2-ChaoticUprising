@@ -12,13 +12,6 @@ namespace ChaoticUprising.Content.Items.Consumables
 
         public override string BossName() => "Abyssal Chaos";
 
-        public override void SetDefaults()
-        {
-            base.SetDefaults();
-            Item.width = 32;
-            Item.height = 32;
-        }
-
         public override void OpenBossBag(Player player)
         {
             var source = player.GetSource_OpenItem(Type);
