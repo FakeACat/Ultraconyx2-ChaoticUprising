@@ -1,4 +1,5 @@
-﻿using ChaoticUprising.Content.Items.Vanity;
+﻿using ChaoticUprising.Content.Items.Accessories;
+using ChaoticUprising.Content.Items.Vanity;
 using ChaoticUprising.Content.Items.Weapons;
 using ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos;
 using Terraria;
@@ -26,6 +27,8 @@ namespace ChaoticUprising.Content.Items.Consumables
                 player.QuickSpawnItem(source, ModContent.ItemType<BloodlustWand>());
             if (Main.rand.NextBool(3))
                 player.QuickSpawnItem(source, ModContent.ItemType<Vertebrae>());
+
+            player.QuickSpawnItem(source, ModContent.ItemType<MiracleMind>());
         }
 	}
 }

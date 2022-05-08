@@ -22,10 +22,6 @@ namespace ChaoticUprising.Content.Buffs
             player.GetModPlayer<AbyssalFlamesDebuffPlayer>().abyssalFlames = true;
             int d = Dust.NewDust(player.position, player.width, player.height, ModContent.DustType<AbyssDust>(), 0, 0, 0, default, 2);
             Main.dust[d].noGravity = true;
-            if (player.statLife <= 1)
-            {
-                player.KillMe(PlayerDeathReason.ByCustomReason(player.name + " disintegrated."), 1, 0);
-            }
         }
         public override void Update(NPC npc, ref int buffIndex)
         {
