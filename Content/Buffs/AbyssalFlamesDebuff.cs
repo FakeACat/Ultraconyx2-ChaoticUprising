@@ -52,6 +52,15 @@ namespace ChaoticUprising.Content.Buffs
                 Player.lifeRegen -= 16;
             }
         }
+
+        public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
+        {
+            if (abyssalFlames)
+            {
+                damageSource = PlayerDeathReason.ByCustomReason(Player.name + " disintegrated.");
+            }
+            return true;
+        }
     }
 
     public class AbyssalFlamesDebuffNPC : GlobalNPC
