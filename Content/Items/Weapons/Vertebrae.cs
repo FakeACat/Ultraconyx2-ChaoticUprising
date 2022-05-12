@@ -1,6 +1,5 @@
 ﻿using ChaoticUprising.Content.Rarities;
 using Terraria;
-using Terraria.Enums;
 using Terraria.ModLoader;
 
 namespace ChaoticUprising.Content.Items.Weapons
