@@ -1,7 +1,6 @@
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.Graphics.Effects;
-using Terraria.Graphics.Shaders;
 using ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos;
 
 namespace ChaoticUprising

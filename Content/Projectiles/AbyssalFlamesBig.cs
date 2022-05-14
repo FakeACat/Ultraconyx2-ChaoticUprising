@@ -30,7 +30,6 @@ namespace ChaoticUprising.Content.Projectiles
             Projectile.extraUpdates = 1;
             Projectile.ignoreWater = true;
             Projectile.DamageType = DamageClass.Magic;
-            Projectile.GetGlobalProjectile<ChaosProjectile>().shouldBeBuffedInChaosMode = false;
         }
 
         public override void AI()

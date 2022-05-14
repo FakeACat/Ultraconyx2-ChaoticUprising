@@ -25,7 +25,6 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
                 Music = MusicLoader.GetMusicSlot(Mod, "Assets/Music/Hellish Intent");
             Main.npcFrameCount[NPC.type] = 4;
             NPC.boss = true;
-            NPC.GetGlobalNPC<ChaosNPC>().shouldBeBuffedInChaosMode = false;
         }
         public override void HitEffect(int hitDirection, double damage)
         {

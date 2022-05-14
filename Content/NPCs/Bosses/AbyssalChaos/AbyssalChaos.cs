@@ -15,6 +15,7 @@ using ChaoticUprising.Common;
 using ChaoticUprising.Content.Items.Consumables;
 using ChaoticUprising.Content.Items.Vanity;
 using ChaoticUprising.Content.Items.Weapons;
+using ChaoticUprising.Common.Systems;
 
 namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
 {
@@ -44,7 +45,6 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath6;
             Main.npcFrameCount[NPC.type] = 5;
-            NPC.GetGlobalNPC<ChaosNPC>().shouldBeBuffedInChaosMode = false;
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Assets/Music/Hellish Intent");
         }
@@ -82,6 +82,16 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
             notExpertLoot.OnSuccess(ItemDropRule.Common(ModContent.ItemType<InfernalBlade>(), 3));
             notExpertLoot.OnSuccess(ItemDropRule.Common(ModContent.ItemType<BloodlustWand>(), 3));
             notExpertLoot.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Vertebrae>(), 3));
+        }
+
+        public override void OnKill()
+        {
+            if (!ChaosMode.chaosMode)
+            {
+                Main.NewText("The ancient spirits of light and dark have been enraged!", new Color(255, 0, 155));
+                Main.NewText("The abyssal barrier between dimensions has been weakened!", new Color(0, 155, 255));
+            }
+            NPC.SetEventFlagCleared(ref ChaosMode.chaosMode, -1);
         }
 
         public override void HitEffect(int hitDirection, double damage)

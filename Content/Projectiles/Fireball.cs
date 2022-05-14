@@ -21,7 +21,6 @@ namespace ChaoticUprising.Content.Projectiles
             Projectile.hostile = true;
             Projectile.timeLeft = 300;
             Projectile.extraUpdates = 1;
-            Projectile.GetGlobalProjectile<ChaosProjectile>().shouldBeBuffedInChaosMode = false;
         }
         private Vector2[] prevPos;
         private float[] prevRot;

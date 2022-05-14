@@ -25,7 +25,6 @@ namespace ChaoticUprising.Content.Projectiles
             Projectile.timeLeft = 400;
             Projectile.DamageType = DamageClass.Magic;
             Projectile.tileCollide = false;
-            Projectile.GetGlobalProjectile<ChaosProjectile>().shouldBeBuffedInChaosMode = false;
         }
         Vector2 spawnPos;
         private Vector2[] prevPos;

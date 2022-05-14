@@ -39,7 +39,6 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
             NPC.DeathSound = SoundID.NPCDeath6;
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Assets/Music/Hellish Intent");
-            NPC.GetGlobalNPC<ChaosNPC>().shouldBeBuffedInChaosMode = false;
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
