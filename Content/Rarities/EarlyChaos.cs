@@ -1,12 +1,12 @@
-﻿using Microsoft.Xna.Framework;
-using Terraria;
+﻿using ChaoticUprising.Common;
+using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
 
 namespace ChaoticUprising.Content.Rarities
 {
     public class EarlyChaos : ModRarity
     {
-        public override Color RarityColor => new(Main.DiscoR, 255 - Main.DiscoR, 155);
+        public override Color RarityColor => CUUtils.FadeBetweenColours(new Color(255, 0, 0), new Color(0, 0, 255));
 
         public override int GetPrefixedRarity(int offset, float valueMult)
         {

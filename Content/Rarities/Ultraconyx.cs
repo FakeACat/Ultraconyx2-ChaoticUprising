@@ -1,12 +1,12 @@
-﻿using Microsoft.Xna.Framework;
-using Terraria;
+﻿using ChaoticUprising.Common;
+using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
 
 namespace ChaoticUprising.Content.Rarities
 {
     public class Ultraconyx : ModRarity
     {
-        public override Color RarityColor => new(255, 255, Main.DiscoR);
+        public override Color RarityColor => CUUtils.FadeBetweenColours(Color.White, Color.Black);
 
         public override int GetPrefixedRarity(int offset, float valueMult)
         {

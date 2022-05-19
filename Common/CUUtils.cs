@@ -53,5 +53,12 @@ namespace ChaoticUprising.Common
             }
             return closestNPC;
         }
+
+        public static Color FadeBetweenColours(Color colour1, Color colour2)
+        {
+            colour1 *= Main.DiscoR / 255f;
+            colour2 *= 1f - Main.DiscoR / 255f;
+            return new Color(colour1.R + colour2.R, colour1.G + colour2.G, colour1.B + colour2.B);
+        }
     }
 }

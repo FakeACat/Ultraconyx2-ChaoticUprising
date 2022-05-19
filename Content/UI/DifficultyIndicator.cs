@@ -12,9 +12,9 @@ namespace ChaoticUprising.Content.UI
         private UIImage outline;
         float outlineX = 24;
         float outlineY = 256;
-        float outlineWidth = 48;
-        float outlineHeight = 256;
-        float outlineThickness = 10;
+        float outlineWidth = 58;
+        float outlineHeight = 260;
+        float outlineThickness = 16;
 
         private Bar bar = new Bar();
 
