@@ -76,7 +76,7 @@ namespace ChaoticUprising.Content.UI
                 rect.Height += num2;
                 rect.Y -= num2;
             }
-            spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>("ChaoticUprising/Assets/Textures/BlankTexture"), rect, colour);
+            spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>("ChaoticUprising/Content/UI/Bar"), rect, colour);
         }
     }
 }
