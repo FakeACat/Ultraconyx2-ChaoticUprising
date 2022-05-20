@@ -93,15 +93,16 @@ namespace ChaoticUprising.Content.Projectiles
                 dust = Main.dust[num927];
                 dust.velocity *= 3f;
             }
-            float scale = Projectile.scale;
             for (int i = 0; i < 30; i++)
             {
-                Vector2 pos = prevPos[i];
-                scale *= 1.05f;
-                int num927 = Dust.NewDust(pos, 0, 0, DustID.Torch, 0f, 0f, 100, default, 3f * scale);
-                Main.dust[num927].noGravity = true;
-                Dust dust = Main.dust[num927];
-                dust.velocity *= 25f;
+                for (int n = 0; n < 3; n++)
+                {
+                    Vector2 pos = prevPos[i];
+                    int num927 = Dust.NewDust(pos, 0, 0, DustID.Torch, 0f, 0f, 100, default, 5f * Projectile.scale);
+                    Main.dust[num927].noGravity = true;
+                    Dust dust = Main.dust[num927];
+                    dust.velocity *= 25f;
+                }
             }
             var source = Projectile.GetSource_FromThis();
             for (int num928 = 0; num928 < 2; num928++)
