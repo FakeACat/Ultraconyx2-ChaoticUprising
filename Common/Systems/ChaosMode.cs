@@ -42,6 +42,34 @@ namespace ChaoticUprising.Common.Systems
             return Difficulty.Medium;
         }
 
+        public static float NormalSpawnMultiplier()
+        {
+            switch (GetDifficulty())
+            {
+                case Difficulty.Easy:
+                    return 0.5f;
+                case Difficulty.Hard:
+                    return 1.5f;
+                default:
+                    return 1.0f;
+
+            }
+        }
+
+        public static float EliteSpawnMultiplier()
+        {
+            switch (GetDifficulty())
+            {
+                case Difficulty.Easy:
+                    return 0.0625f;
+                case Difficulty.Hard:
+                    return 1.0f;
+                default:
+                    return 0.25f;
+
+            }
+        }
+
         public override void PostUpdatePlayers()
         {
             if (chaosMode)
