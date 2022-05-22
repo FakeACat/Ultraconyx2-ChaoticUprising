@@ -254,7 +254,7 @@ namespace ChaoticUprising.Content.NPCs
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
             if (ChaosMode.chaosMode)
-                return SpawnCondition.Overworld.Chance * ChaosMode.EliteSpawnMultiplier() / 30;
+                return SpawnCondition.Overworld.Chance * ChaosMode.EliteSpawnMultiplier() / 50;
             else
                 return 0;
         }

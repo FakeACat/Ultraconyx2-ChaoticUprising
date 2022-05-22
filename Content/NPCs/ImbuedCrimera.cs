@@ -48,7 +48,7 @@ namespace ChaoticUprising.Content.NPCs
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
             if (ChaosMode.chaosMode)
-                return SpawnCondition.Crimson.Chance * ChaosMode.NormalSpawnMultiplier() / 2;
+                return SpawnCondition.Crimson.Chance * ChaosMode.NormalSpawnMultiplier() / 4;
             return 0;
         }
 
