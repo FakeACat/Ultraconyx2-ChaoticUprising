@@ -61,7 +61,8 @@ namespace ChaoticUprising.Content.NPCs
                 if (projectileTimer > 100)
                 {
                     projectileTimer = 0;
-                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Normalize(Main.player[NPC.target].Center - NPC.Center) * 6, ProjectileID.GoldenShowerHostile, 60, 1);
+                    for (int i = 0; i < 3; i++)
+                        Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Normalize(Main.player[NPC.target].Center - NPC.Center) * 6 + new Vector2(Main.rand.NextFloat(-2, 2), Main.rand.NextFloat(-2, 2)), ProjectileID.GoldenShowerHostile, 60, 1);
                 }
             }
         }
