@@ -97,7 +97,7 @@ namespace ChaoticUprising.Common.Systems
                 return 0;
             float val = 0.00004f;
             if (player.ZoneCorrupt || player.ZoneCrimson || player.ZoneUnderworldHeight)
-                val += 0.00008f;
+                val += 0.00002f;
             return val;
         }
 
