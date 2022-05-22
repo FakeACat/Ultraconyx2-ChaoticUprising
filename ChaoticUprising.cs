@@ -23,8 +23,7 @@ namespace ChaoticUprising
 
         public override void PostSetupContent()
         {
-            Mod checklist = ModLoader.GetMod("BossChecklist");
-            if (checklist != null)
+            if (ModLoader.TryGetMod("BossChecklist", out Mod checklist))
                 checklist.Call("AddBoss", 
                     this, 
                     "Abyssal Chaos",
