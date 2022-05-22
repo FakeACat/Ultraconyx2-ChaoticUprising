@@ -1,7 +1,9 @@
 ﻿using ChaoticUprising.Common.Systems;
+using ChaoticUprising.Content.Items.Materials;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
@@ -55,6 +57,11 @@ namespace ChaoticUprising.Content.NPCs
                 }
                 NPC.velocity *= 0.97f;
             }
+        }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Terragel>()));
         }
     }
 }

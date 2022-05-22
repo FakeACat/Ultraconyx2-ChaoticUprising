@@ -20,6 +20,7 @@ namespace ChaoticUprising.Common.Systems
 
         public static bool chaosMode = false;
         public static float difficulty = 0.0f;
+        public const float MAXIMUM_DIFFICULTY = 3.0f;
 
         public override void Load()
         {
@@ -86,14 +87,15 @@ namespace ChaoticUprising.Common.Systems
                     }
                 }
                 if (n > 0) 
-                    difficulty = Math.Clamp(difficulty + (totalDif / n), 0.0f, 3.0f);
+                    difficulty = Math.Clamp(difficulty + (totalDif / n), 0.0f, MAXIMUM_DIFFICULTY);
             }
         }
 
         private float playerDif(Player player)
         {
+            if (player.townNPCs >= 1)
+                return 0;
             float val = 0.00004f;
-            val -= player.townNPCs / 20000;
             if (player.ZoneCorrupt || player.ZoneCrimson || player.ZoneUnderworldHeight)
                 val += 0.00008f;
             return val;
