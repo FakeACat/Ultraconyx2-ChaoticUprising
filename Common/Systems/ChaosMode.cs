@@ -50,7 +50,7 @@ namespace ChaoticUprising.Common.Systems
                 case Difficulty.Easy:
                     return 0.5f;
                 case Difficulty.Hard:
-                    return 1.5f;
+                    return 2.0f;
                 default:
                     return 1.0f;
 
