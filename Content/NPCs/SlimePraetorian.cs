@@ -12,6 +12,11 @@ namespace ChaoticUprising.Content.NPCs
 {
     public class SlimePraetorian : ModNPC
     {
+        public override void SetStaticDefaults()
+        {
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new NPCID.Sets.NPCBestiaryDrawModifiers(0) { PortraitScale = 0.75f });
+        }
+
         public override void SetDefaults()
         {
             NPC.width = 174;
