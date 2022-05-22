@@ -95,9 +95,9 @@ namespace ChaoticUprising.Common.Systems
         {
             if (player.townNPCs >= 1)
                 return 0;
-            float val = 0.00004f;
+            float val = 0.00003f;
             if (player.ZoneCorrupt || player.ZoneCrimson || player.ZoneUnderworldHeight)
-                val += 0.00002f;
+                val += 0.000015f;
             return val;
         }
 
