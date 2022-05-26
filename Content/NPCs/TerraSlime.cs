@@ -55,6 +55,7 @@ namespace ChaoticUprising.Content.NPCs
                     NPC.velocity.Y = -16;
                     NPC.velocity.X = Vector2.Normalize(Main.player[NPC.target].Center - NPC.Center).X * 12;
                 }
+                NPC.velocity.X += Vector2.Normalize(Main.player[NPC.target].Center - NPC.Center).X / 8;
                 NPC.velocity *= 0.97f;
             }
         }
