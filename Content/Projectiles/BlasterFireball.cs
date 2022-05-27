@@ -142,7 +142,7 @@ namespace ChaoticUprising.Content.Projectiles
                 scale *= 1.05f;
                 alpha *= 0.9f;
                 Vector2 pos = prevPos[i] - Main.screenPosition;
-                Main.EntitySpriteDraw(texture, pos, null, Color.White * alpha, prevRot[i], new Vector2(texture.Width, texture.Height) / 2, scale, SpriteEffects.None, 0);
+                Main.EntitySpriteDraw(texture, pos, null, new Color(255, 255, 255, 1) * alpha, prevRot[i], new Vector2(texture.Width, texture.Height) / 2, scale, SpriteEffects.None, 0);
             }
             return false;
         }

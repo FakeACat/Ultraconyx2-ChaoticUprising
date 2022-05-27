@@ -52,6 +52,9 @@ namespace ChaoticUprising.Content.Projectiles
                 prevRot[i] = prevRot[i - 1];
             }
             Projectile.rotation += 0.3f * Projectile.direction;
+
+            if (Projectile.timeLeft < 50)
+                Projectile.alpha = 255 - (int)(5.1f * Projectile.timeLeft);
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
@@ -62,14 +65,14 @@ namespace ChaoticUprising.Content.Projectiles
         public override bool PreDraw(ref Color lightColor)
         {
             float scale = Projectile.scale;
-            float alpha = 0.4f;
+            float alpha = 0.4f * (1f - (Projectile.alpha / 255f));
             Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("ChaoticUprising/Content/Projectiles/Fireball");
             for (int i = 0; i < 30; i++)
             {
                 scale *= 1.05f;
                 alpha *= 0.9f;
                 Vector2 pos = prevPos[i] - Main.screenPosition;
-                Main.EntitySpriteDraw(texture, pos, null, Color.White * alpha, prevRot[i], new Vector2(texture.Width, texture.Height) / 2, scale, SpriteEffects.None, 0);
+                Main.EntitySpriteDraw(texture, pos, null, new Color(255, 255, 255, 1) * alpha, prevRot[i], new Vector2(texture.Width, texture.Height) / 2, scale, SpriteEffects.None, 0);
             }
             return false;
         }
