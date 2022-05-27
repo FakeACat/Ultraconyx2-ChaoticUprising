@@ -43,13 +43,13 @@ namespace ChaoticUprising.Common.Systems
             }
             int width = 32;
             int width3 = width;
-            for (int y = (int)Main.worldSurface - 400; y < Main.maxTilesY - 150; y++)
+            for (int y = (int)Main.worldSurface - 400 > 0 ? (int)Main.worldSurface - 400 : 0; y < Main.maxTilesY - 150; y++)
             {
                 if (!WorldGen.TileEmpty(X, y))
                     tileDensity++;
                 if (tileDensity > maxTileDensity)
                     tileDensity = maxTileDensity;
-                if (WorldGen.genRand.Next(2) == 0)
+                if (WorldGen.genRand.NextBool(2))
                     width3++;
                 else
                     width3--;
@@ -61,19 +61,19 @@ namespace ChaoticUprising.Common.Systems
 
                 for (int x = X - width3; x <= X + width3; x++)
                 {
-                    if (((x == X - width3 || x == X + width3) && WorldGen.genRand.Next(2) == 0) || (x > X - width3 && x < X + width3))
+                    if (((x == X - width3 || x == X + width3) && WorldGen.genRand.NextBool(2)) || (x > X - width3 && x < X + width3))
                     {
-                        if (tileDensity > -1 && WorldGen.genRand.Next(maxTileDensity) <= tileDensity && (y < Main.maxTilesY - 200 || y == Main.maxTilesY - 200 && WorldGen.genRand.Next(2) == 0))
+                        if (tileDensity > -1 && WorldGen.genRand.Next(maxTileDensity) <= tileDensity && (y < Main.maxTilesY - 200 || y == Main.maxTilesY - 200 && WorldGen.genRand.NextBool(2)))
                         {
-                            WorldGen.PlaceTile(x, y, WorldGen.genRand.Next(120) == 0 ? ore : tile, false, true);
+                            WorldGen.PlaceTile(x, y, WorldGen.genRand.NextBool(120)? ore : tile, false, true);
                             Main.tile[x, y].WallType = wall;
-                            if (WorldGen.genRand.Next(128) == 0 && Math.Abs(X - x) > width2)
+                            if (WorldGen.genRand.NextBool(128)&& Math.Abs(X - x) > width2)
                             {
                                 spikes.Add(new Vector2(x, y));
                             }
                         }
                     }
-                    if ((((x == X - width2 || x == X + width2) && WorldGen.genRand.Next(2) == 0) || (x > X - width2 && x < X + width2)) && (y <= Main.maxTilesY - 200 || Main.tile[x, y].TileType == TileID.Ash || Main.tile[x, y].TileType == TileID.Stone))
+                    if ((((x == X - width2 || x == X + width2) && WorldGen.genRand.NextBool(2)) || (x > X - width2 && x < X + width2)) && (y <= Main.maxTilesY - 200 || Main.tile[x, y].TileType == TileID.Ash || Main.tile[x, y].TileType == TileID.Stone))
                     {
                         WorldGen.KillTile(x, y, false, false, false);
                     }
