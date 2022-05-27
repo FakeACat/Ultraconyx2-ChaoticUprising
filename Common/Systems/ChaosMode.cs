@@ -20,7 +20,7 @@ namespace ChaoticUprising.Common.Systems
 
         public static bool chaosMode = false;
         public static float difficulty = 0.0f;
-        public const float MAXIMUM_DIFFICULTY = 3.0f;
+        public const float MAXIMUM_DIFFICULTY = 4.0f;
 
         public override void Load()
         {
@@ -36,11 +36,25 @@ namespace ChaoticUprising.Common.Systems
 
         public static Difficulty GetDifficulty()
         {
-            if (difficulty <= 1.0f)
-                return Difficulty.Easy;
-            if (difficulty >= 2.0f)
-                return Difficulty.Hard;
-            return Difficulty.Medium;
+            switch (difficulty)
+            {
+                case <= 1.0f:
+                    return Difficulty.Easy;
+                case <= 2.0f:
+                    return Difficulty.Medium;
+                case <= 3.0f:
+                    return Difficulty.Hard;
+                case <= 4.0f:
+                    return Difficulty.Chaotic;
+                case <= 5.0f:
+                    return Difficulty.Darkened;
+                case <= 6.0f:
+                    return Difficulty.Infested;
+                case <= 7.0f:
+                    return Difficulty.Abyssal;
+            }
+
+            return Difficulty.Easy;
         }
 
         public static float NormalSpawnMultiplier()
@@ -49,10 +63,12 @@ namespace ChaoticUprising.Common.Systems
             {
                 case Difficulty.Easy:
                     return 0.5f;
+                case Difficulty.Medium:
+                    return 1.0f;
                 case Difficulty.Hard:
                     return 2.0f;
                 default:
-                    return 1.0f;
+                    return 4.0f;
 
             }
         }
@@ -63,10 +79,12 @@ namespace ChaoticUprising.Common.Systems
             {
                 case Difficulty.Easy:
                     return 0.0625f;
+                case Difficulty.Medium:
+                    return 0.25f;
                 case Difficulty.Hard:
                     return 1.0f;
                 default:
-                    return 0.25f;
+                    return 4.0f;
 
             }
         }
@@ -186,6 +204,10 @@ namespace ChaoticUprising.Common.Systems
     {
         Easy,
         Medium,
-        Hard
+        Hard,
+        Chaotic,
+        Darkened,
+        Infested,
+        Abyssal
     }
 }

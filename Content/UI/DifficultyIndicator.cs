@@ -59,7 +59,11 @@ namespace ChaoticUprising.Content.UI
             DrawDif(spriteBatch, 0.0f, new Color(0, 255, 0));
             DrawDif(spriteBatch, 1.0f, new Color(255, 255, 0));
             DrawDif(spriteBatch, 2.0f, new Color(255, 0, 0));
-            DrawDif(spriteBatch, 3.0f, new Color(40, 40, 40));
+            DrawDif(spriteBatch, 3.0f, new Color(100, 0, 0));
+            DrawDif(spriteBatch, 4.0f, new Color(60, 60, 60));
+            DrawDif(spriteBatch, 5.0f, new Color(82, 42, 60));
+            DrawDif(spriteBatch, 6.0f, new Color(77, 56, 56));
+            DrawDif(spriteBatch, 7.0f, new Color(40, 40, 40));
         }
 
         protected void DrawDif(SpriteBatch spriteBatch, float min, Color colour)
