@@ -26,7 +26,7 @@ namespace ChaoticUprising.Content.NPCs
             NPC.DeathSound = SoundID.NPCDeath1;
             Main.npcFrameCount[NPC.type] = 2;
             AnimationType = NPCID.BlueSlime;
-            NPC.knockBackResist = 0;
+            NPC.knockBackResist = 0.3f;
             NPC.alpha = 50;
             Banner = Type;
             BannerItem = ModContent.ItemType<TerraSlimeBanner>();
@@ -49,7 +49,7 @@ namespace ChaoticUprising.Content.NPCs
         {
             if ((!Main.player[NPC.target].active || Main.player[NPC.target].dead) && NPC.aiStyle != 1)
                 NPC.aiStyle = 1;
-            if (NPC.life < NPC.lifeMax && Main.player[NPC.target].active && !Main.player[NPC.target].dead)
+            else if (NPC.life < NPC.lifeMax)
             {
                 NPC.aiStyle = -1;
 
