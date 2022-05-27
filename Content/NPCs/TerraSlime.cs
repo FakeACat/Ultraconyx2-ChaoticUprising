@@ -1,5 +1,6 @@
 ﻿using ChaoticUprising.Common.Systems;
 using ChaoticUprising.Content.Items.Materials;
+using ChaoticUprising.Content.Items.Placeables.Banners;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.GameContent.Bestiary;
@@ -27,6 +28,8 @@ namespace ChaoticUprising.Content.NPCs
             AnimationType = NPCID.BlueSlime;
             NPC.knockBackResist = 0;
             NPC.alpha = 50;
+            Banner = Type;
+            BannerItem = ModContent.ItemType<TerraSlimeBanner>();
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)

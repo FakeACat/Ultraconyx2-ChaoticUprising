@@ -7,6 +7,7 @@ using ChaoticUprising.Common.Systems;
 using Terraria.ModLoader.Utilities;
 using Terraria.GameContent.Bestiary;
 using Microsoft.Xna.Framework.Graphics;
+using ChaoticUprising.Content.Items.Placeables.Banners;
 
 namespace ChaoticUprising.Content.NPCs
 {
@@ -35,6 +36,8 @@ namespace ChaoticUprising.Content.NPCs
             NPC.buffImmune[BuffID.OnFire] = true;
             AnimationType = NPCID.KingSlime;
             Main.npcFrameCount[NPC.type] = 6;
+            Banner = Type;
+            BannerItem = ModContent.ItemType<SlimePraetorianBanner>();
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {

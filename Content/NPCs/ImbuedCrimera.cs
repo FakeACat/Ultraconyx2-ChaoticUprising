@@ -1,4 +1,5 @@
 ﻿using ChaoticUprising.Common.Systems;
+using ChaoticUprising.Content.Items.Placeables.Banners;
 using ChaoticUprising.Content.Items.Weapons;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -36,6 +37,8 @@ namespace ChaoticUprising.Content.NPCs
             NPC.value = Item.buyPrice(0, 1, 0, 0);
             Main.npcFrameCount[NPC.type] = 2;
             AnimationType = NPCID.Crimera;
+            Banner = Type;
+            BannerItem = ModContent.ItemType<ImbuedCrimeraBanner>();
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)

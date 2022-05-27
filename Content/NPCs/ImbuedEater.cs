@@ -1,4 +1,5 @@
 ﻿using ChaoticUprising.Common.Systems;
+using ChaoticUprising.Content.Items.Placeables.Banners;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
@@ -35,6 +36,8 @@ namespace ChaoticUprising.Content.NPCs
             NPC.value = Item.buyPrice(0, 1, 0, 0);
             Main.npcFrameCount[NPC.type] = 2;
             AnimationType = NPCID.EaterofSouls;
+            Banner = Type;
+            BannerItem = ModContent.ItemType<ImbuedEaterBanner>();
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
