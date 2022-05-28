@@ -8,6 +8,7 @@ using System;
 using ChaoticUprising.Content.Items.Placeables;
 using ChaoticUprising.Content.Items.Vanity;
 using ChaoticUprising.Content.Items.Consumables;
+using ChaoticUprising.Content.Biomes.Darkness;
 
 namespace ChaoticUprising
 {
@@ -18,6 +19,7 @@ namespace ChaoticUprising
             if (!Main.dedServ)
             {
                 SkyManager.Instance["ChaoticUprising:AbyssalChaos"] = new AbyssalChaosSky();
+                SkyManager.Instance["ChaoticUprising:Darkness"] = new DarknessSky();
             }
         }
 

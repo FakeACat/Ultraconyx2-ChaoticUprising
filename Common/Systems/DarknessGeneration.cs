@@ -14,8 +14,8 @@ namespace ChaoticUprising.Common.Systems
     public class DarknessGeneration : ModSystem
     {
 
-        public static int darknessX;
-        public static int darknessY;
+        public int darknessX;
+        public int darknessY;
 
         public override void ModifyWorldGenTasks(List<GenPass> tasks, ref float totalWeight)
         {
