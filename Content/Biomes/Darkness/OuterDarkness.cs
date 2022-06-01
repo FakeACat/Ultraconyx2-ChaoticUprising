@@ -20,7 +20,7 @@ namespace ChaoticUprising.Content.Biomes.Darkness
             DarknessGeneration darknessGeneration = ModContent.GetInstance<DarknessGeneration>();
             Vector2 centre = new(darknessGeneration.darknessX * 16, darknessGeneration.darknessY * 16);
 
-            return player.DistanceSQ(centre) < 36000000;
+            return player.DistanceSQ(centre) < 36000000 && player.DistanceSQ(centre) >= 2560000;
         }
 
         public override void OnEnter(Player player)
