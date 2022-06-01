@@ -14,7 +14,7 @@ namespace ChaoticUprising.Content.Tiles
             Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = true;
             ItemDrop = ModContent.ItemType<Items.Placeables.NightRock>();
-            SoundType = SoundID.Tink;
+            HitSound = SoundID.Tink;
             MineResist = 3;
             AddMapEntry(new Color(100, 100, 120));
             DustType = DustID.Stone;

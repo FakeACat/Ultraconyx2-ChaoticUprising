@@ -120,7 +120,7 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
                     NPC.ai[1] = 0;
                     NPC.ai[2]++;
                     NPC.velocity = Vector2.Normalize(Target().Center - NPC.Center) * 30;
-                    SoundEngine.PlaySound(SoundID.Roar, (int)NPC.Center.X, (int)NPC.Center.Y, 0);
+                    SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
                     if (NPC.ai[2] > 6)
                         SwitchAI();
                 }

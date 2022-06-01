@@ -34,7 +34,7 @@ namespace ChaoticUprising.Content.Items.Consumables
             Main.NewText("Music: Hellish Intent by ENNWAY", 0, 0, 255);
             if (player.whoAmI == Main.myPlayer)
             {
-                SoundEngine.PlaySound(SoundID.Roar, player.position, 0);
+                SoundEngine.PlaySound(SoundID.Roar, player.position);
                 int type = ModContent.NPCType<AbyssalChaos>();
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                     NPC.SpawnOnPlayer(player.whoAmI, type);

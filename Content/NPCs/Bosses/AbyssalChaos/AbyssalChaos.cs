@@ -258,7 +258,7 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
                             NPC.ai[1] = 0;
                             NPC.ai[2]++;
                             NPC.velocity = Vector2.Normalize(Target().Center - NPC.Center) * 22;
-                            SoundEngine.PlaySound(SoundID.ForceRoar, (int)NPC.Center.X, (int)NPC.Center.Y, 0);
+                            SoundEngine.PlaySound(SoundID.ForceRoar, NPC.Center);
                             if (NPC.ai[2] > 6)
                                 SwitchAI();
                         }
@@ -278,7 +278,7 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
                             NPC.velocity.X = Target().Center.X > NPC.Center.X ? 30 : -30;
                             NPC.velocity.Y = Target().Center.Y > NPC.Center.Y ? 30 : -30;
                             NPC.rotation = NPC.velocity.ToRotation() - (float)(Math.PI / 2);
-                            SoundEngine.PlaySound(SoundID.ForceRoar, (int)NPC.Center.X, (int)NPC.Center.Y, 0);
+                            SoundEngine.PlaySound(SoundID.ForceRoar, NPC.Center);
                             if (NPC.ai[2] > 8)
                                 SwitchAI();
                         }
@@ -296,7 +296,7 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
                     NPC.ai[1] = 0;
                     NPC.ai[2]++;
                     NPC.velocity = Vector2.Normalize(Target().Center - NPC.Center) * 22;
-                    SoundEngine.PlaySound(SoundID.Roar, (int)NPC.Center.X, (int)NPC.Center.Y, 0);
+                    SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
                     if (NPC.ai[2] > 4)
                         SwitchAI();
                 }
@@ -417,7 +417,7 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
             if (player == Main.myPlayer)
             {
                 Player p = Main.player[player];
-                SoundEngine.PlaySound(SoundID.Roar, p.position, 0);
+                SoundEngine.PlaySound(SoundID.Roar, p.position);
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                     NPC.SpawnOnPlayer(p.whoAmI, type);
                 else
