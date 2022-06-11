@@ -10,7 +10,6 @@ namespace ChaoticUprising.Content.Biomes.Darkness
     {
         bool active;
         float intensity;
-        float maxIntensity = 1.0f;
         public override void Activate(Vector2 position, params object[] args)
         {
             active = true;
@@ -40,9 +39,9 @@ namespace ChaoticUprising.Content.Biomes.Darkness
 
         public override void Update(GameTime gameTime)
         {
-            if (Main.LocalPlayer.InModBiome(ModContent.GetInstance<OuterDarkness>()))
+            if (Main.LocalPlayer.InModBiome(ModContent.GetInstance<Darkness>()))
             {
-                if (intensity < maxIntensity)
+                if (intensity < 1.0f)
                     intensity += 0.05f;
             }
             else

@@ -39,26 +39,26 @@ namespace ChaoticUprising.Common.Systems
             darknessX = x;
             darknessY = 200;
 
-            for (int X = darknessX - 400; X < darknessX + 400; X++)
+            for (int X = darknessX - 300; X < darknessX + 300; X++)
             {
-                for (int Y = darknessY - 400; Y < darknessY + 400; Y++)
+                for (int Y = darknessY - 300; Y < darknessY + 300; Y++)
                 {
                     int dist = (int)Vector2.DistanceSquared(new Vector2(X, Y), new Vector2(darknessX, darknessY));
-                    if (dist < 160000 && dist > 14400 && Y < Main.worldSurface)
+                    if (dist < 90000 && dist > 14400 && Y < Main.worldSurface)
                         if (WorldGen.genRand.NextBool(dist / 30))
                             GenDarknessStalagtite(new Vector2(X, Y), new Vector2(darknessX, darknessY));
 
                     if (dist < 14400 && dist > 10000 && WorldGen.genRand.NextBool(300))
                     {
-                        GenDarknessStalagtite(new Vector2(X, Y), new Vector2(darknessX, darknessY));
+                        GenDarknessStalagtite(new Vector2(X, Y), new Vector2(darknessX, darknessY), true);
                     }
                 }
             }
         }
 
-        private void GenDarknessStalagtite(Vector2 pos, Vector2 target)
+        private void GenDarknessStalagtite(Vector2 pos, Vector2 target, bool b = false)
         {
-            bool bg = WorldGen.genRand.NextBool(2);
+            bool bg = b || WorldGen.genRand.NextBool(2);
             Vector2 velocity = ((target - pos).ToRotation() + 1.57f).ToRotationVector2();
             float size = WorldGen.genRand.Next(3, 7);
             while (size > 0.25)
