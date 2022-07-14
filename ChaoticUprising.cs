@@ -9,6 +9,7 @@ using ChaoticUprising.Content.Items.Placeables;
 using ChaoticUprising.Content.Items.Vanity;
 using ChaoticUprising.Content.Items.Consumables;
 using ChaoticUprising.Content.Biomes.Darkness;
+using System.IO;
 
 namespace ChaoticUprising
 {
@@ -37,6 +38,25 @@ namespace ChaoticUprising
                     ModContent.ItemType<CorruptedSkull>(),
                     string.Format("Use a [i:{0}]\n[c/63445c:Activates Chaos Mode]", ModContent.ItemType<CorruptedSkull>())
                     );
+        }
+
+        internal enum PacketType : byte
+        {
+            LifeforceRelicsSync
+        }
+
+        public override void HandlePacket(BinaryReader reader, int whoAmI)
+        {
+            PacketType type = (PacketType)reader.ReadByte();
+
+            switch (type)
+            {
+                case PacketType.LifeforceRelicsSync:
+                    byte playernumber = reader.ReadByte();
+                    LifeforceRelicPlayer player = Main.player[playernumber].GetModPlayer<LifeforceRelicPlayer>();
+                    player.lifeforceRelics = reader.ReadInt32();
+                    break;
+            }
         }
     }
 }
