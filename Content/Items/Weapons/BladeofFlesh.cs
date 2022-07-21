@@ -22,8 +22,8 @@ namespace ChaoticUprising.Content.Items.Weapons
             Item.width = 70;
             Item.damage = 600;
             Item.DamageType = DamageClass.Melee;
-            Item.useTime = 15;
-            Item.useAnimation = 15;
+            Item.useTime = 8;
+            Item.useAnimation = 20;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.knockBack = 6;
             Item.value = Item.sellPrice(0, 45);

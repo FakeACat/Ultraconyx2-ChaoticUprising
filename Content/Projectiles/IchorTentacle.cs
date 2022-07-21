@@ -18,12 +18,16 @@ namespace ChaoticUprising.Content.Projectiles
             Projectile.friendly = true;
             Projectile.hostile = false;
             Projectile.ignoreWater = true;
-            Projectile.timeLeft = 120;
+            Projectile.timeLeft = 40;
             Projectile.penetrate = -1;
         }
 
+        float m = 0;
+
         public override void AI()
         {
+            if (m == 0)
+                m = Main.rand.Next(48, 512);
             if (Projectile.ai[1] == 0)
                 Projectile.ai[1] = Projectile.timeLeft;
             Projectile.ai[0]++;
@@ -33,7 +37,7 @@ namespace ChaoticUprising.Content.Projectiles
             {
                 float r = Projectile.ai[0] / Projectile.ai[1] * MathHelper.Pi;
                 Vector2 player = Main.player[Main.myPlayer].Center;
-                Vector2 mouse = new Vector2(Main.mouseX, Main.mouseY) - new Vector2(Main.screenWidth, Main.screenHeight) / 2;
+                Vector2 mouse = m * Vector2.Normalize(new Vector2(Main.mouseX, Main.mouseY) - new Vector2(Main.screenWidth, Main.screenHeight) / 2);
                 Projectile.position = player + (mouse * (float)Math.Sin(r)) + (mouse.RotatedBy(Math.PI / 2) * (float)Math.Sin(2 * r)) * 0.2f;
             }
 
@@ -51,7 +55,7 @@ namespace ChaoticUprising.Content.Projectiles
                 Main.dust[num118].position.X -= num115;
                 Main.dust[num118].position.Y -= num116;
             }
-            if (Main.rand.Next(8) == 0)
+            if (Main.rand.NextBool(8))
             {
                 int num119 = 16;
                 int num120 = Dust.NewDust(new Vector2(Projectile.position.X + num119, Projectile.position.Y + num119), Projectile.width - num119 * 2, Projectile.height - num119 * 2, DustID.Ichor, 0f, 0f, 100, default, 0.5f);
