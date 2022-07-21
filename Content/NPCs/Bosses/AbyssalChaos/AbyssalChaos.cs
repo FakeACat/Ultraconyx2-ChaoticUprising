@@ -88,8 +88,7 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
         {
             if (!ChaosMode.chaosMode)
             {
-                Main.NewText("The ancient spirits of light and dark have been enraged!", new Color(255, 0, 155));
-                Main.NewText("The abyssal barrier between dimensions has been weakened!", new Color(0, 155, 255));
+                ChaosMode.GenerateChaosMode();
             }
             NPC.SetEventFlagCleared(ref ChaosMode.chaosMode, -1);
         }
@@ -131,6 +130,8 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
                     Dust.NewDust(npc.Center, 0, 0, dust, target.X / a, target.Y / a, 0, default, 3);
                 }
             }
+            Main.NewText("The ancient spirits of light and dark have been enraged!", new Color(255, 0, 155));
+            Main.NewText("The abyssal barrier between dimensions has been weakened!", new Color(0, 155, 255));
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)

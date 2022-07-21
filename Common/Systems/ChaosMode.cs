@@ -1,10 +1,13 @@
-﻿using ChaoticUprising.Content.UI;
+﻿using ChaoticUprising.Content.Items.Consumables;
+using ChaoticUprising.Content.Items.Weapons;
+using ChaoticUprising.Content.UI;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.GameInput;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.UI;
@@ -141,6 +144,59 @@ namespace ChaoticUprising.Common.Systems
                         },
                         InterfaceScaleType.UI)
                     );
+                }
+            }
+        }
+
+        public static void GenerateChaosMode()
+        {
+            GenerateFleshChests();
+        }
+
+        private static void GenerateFleshChests()
+        {
+            for (int i = 0; i < Main.maxTilesX * Main.maxTilesY / 300; i++)
+            {
+                int x = WorldGen.genRand.Next(10, Main.maxTilesX - 9);
+                int y = WorldGen.genRand.Next(10, Main.maxTilesY - 9);
+                int c = WorldGen.PlaceChest(x, y, 21, false, 43);
+                if (c != -1)
+                {
+                    int item = 0;
+                    switch (WorldGen.genRand.Next(5))
+                    {
+                        case 0:
+                            item = ModContent.ItemType<BladeofFlesh>();
+                            break;
+                        case 1:
+                            item = ModContent.ItemType<RavenousBlaster>();
+                            break;
+                        case 2:
+                            item = ModContent.ItemType<InfernalBlade>();
+                            break;
+                        case 3:
+                            item = ModContent.ItemType<BloodlustWand>();
+                            break;
+                        case 4:
+                            item = ModContent.ItemType<Vertebrae>();
+                            break;
+                    }
+                    Main.chest[c].item[0].SetDefaults(item);
+
+                    Main.chest[c].item[1].SetDefaults(ModContent.ItemType<LifeforceRelic>());
+
+                    if (WorldGen.genRand.NextBool())
+                    {
+                        Main.chest[c].item[2].SetDefaults(ItemID.LunarBar);
+                        Main.chest[c].item[2].stack = WorldGen.genRand.Next(8, 17);
+                    }
+                    else
+                    {
+                        int item2 = WorldGen.genRand.Next(ItemID.FragmentVortex, ItemID.FragmentVortex + 4);
+
+                        Main.chest[c].item[2].SetDefaults(item2);
+                        Main.chest[c].item[2].stack = WorldGen.genRand.Next(16, 33);
+                    }
                 }
             }
         }
