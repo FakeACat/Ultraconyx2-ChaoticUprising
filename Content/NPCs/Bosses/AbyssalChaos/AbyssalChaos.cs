@@ -279,7 +279,7 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
                         {
                             NPC.ai[1] = 0;
                             NPC.ai[2]++;
-                            NPC.velocity.X = Target().Center.X > NPC.Center.X ? 30 : -30;
+                            NPC.velocity.X = Target().Center.X > NPC.Center.X ? 15 : -15;
                             NPC.velocity.Y = Target().Center.Y > NPC.Center.Y ? 30 : -30;
                             NPC.rotation = NPC.velocity.ToRotation() - (float)(Math.PI / 2);
                             SoundEngine.PlaySound(SoundID.ForceRoar, NPC.Center);
@@ -323,7 +323,7 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
                 {
                     if (NPC.ai[3] == 1)
                     {
-                        Speed = 2;
+                        numProj = 20;
                         for (int I = 0; I < numProj; I++)
                         {
                             Vector2 pos = 2 * Target().Center - NPC.Center;
