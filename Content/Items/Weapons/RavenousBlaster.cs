@@ -40,7 +40,7 @@ namespace ChaoticUprising.Content.Items.Weapons
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-			float scale = Main.rand.NextFloat(0.5f, 1.0f);
+			float scale = Main.rand.NextFloat(0.75f, 1.25f);
 			bool alt = player.altFunctionUse == 2;
 			if (alt)
 				velocity /= 4;

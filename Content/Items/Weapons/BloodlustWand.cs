@@ -34,7 +34,7 @@ namespace ChaoticUprising.Content.Items.Weapons
 			Item.UseSound = SoundID.Item20;
 			Item.autoReuse = true;
 			Item.shoot = ModContent.ProjectileType<WandFlames>();
-			Item.shootSpeed = 5.5f;
+			Item.shootSpeed = 13f;
 			Item.crit = 6;
 			Item.mana = 35;
 			Item.staff[Type] = true;
@@ -51,7 +51,7 @@ namespace ChaoticUprising.Content.Items.Weapons
 				return false;
             }
 
-			float angleBetweenProjectiles = MathHelper.Pi / 6;
+			float angleBetweenProjectiles = MathHelper.Pi / 12;
 			int numProjectiles = 5;
 			for (int i = 0; i < numProjectiles; i++)
             {

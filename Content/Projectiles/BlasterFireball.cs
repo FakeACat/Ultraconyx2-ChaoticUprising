@@ -95,10 +95,10 @@ namespace ChaoticUprising.Content.Projectiles
             }
             for (int i = 0; i < 30; i++)
             {
-                for (int n = 0; n < 3; n++)
+                for (int n = 0; n < 7; n++)
                 {
                     Vector2 pos = prevPos[i];
-                    int num927 = Dust.NewDust(pos, 0, 0, DustID.Torch, 0f, 0f, 100, default, 5f * Projectile.scale);
+                    int num927 = Dust.NewDust(pos, 0, 0, DustID.Torch, 0f, 0f, 100, default, 5f * Projectile.scale * 0.75f);
                     Main.dust[num927].noGravity = true;
                     Dust dust = Main.dust[num927];
                     dust.velocity *= 25f;
@@ -135,7 +135,7 @@ namespace ChaoticUprising.Content.Projectiles
         public override bool PreDraw(ref Color lightColor)
         {
             float scale = Projectile.scale;
-            float alpha = 0.4f;
+            float alpha = 0.6f;
             Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("ChaoticUprising/Content/Projectiles/Fireball");
             for (int i = 0; i < 30; i++)
             {

@@ -24,7 +24,7 @@ namespace ChaoticUprising.Content.Projectiles
 
         public override void AI()
         {
-            Projectile.GetGlobalProjectile<ProjectileFeatures>().friendlyHoming = Projectile.timeLeft < 240;
+            Projectile.GetGlobalProjectile<ProjectileFeatures>().friendlyHoming = Projectile.timeLeft < 270;
             int d = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<AbyssDust>(), Projectile.velocity.X, Projectile.velocity.Y, 0, default, 1);
             Main.dust[d].noGravity = true;
             Projectile.rotation += 0.3f * Projectile.direction;
