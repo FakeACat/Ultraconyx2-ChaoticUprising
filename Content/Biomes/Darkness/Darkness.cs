@@ -1,5 +1,6 @@
 ﻿using ChaoticUprising.Common.Systems;
 using ChaoticUprising.Content.NPCs;
+using ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Graphics.Effects;
@@ -30,6 +31,11 @@ namespace ChaoticUprising.Content.Biomes.Darkness
         {
             if (!SkyManager.Instance["ChaoticUprising:Darkness"].IsActive() && player.whoAmI == Main.myPlayer)
                 SkyManager.Instance.Activate("ChaoticUprising:Darkness");
+
+            if (Main.netMode != NetmodeID.MultiplayerClient && !NPC.AnyNPCs(ModContent.NPCType<NightmareReaper>()))
+            {
+                NPC.SpawnOnPlayer(player.whoAmI, ModContent.NPCType<NightmareReaper>());
+            }
         }
 
         public override void OnInBiome(Player player)

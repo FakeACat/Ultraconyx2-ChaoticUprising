@@ -3,7 +3,6 @@ using Terraria;
 using Terraria.ID;
 using Terraria.Audio;
 using ChaoticUprising.Content.Dusts;
-using ChaoticUprising.Common.GlobalProjectiles;
 using ChaoticUprising.Content.Buffs;
 using System;
 

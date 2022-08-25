@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
 namespace ChaoticUprising.Common
@@ -59,6 +60,87 @@ namespace ChaoticUprising.Common
             colour1 *= Main.DiscoR / 255f;
             colour2 *= 1f - Main.DiscoR / 255f;
             return new Color(colour1.R + colour2.R, colour1.G + colour2.G, colour1.B + colour2.B);
+        }
+
+        public static void DrawSpecialWorm(SpriteBatch spriteBatch, 
+            NPC npc, 
+            Texture2D head, 
+            Texture2D body, 
+            Texture2D tail, 
+            Color drawColor,
+            int segmentCount,
+            Vector2[] segmentPos,
+            float[] segmentRot,
+            Texture2D specialSecond = null)
+        {
+            Texture2D texture = head;
+            spriteBatch.Draw(texture, npc.Center - Main.screenPosition, null, drawColor, npc.rotation, new Vector2(head.Width / 2, head.Height / 2), npc.scale, SpriteEffects.None, 0);
+            for (int i = 0; i < segmentCount; i++)
+            {
+                if (i == segmentCount - 1)
+                {
+                    texture = tail;
+                }
+                else if (specialSecond != null && i == 0)
+                {
+                    texture = specialSecond;
+                }
+                else
+                {
+                    texture = body;
+                }
+                spriteBatch.Draw(texture, segmentPos[i] - Main.screenPosition, null, Lighting.GetColor((int)segmentPos[i].X / 16, (int)segmentPos[i].Y / 16), segmentRot[i] + 1.57f, new Vector2(texture.Width / 2, texture.Height / 2), npc.scale, SpriteEffects.None, 0);
+            }
+        }
+
+        public static void UpdateSpecialWormSegments(NPC npc,
+            int gap1,
+            int gap2,
+            int gap3,
+            int speed,
+            int segmentCount,
+            Vector2[] segmentPos,
+            float[] segmentRot,
+            float headRot)
+        {
+            for (int i = 0; i < segmentCount; i++)
+            {
+                Vector2 previousSegment;
+                float previousRot;
+                if (i != 0)
+                {
+                    previousSegment = segmentPos[i - 1];
+                    previousRot = segmentRot[i - 1];
+                }
+                else
+                {
+                    previousSegment = npc.Center;
+                    previousRot = headRot;
+                }
+
+                int gap;
+                if (i == 0)
+                    gap = gap1;
+                else if (i == segmentCount - 1)
+                    gap = gap3;
+                else
+                    gap = gap2;
+                if (i != 0 && i != segmentCount - 1)
+                {
+                    gap = gap2;
+                }
+                gap = (int)(gap * npc.scale);
+
+                segmentPos[i] += Vector2.Normalize(previousSegment - previousRot.ToRotationVector2() * gap * 2 - segmentPos[i]) * speed;
+                segmentPos[i] = -(Vector2.Normalize(previousSegment - segmentPos[i]) * gap) + previousSegment;
+                segmentRot[i] = (previousSegment - segmentPos[i]).ToRotation();
+            }
+        }
+
+        public static bool InvalidTarget(int target)
+        {
+            Player target2 = Main.player[target];
+            return target < 0 || target >= 255 || target2.dead || !target2.active;
         }
     }
 }
