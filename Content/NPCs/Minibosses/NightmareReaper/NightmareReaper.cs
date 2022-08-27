@@ -185,8 +185,8 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
 
         public abstract Texture2D ArmTexture();
 
-        public virtual Texture2D ArmGlowmask() => null;
-        public virtual Texture2D HandGlowmask() => null;
+        public abstract Texture2D ArmGlowmask();
+        public abstract Texture2D HandGlowmask();
 
         public abstract Vector2 Shoulder();
 
@@ -270,6 +270,9 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
         }
 
         public override Texture2D ArmTexture() => (Texture2D)ModContent.Request<Texture2D>("ChaoticUprising/Content/NPCs/Minibosses/NightmareReaper/NightmareRightArm");
+
+        public override Texture2D ArmGlowmask() => (Texture2D)ModContent.Request<Texture2D>("ChaoticUprising/Content/NPCs/Minibosses/NightmareReaper/NightmareRightArmGlowmask");
+        public override Texture2D HandGlowmask() => (Texture2D)ModContent.Request<Texture2D>("ChaoticUprising/Content/NPCs/Minibosses/NightmareReaper/NightmareRightHandGlowmask");
 
         public override Vector2 RestingOffset() => new(160, -80);
 
