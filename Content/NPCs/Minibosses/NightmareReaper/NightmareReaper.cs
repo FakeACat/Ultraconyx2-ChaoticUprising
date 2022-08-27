@@ -128,8 +128,12 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
             Texture2D head2 = (Texture2D)ModContent.Request<Texture2D>("ChaoticUprising/Content/NPCs/Minibosses/NightmareReaper/NightmareReaperHead2");
             Texture2D head3 = (Texture2D)ModContent.Request<Texture2D>("ChaoticUprising/Content/NPCs/Minibosses/NightmareReaper/NightmareReaperHead3");
             Texture2D deathray = (Texture2D)ModContent.Request<Texture2D>("ChaoticUprising/Content/NPCs/Minibosses/NightmareReaper/NightmareReaperDeathray");
+            Texture2D head_glow = (Texture2D)ModContent.Request<Texture2D>("ChaoticUprising/Content/NPCs/Minibosses/NightmareReaper/NightmareReaperGlowmask");
+            Texture2D body_glow = (Texture2D)ModContent.Request<Texture2D>("ChaoticUprising/Content/NPCs/Minibosses/NightmareReaper/NightmareReaperBodyGlowmask");
+            Texture2D tail_glow = (Texture2D)ModContent.Request<Texture2D>("ChaoticUprising/Content/NPCs/Minibosses/NightmareReaper/NightmareReaperTailGlowmask");
+            Texture2D torso_glow = (Texture2D)ModContent.Request<Texture2D>("ChaoticUprising/Content/NPCs/Minibosses/NightmareReaper/NightmareReaperTorsoGlowmask");
 
-            CUUtils.DrawSpecialWorm(spriteBatch, NPC, head, body, tail, drawColor, segmentCount, segmentPos, segmentRot, torso);
+            CUUtils.DrawSpecialWorm(spriteBatch, NPC, head, body, tail, drawColor, segmentCount, segmentPos, segmentRot, torso, head_glow, body_glow, tail_glow, torso_glow);
             Vector2 offset = (NPC.rotation - MathHelper.PiOver2).ToRotationVector2();
             Vector2 mouthPos = NPC.Center - Main.screenPosition + offset * 3;
             spriteBatch.Draw(head3, mouthPos, null, drawColor, NPC.rotation - jawRotation, new Vector2(head3.Width / 2, head3.Height / 2), NPC.scale, SpriteEffects.None, 0);
@@ -181,6 +185,9 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
 
         public abstract Texture2D ArmTexture();
 
+        public virtual Texture2D ArmGlowmask() => null;
+        public virtual Texture2D HandGlowmask() => null;
+
         public abstract Vector2 Shoulder();
 
         public override bool PreAI()
@@ -210,14 +217,24 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
             float rotation1 = (r1.ToRotationVector2() + r2.ToRotationVector2()).ToRotation();
 
             spriteBatch.Draw(ArmTexture(), wrist - Main.screenPosition, null, Lighting.GetColor((int)wrist.X / 16, (int)wrist.Y / 16), rotation1, new Vector2(ArmTexture().Width / 2, 0), NPC.scale, SpriteEffects.None, 0);
+            if (ArmGlowmask() != null)
+                spriteBatch.Draw(ArmGlowmask(), wrist - Main.screenPosition, null, Color.White, rotation1, new Vector2(ArmGlowmask().Width / 2, 0), NPC.scale, SpriteEffects.None, 0);
 
             Vector2 elbow = wrist + (rotation1 + MathHelper.PiOver2).ToRotationVector2() * ArmTexture().Height;
 
             float rotation2 = (Reaper.Center + Shoulder().RotatedBy(r2) - elbow).ToRotation() - MathHelper.PiOver2;
 
             spriteBatch.Draw(ArmTexture(), elbow - Main.screenPosition, null, Lighting.GetColor((int)elbow.X / 16, (int)elbow.Y / 16), rotation2, new Vector2(ArmTexture().Width / 2, 0), NPC.scale, SpriteEffects.None, 0);
+            if (ArmGlowmask() != null)
+                spriteBatch.Draw(ArmGlowmask(), elbow - Main.screenPosition, null, Color.White, rotation2, new Vector2(ArmGlowmask().Width / 2, 0), NPC.scale, SpriteEffects.None, 0);
 
-            return true;
+            Texture2D texture = (Texture2D)ModContent.Request<Texture2D>(Texture);
+            Vector2 Vector = new(texture.Width / 2, texture.Height / Main.npcFrameCount[NPC.type] / 2);
+            spriteBatch.Draw(texture, new Vector2(NPC.position.X - Main.screenPosition.X + (NPC.width / 2) - texture.Width * NPC.scale / 2f + Vector.X * NPC.scale, NPC.position.Y - Main.screenPosition.Y + NPC.height - texture.Height * NPC.scale / Main.npcFrameCount[NPC.type] + 4f + Vector.Y * NPC.scale), new Rectangle?(NPC.frame), drawColor, NPC.rotation, Vector, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+            if (HandGlowmask() != null)
+                spriteBatch.Draw(HandGlowmask(), new Vector2(NPC.position.X - Main.screenPosition.X + (NPC.width / 2) - texture.Width * NPC.scale / 2f + Vector.X * NPC.scale, NPC.position.Y - Main.screenPosition.Y + NPC.height - texture.Height * NPC.scale / Main.npcFrameCount[NPC.type] + 4f + Vector.Y * NPC.scale), new Rectangle?(NPC.frame), Color.White, NPC.rotation, Vector, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+
+            return false;
         }
 
         public override bool CheckActive()
@@ -389,6 +406,9 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
         }
 
         public override Texture2D ArmTexture() => (Texture2D)ModContent.Request<Texture2D>("ChaoticUprising/Content/NPCs/Minibosses/NightmareReaper/NightmareLeftArm");
+
+        public override Texture2D ArmGlowmask() => (Texture2D)ModContent.Request<Texture2D>("ChaoticUprising/Content/NPCs/Minibosses/NightmareReaper/NightmareLeftArmGlowmask");
+        public override Texture2D HandGlowmask() => (Texture2D)ModContent.Request<Texture2D>("ChaoticUprising/Content/NPCs/Minibosses/NightmareReaper/NightmareLeftHandGlowmask");
 
         public override Vector2 RestingOffset() => new(-160, -80);
 

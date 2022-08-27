@@ -71,25 +71,41 @@ namespace ChaoticUprising.Common
             int segmentCount,
             Vector2[] segmentPos,
             float[] segmentRot,
-            Texture2D specialSecond = null)
+            Texture2D specialSecond = null,
+            Texture2D glowmaskHead = null,
+            Texture2D glowmaskBody = null,
+            Texture2D glowmaskTail = null,
+            Texture2D glowmaskSpecialSecond = null)
         {
             Texture2D texture = head;
-            spriteBatch.Draw(texture, npc.Center - Main.screenPosition, null, drawColor, npc.rotation, new Vector2(head.Width / 2, head.Height / 2), npc.scale, SpriteEffects.None, 0);
+            Texture2D glowmask = glowmaskHead;
+            spriteBatch.Draw(texture, npc.Center - Main.screenPosition, null, drawColor, npc.rotation, new Vector2(texture.Width / 2, texture.Height / 2), npc.scale, SpriteEffects.None, 0);
+            if (glowmask != null)
+            {
+                spriteBatch.Draw(glowmask, npc.Center - Main.screenPosition, null, Color.White, npc.rotation, new Vector2(glowmask.Width / 2, glowmask.Height / 2), npc.scale, SpriteEffects.None, 0);
+            }
             for (int i = 0; i < segmentCount; i++)
             {
                 if (i == segmentCount - 1)
                 {
                     texture = tail;
+                    glowmask = glowmaskTail;
                 }
                 else if (specialSecond != null && i == 0)
                 {
                     texture = specialSecond;
+                    glowmask = glowmaskSpecialSecond;
                 }
                 else
                 {
                     texture = body;
+                    glowmask = glowmaskBody;
                 }
                 spriteBatch.Draw(texture, segmentPos[i] - Main.screenPosition, null, Lighting.GetColor((int)segmentPos[i].X / 16, (int)segmentPos[i].Y / 16), segmentRot[i] + 1.57f, new Vector2(texture.Width / 2, texture.Height / 2), npc.scale, SpriteEffects.None, 0);
+                if (glowmask != null)
+                {
+                    spriteBatch.Draw(glowmask, segmentPos[i] - Main.screenPosition, null, Color.White, segmentRot[i] + 1.57f, new Vector2(glowmask.Width / 2, glowmask.Height / 2), npc.scale, SpriteEffects.None, 0);
+                }
             }
         }
 
