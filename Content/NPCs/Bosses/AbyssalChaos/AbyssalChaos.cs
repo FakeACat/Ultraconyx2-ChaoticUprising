@@ -16,6 +16,7 @@ using ChaoticUprising.Content.Items.Consumables;
 using ChaoticUprising.Content.Items.Vanity;
 using ChaoticUprising.Content.Items.Weapons;
 using ChaoticUprising.Common.Systems;
+using ChaoticUprising.Content.Items.Pets;
 
 namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
 {
@@ -74,6 +75,7 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
             npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<AbyssalChaosBossBag>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Placeables.AbyssalChaosTrophy>(), 10));
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<Items.Placeables.AbyssalChaosRelic>()));
+            npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<AbyssalSkull>(), 4));
 
             LeadingConditionRule notExpertLoot = new LeadingConditionRule(new Conditions.NotExpert());
             notExpertLoot.OnSuccess(ItemDropRule.Common(ModContent.ItemType<AbyssalChaosMask>(), 7));

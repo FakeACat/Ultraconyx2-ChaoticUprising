@@ -16,6 +16,7 @@ namespace ChaoticUprising.Common
             {
                 return expertHealth / 2;
             }
+
             return normalHealth;
         }
 
