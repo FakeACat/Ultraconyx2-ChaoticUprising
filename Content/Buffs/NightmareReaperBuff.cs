@@ -5,12 +5,12 @@ using Terraria.ModLoader;
 
 namespace ChaoticUprising.Content.Buffs
 {
-    public class MiniShadeBuff : ModBuff
+    public class NightmareReaperBuff : ModBuff
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Miniature Abyssal Shade");
-            Description.SetDefault("A small Abyssal Shade is following you.");
+            DisplayName.SetDefault("Baby Nightmare Reaper");
+            Description.SetDefault("A baby Nightmare Reaper is following you.");
 
             Main.buffNoTimeDisplay[Type] = true;
             Main.vanityPet[Type] = true;
@@ -19,7 +19,7 @@ namespace ChaoticUprising.Content.Buffs
         public override void Update(Player player, ref int buffIndex)
         {
             player.buffTime[buffIndex] = 18000;
-            int projType = ModContent.ProjectileType<MiniShade>();
+            int projType = ModContent.ProjectileType<BabyNightmareReaper>();
             if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[projType] <= 0)
             {
                 var entitySource = player.GetSource_Buff(buffIndex);

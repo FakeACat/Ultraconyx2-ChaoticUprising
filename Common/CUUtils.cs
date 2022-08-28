@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 
 namespace ChaoticUprising.Common
@@ -158,6 +159,11 @@ namespace ChaoticUprising.Common
         {
             Player target2 = Main.player[target];
             return target < 0 || target >= 255 || target2.dead || !target2.active;
+        }
+
+        public static float AngleTo(Vector2 destination, Vector2 centre)
+        {
+            return (float)Math.Atan2(destination.Y - centre.Y, destination.X - centre.X);
         }
     }
 }
