@@ -1,10 +1,12 @@
 ﻿using ChaoticUprising.Common;
+using ChaoticUprising.Content.Items.Pets;
 using ChaoticUprising.Content.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -118,6 +120,11 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
         private float deathrayStrength = 0.0f;
         private readonly int deathrayLength = 50;
         private int DeathrayLengthInPixels => deathrayLength * 26 + 50;
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<ReaperEssence>(), 4));
+        }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
