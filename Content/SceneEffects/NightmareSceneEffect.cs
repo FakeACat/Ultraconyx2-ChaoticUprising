@@ -10,7 +10,7 @@ namespace ChaoticUprising.Content.SceneEffects
     {
         public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 
-        public override int Music => Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<NightmareReaper>()) ? MusicLoader.GetMusicSlot(Mod, "Assets/Music/Terrible Day") : MusicLoader.GetMusicSlot(Mod, "Assets/Music/Devoid");
+        public override int Music => Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<NightmareReaper>()) ? MusicLoader.GetMusicSlot(Mod, "Assets/Music/Terrible Day") : MusicLoader.GetMusicSlot(Mod, "Assets/Music/Absent");
 
         public override bool IsSceneEffectActive(Player player)
         {
