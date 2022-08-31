@@ -1,6 +1,5 @@
 ﻿using ChaoticUprising.Common.Systems;
 using ChaoticUprising.Content.NPCs;
-using ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos;
 using ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper;
 using Microsoft.Xna.Framework;
 using Terraria;
