@@ -16,6 +16,9 @@ namespace ChaoticUprising.Common.Systems
 
         public int darknessX;
         public int darknessY;
+        public const int wormholeSize = 100;
+        public const int innerDarknessSize = 120;
+        public const int outerDarknessSize = 180;
 
         public override void ModifyWorldGenTasks(List<GenPass> tasks, ref float totalWeight)
         {
@@ -39,16 +42,16 @@ namespace ChaoticUprising.Common.Systems
             darknessX = x;
             darknessY = 200;
 
-            for (int X = darknessX - 300; X < darknessX + 300; X++)
+            for (int X = darknessX - outerDarknessSize; X < darknessX + outerDarknessSize; X++)
             {
-                for (int Y = darknessY - 300; Y < darknessY + 300; Y++)
+                for (int Y = darknessY - outerDarknessSize; Y < darknessY + outerDarknessSize; Y++)
                 {
                     int dist = (int)Vector2.DistanceSquared(new Vector2(X, Y), new Vector2(darknessX, darknessY));
-                    if (dist < 90000 && dist > 14400 && Y < Main.worldSurface)
+                    if (dist < outerDarknessSize * outerDarknessSize && dist > innerDarknessSize * innerDarknessSize && Y < Main.worldSurface)
                         if (WorldGen.genRand.NextBool(dist / 30))
                             GenDarknessStalagtite(new Vector2(X, Y), new Vector2(darknessX, darknessY));
 
-                    if (dist < 14400 && dist > 10000 && WorldGen.genRand.NextBool(300))
+                    if (dist < innerDarknessSize * innerDarknessSize && dist > wormholeSize * wormholeSize && WorldGen.genRand.NextBool(300))
                     {
                         GenDarknessStalagtite(new Vector2(X, Y), new Vector2(darknessX, darknessY), true);
                     }

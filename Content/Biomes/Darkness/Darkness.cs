@@ -13,7 +13,7 @@ namespace ChaoticUprising.Content.Biomes.Darkness
 {
     public class Darkness : ModBiome
     {
-        public virtual int SizeSQ => 23040000;
+        public virtual int SizeSQ => DarknessGeneration.outerDarknessSize * DarknessGeneration.outerDarknessSize * 256;
         public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
         public override int Music => MusicLoader.GetMusicSlot(Mod, "Assets/Music/Absent");
         public override void SetStaticDefaults()
@@ -46,7 +46,6 @@ namespace ChaoticUprising.Content.Biomes.Darkness
                         NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
                 }
             }
-            
         }
 
         public override void OnInBiome(Player player)
@@ -61,7 +60,7 @@ namespace ChaoticUprising.Content.Biomes.Darkness
 
     public class InnerDarkness : Darkness
     {
-        public override int SizeSQ => 2560000;
+        public override int SizeSQ => DarknessGeneration.innerDarknessSize * DarknessGeneration.innerDarknessSize * 256;
         public override int Music => MusicLoader.GetMusicSlot(Mod, "Assets/Music/Devoid");
         public override SceneEffectPriority Priority => SceneEffectPriority.Event;
     }
