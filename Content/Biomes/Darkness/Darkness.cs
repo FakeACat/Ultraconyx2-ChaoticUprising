@@ -1,8 +1,10 @@
 ﻿using ChaoticUprising.Common.Systems;
 using ChaoticUprising.Content.NPCs;
+using ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos;
 using ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -29,13 +31,22 @@ namespace ChaoticUprising.Content.Biomes.Darkness
 
         public override void OnEnter(Player player)
         {
-            if (!SkyManager.Instance["ChaoticUprising:Darkness"].IsActive() && player.whoAmI == Main.myPlayer)
-                SkyManager.Instance.Activate("ChaoticUprising:Darkness");
-
-            if (Main.netMode != NetmodeID.MultiplayerClient && !NPC.AnyNPCs(ModContent.NPCType<NightmareReaper>()))
+            if (player.whoAmI == Main.myPlayer)
             {
-                NPC.SpawnOnPlayer(player.whoAmI, ModContent.NPCType<NightmareReaper>());
+                if (!SkyManager.Instance["ChaoticUprising:Darkness"].IsActive())
+                    SkyManager.Instance.Activate("ChaoticUprising:Darkness");
+
+                if (!NPC.AnyNPCs(ModContent.NPCType<NightmareReaper>()))
+                {
+                    SoundEngine.PlaySound(SoundID.Roar, player.position);
+                    int type = ModContent.NPCType<NightmareReaper>();
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                        NPC.SpawnOnPlayer(player.whoAmI, type);
+                    else
+                        NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
+                }
             }
+            
         }
 
         public override void OnInBiome(Player player)

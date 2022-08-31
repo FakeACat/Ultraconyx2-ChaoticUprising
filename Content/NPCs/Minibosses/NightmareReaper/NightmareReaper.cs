@@ -1,12 +1,16 @@
 ﻿using ChaoticUprising.Common;
+using ChaoticUprising.Content.Biomes.Darkness;
 using ChaoticUprising.Content.Items.Pets;
 using ChaoticUprising.Content.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -17,19 +21,29 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Void-dropped Nightmare");
+            NPCID.Sets.MPAllowedEnemies[Type] = true;
         }
         public override void SetDefaults()
         {
             NPC.width = 76;
             NPC.height = 76;
             NPC.damage = 80;
-            NPC.lifeMax = 120000;
+            NPC.lifeMax = 220000;
             NPC.defense = 45;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.knockBackResist = 0;
             NPC.aiStyle = -1;
             NPC.noGravity = true;
             NPC.noTileCollide = true;
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<Darkness>().Type };
+        }
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+                new MoonLordPortraitBackgroundProviderBestiaryInfoElement(),
+                new FlavorTextBestiaryInfoElement("A highly territorial leviathan originating from the Void.")
+            });
         }
 
         static readonly int segmentCount = 40;
@@ -262,7 +276,7 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
 
         public override void FindFrame(int frameHeight)
         {
-            if (NPC.ai[1] < 300)
+            if (NPC.ai[1] > 600 && NPC.ai[1] < 900)
             {
                 NPC.frame.Y = frameHeight * 2;
             }
@@ -290,7 +304,7 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
             if (!CUUtils.InvalidTarget(Reaper.target))
             {
                 NPC.ai[1]++;
-                if (NPC.ai[1] < 300)
+                if (NPC.ai[1] > 600 && NPC.ai[1] < 900)
                 {
                     Succ();
                     return;
@@ -310,11 +324,11 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
 
         private void Succ()
         {
-            if (NPC.ai[1] < 80)
+            if (NPC.ai[1] < 680)
             {
                 tractorBeamLength += 20;
             }
-            if (NPC.ai[1] > 220)
+            if (NPC.ai[1] > 820)
             {
                 tractorBeamLength -= 20;
             }
@@ -368,7 +382,7 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            if (NPC.ai[1] < 300)
+            if (NPC.ai[1] > 600 && NPC.ai[1] < 900)
             {
                 spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>("ChaoticUprising/Assets/Textures/BlankTexture"), new Rectangle((int)NPC.Center.X - (int)Main.screenPosition.X, (int)NPC.Center.Y - (int)Main.screenPosition.Y, tractorBeamLength, 1), new Rectangle(0, 0, 16, 16), Color.Cyan, NPC.rotation - MathHelper.PiOver2, Vector2.Zero, SpriteEffects.None, 0);
             }

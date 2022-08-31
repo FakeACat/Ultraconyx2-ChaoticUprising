@@ -23,7 +23,7 @@ namespace ChaoticUprising.Common.Systems
 
         public static bool chaosMode = false;
         public static float difficulty = 0.0f;
-        public const float MAXIMUM_DIFFICULTY = 4.0f;
+        public const float MAXIMUM_DIFFICULTY = 7.0f;
 
         public override void Load()
         {
