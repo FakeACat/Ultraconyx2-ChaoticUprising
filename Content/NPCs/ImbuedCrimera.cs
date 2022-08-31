@@ -2,6 +2,8 @@
 using ChaoticUprising.Content.Items.Placeables.Banners;
 using ChaoticUprising.Content.Items.Weapons;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
@@ -74,6 +76,24 @@ namespace ChaoticUprising.Content.NPCs
         {
             npcLoot.Add(ItemDropRule.Common(ItemID.Ichor, 1, 0, 3));
             npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<BladeofFlesh>(), 200, 100));
+        }
+
+        private static Asset<Texture2D> glowmask;
+
+        public override void Load()
+        {
+            if (!Main.dedServ)
+                glowmask = ModContent.Request<Texture2D>(Texture + "Glow");
+        }
+
+        public override void Unload()
+        {
+            glowmask = null;
+        }
+
+        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            spriteBatch.Draw(glowmask.Value, NPC.Center - screenPos + new Vector2(0, 2), NPC.frame, Color.White, NPC.rotation, new Vector2(NPC.width / 2, NPC.height / 2), NPC.scale, SpriteEffects.None, 0);
         }
     }
 }
