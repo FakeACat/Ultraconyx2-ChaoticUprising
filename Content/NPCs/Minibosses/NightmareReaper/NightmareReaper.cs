@@ -79,7 +79,6 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
             if (NPC.ai[1] == 0)
             {
                 float d = NPC.Distance(Target.Center);
-                //jawRotation = d > 600 ? 0 : 1 - d / 600;
                 NPC.rotation = (Target.Center - NPC.Center).ToRotation() + MathHelper.PiOver2;
                 if (crawling)
                 {
@@ -280,7 +279,7 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
             {
                 NPC.frame.Y = frameHeight * 2;
             }
-            else if (NPC.ai[1] > 1140)
+            else if (NPC.ai[1] > 1100)
             {
                 NPC.frame.Y = frameHeight;
             }
@@ -309,13 +308,16 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
                     Succ();
                     return;
                 }
-                else if (NPC.ai[1] > 1140 && NPC.ai[1] < 1200)
+                else if (NPC.ai[1] > 1100 && NPC.ai[1] < 1200)
                 {
                     Redirect();
                     return;
                 }
                 else if (NPC.ai[1] >= 1200)
                     NPC.ai[1] = 0;
+
+                if (Main.expertMode)
+                    NPC.ai[1] += 2;
             }
             base.AI();
         }
@@ -373,7 +375,7 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
                     if (Main.projectile[i].type == ModContent.ProjectileType<DarkMatterEnergyBall>() && Main.projectile[i].active)
                     {
                         Main.projectile[i].ai[0] = 1;
-                        Main.projectile[i].velocity = Vector2.Normalize(target.Center - Main.projectile[i].Center) * 6;
+                        Main.projectile[i].velocity = Vector2.Normalize(target.Center - Main.projectile[i].Center) * 9;
                         Main.projectile[i].timeLeft = 300;
                     }
                 }
@@ -455,6 +457,9 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
                 }
                 if (NPC.ai[1] >= 1200)
                     NPC.ai[1] = 0;
+
+                if (Main.expertMode)
+                    NPC.ai[1] += 2;
             }
             base.AI();
         }
@@ -469,7 +474,7 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
 
             if (NPC.ai[1] % 8 == 0 && (NPC.ai[1] < 475 || NPC.ai[1] > 525) && Main.netMode != NetmodeID.MultiplayerClient)
             {
-                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Normalize(target.Center - NPC.Center) * 3, ModContent.ProjectileType<VoidHarpoon>(), 50, 2);
+                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Normalize(target.Center - NPC.Center) * 5, ModContent.ProjectileType<VoidHarpoon>(), 50, 2);
             }
         }
 
@@ -483,7 +488,7 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
             {
                 for (int i = 0; i < 7; i++)
                 {
-                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Normalize(target.Center - NPC.Center) * 10 + new Vector2(Main.rand.Next(-5, 6), Main.rand.Next(-5, 6)) / 3, ModContent.ProjectileType<DarkMatterEnergyBall>(), 100, 2);
+                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Normalize(target.Center - NPC.Center) * 10 + new Vector2(Main.rand.Next(-5, 6), Main.rand.Next(-5, 6)) / 2, ModContent.ProjectileType<DarkMatterEnergyBall>(), 100, 2);
                 }
             }
         }
