@@ -28,7 +28,7 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
             NPC.width = 76;
             NPC.height = 76;
             NPC.damage = 80;
-            NPC.lifeMax = 220000;
+            NPC.lifeMax = 120000;
             NPC.defense = 45;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.knockBackResist = 0;
