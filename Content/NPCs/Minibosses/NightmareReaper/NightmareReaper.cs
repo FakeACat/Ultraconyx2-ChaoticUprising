@@ -22,6 +22,7 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
         {
             DisplayName.SetDefault("Void-dropped Nightmare");
             NPCID.Sets.MPAllowedEnemies[Type] = true;
+            NPCID.Sets.MustAlwaysDraw[Type] = true;
         }
         public override void SetDefaults()
         {
@@ -131,7 +132,7 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
         }
 
         private float deathrayStrength = 0.0f;
-        private readonly int deathrayLength = 50;
+        private readonly int deathrayLength = 100;
         private int DeathrayLengthInPixels => deathrayLength * 26 + 50;
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
