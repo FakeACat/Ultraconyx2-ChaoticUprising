@@ -51,7 +51,7 @@ namespace ChaoticUprising.Content.Biomes.Darkness
         public override void OnInBiome(Player player)
         {
             DarknessGeneration darknessGeneration = ModContent.GetInstance<DarknessGeneration>();
-            if (!NPC.AnyNPCs(ModContent.NPCType<Wormhole>()) && Main.netMode != NetmodeID.MultiplayerClient)
+            if (!NPC.AnyNPCs(ModContent.NPCType<Wormhole>()) && Main.netMode != NetmodeID.MultiplayerClient && ChaosMode.chaosMode)
             {
                 NPC.NewNPC(Entity.GetSource_NaturalSpawn(), darknessGeneration.darknessX * 16, darknessGeneration.darknessY * 16, ModContent.NPCType<Wormhole>());
             }
