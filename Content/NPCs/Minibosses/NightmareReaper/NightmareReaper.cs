@@ -13,6 +13,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.Utilities;
 
 namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
 {
@@ -54,6 +55,13 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
                 new FlavorTextBestiaryInfoElement("A highly territorial leviathan originating from the Void.")
             });
         }
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        {
+            if (ChaosMode.chaosMode && (int)ChaosMode.GetDifficulty() >= (int)Difficulty.Darkened && !NPC.AnyNPCs(ModContent.NPCType<NightmareReaper>()) && !spawnInfo.PlayerSafe && spawnInfo.Sky)
+                return 0.0001f;
+            return 0;
+        }
+
 
         static readonly int segmentCount = 40;
         readonly Vector2[] segmentPos = new Vector2[segmentCount];
