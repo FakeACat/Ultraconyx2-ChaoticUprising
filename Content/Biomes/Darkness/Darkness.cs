@@ -35,7 +35,7 @@ namespace ChaoticUprising.Content.Biomes.Darkness
                 if (!SkyManager.Instance["ChaoticUprising:Darkness"].IsActive())
                     SkyManager.Instance.Activate("ChaoticUprising:Darkness");
 
-                if (!NPC.AnyNPCs(ModContent.NPCType<NightmareReaper>()))
+                if (!NPC.AnyNPCs(ModContent.NPCType<NightmareReaper>()) && !DownedBosses.downedNightmareReaper)
                 {
                     SoundEngine.PlaySound(SoundID.Roar, player.position);
                     int type = ModContent.NPCType<NightmareReaper>();

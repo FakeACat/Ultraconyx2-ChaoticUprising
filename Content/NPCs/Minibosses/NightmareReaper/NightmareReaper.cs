@@ -1,4 +1,5 @@
 ﻿using ChaoticUprising.Common;
+using ChaoticUprising.Common.Systems;
 using ChaoticUprising.Content.Biomes.Darkness;
 using ChaoticUprising.Content.Items.Pets;
 using ChaoticUprising.Content.Projectiles;
@@ -22,6 +23,14 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
             DisplayName.SetDefault("Void-dropped Nightmare");
             NPCID.Sets.MPAllowedEnemies[Type] = true;
             NPCID.Sets.MustAlwaysDraw[Type] = true;
+
+            var drawModifier = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+            {
+                CustomTexturePath = Texture + "Image",
+                PortraitScale = 0.75f,
+                PortraitPositionYOverride = 48f
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, drawModifier);
         }
         public override void SetDefaults()
         {
@@ -133,6 +142,11 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
         private float deathrayStrength = 0.0f;
         private readonly int deathrayLength = 100;
         private int DeathrayLengthInPixels => deathrayLength * 26 + 50;
+
+        public override void OnKill()
+        {
+            NPC.SetEventFlagCleared(ref DownedBosses.downedNightmareReaper, -1);
+        }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
