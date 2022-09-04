@@ -40,7 +40,7 @@ namespace ChaoticUprising.Common.Systems
                 x = -(Main.dungeonX - Main.maxTilesX);
             }
             darknessX = x;
-            darknessY = 200;
+            darknessY = innerDarknessSize;
 
             for (int X = darknessX - outerDarknessSize; X < darknessX + outerDarknessSize; X++)
             {
