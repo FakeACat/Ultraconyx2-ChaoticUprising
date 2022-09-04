@@ -35,7 +35,7 @@ namespace ChaoticUprising.Content.Biomes.Darkness
                 if (!SkyManager.Instance["ChaoticUprising:Darkness"].IsActive())
                     SkyManager.Instance.Activate("ChaoticUprising:Darkness");
 
-                if (!NPC.AnyNPCs(ModContent.NPCType<NightmareReaper>()) && !DownedBosses.downedNightmareReaper)
+                if (!NPC.AnyNPCs(ModContent.NPCType<NightmareReaper>()) && !DownedBosses.downedNightmareReaper && ChaosMode.chaosMode)
                 {
                     SoundEngine.PlaySound(SoundID.Roar, player.position);
                     int type = ModContent.NPCType<NightmareReaper>();
@@ -50,7 +50,7 @@ namespace ChaoticUprising.Content.Biomes.Darkness
         public override void OnInBiome(Player player)
         {
             DarknessGeneration darknessGeneration = ModContent.GetInstance<DarknessGeneration>();
-            if (!NPC.AnyNPCs(ModContent.NPCType<Wormhole>()) && Main.netMode != NetmodeID.MultiplayerClient && ChaosMode.chaosMode)
+            if (!NPC.AnyNPCs(ModContent.NPCType<Wormhole>()) && Main.netMode != NetmodeID.MultiplayerClient)
             {
                 NPC.NewNPC(Entity.GetSource_NaturalSpawn(), darknessGeneration.darknessX * 16, darknessGeneration.darknessY * 16, ModContent.NPCType<Wormhole>());
             }
