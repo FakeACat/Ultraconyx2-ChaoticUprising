@@ -53,7 +53,7 @@ namespace ChaoticUprising.Common.Systems
 
                     if (dist < innerDarknessSize * innerDarknessSize && dist > wormholeSize * wormholeSize && WorldGen.genRand.NextBool(300))
                     {
-                        GenDarknessStalagtite(new Vector2(X, Y), new Vector2(darknessX, darknessY), true);
+                        GenDarknessStalagtite(new Vector2(X, Y), new Vector2(darknessX, darknessY));
                     }
                 }
             }
@@ -61,7 +61,7 @@ namespace ChaoticUprising.Common.Systems
 
         private void GenDarknessStalagtite(Vector2 pos, Vector2 target, bool b = false)
         {
-            bool bg = b || WorldGen.genRand.NextBool(2);
+            //bool bg = b || WorldGen.genRand.NextBool(2);
             Vector2 velocity = ((target - pos).ToRotation() + 1.57f).ToRotationVector2();
             float size = WorldGen.genRand.Next(3, 7);
             while (size > 0.25)
@@ -72,18 +72,18 @@ namespace ChaoticUprising.Common.Systems
                     {
                         if (WorldGen.genRand.NextBool(1 + (int)size))
                         {
-                            if (bg)
-                            {
+                            //if (bg)
+                            //{
                                 WorldGen.PlaceWall((int)x, (int)y, ModContent.WallType<NightRockWall>());
-                            }
-                            else
-                            {
-                                WorldGen.PlaceTile((int)x, (int)y, ModContent.TileType<NightRock>());
-                            }
+                            //}
+                            //else
+                            //{
+                            //    WorldGen.PlaceTile((int)x, (int)y, ModContent.TileType<NightRock>());
+                            //}
                         }
                     }
                 }
-                size *= bg ? 0.98f : 0.97f;
+                size *= /*bg ?*/ 0.98f /*: 0.97f*/;
                 velocity += Vector2.Normalize(target - pos) / (pos.DistanceSQ(new Vector2(darknessX, darknessY)) / 450);
                 pos += velocity;
                 velocity.Normalize();
