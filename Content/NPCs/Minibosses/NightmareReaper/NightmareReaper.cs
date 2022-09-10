@@ -5,6 +5,7 @@ using ChaoticUprising.Content.Items.Pets;
 using ChaoticUprising.Content.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
@@ -287,6 +288,11 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
 
     public class NightmareRightHand : AbstractNightmareHand
     {
+        public override void SetStaticDefaults()
+        {
+            NPCID.Sets.MustAlwaysDraw[Type] = true;
+        }
+
         public override void SetDefaults()
         {
             base.SetDefaults();
@@ -345,20 +351,15 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
         }
 
         int tractorBeamLength = 0;
+        const int TRACTOR_MAX_LENGTH = 800;
 
         private void Succ()
         {
-            if (NPC.ai[1] < 680)
-            {
-                tractorBeamLength += 20;
-            }
-            if (NPC.ai[1] > 820)
-            {
-                tractorBeamLength -= 20;
-            }
+            float progressAsAngle = (NPC.ai[1] - 600) / 300 * MathHelper.TwoPi;
+            tractorBeamLength = Math.Abs((int)(Math.Sin(progressAsAngle * 1.5f) * TRACTOR_MAX_LENGTH));
             Player player = Main.player[Reaper.target];
-            NPC.rotation = NPC.velocity.ToRotation() + MathHelper.PiOver2;
-            NPC.velocity += Vector2.Normalize(player.Center - NPC.Center) * 0.75f;
+            NPC.rotation = NPC.rotation.AngleTowards(CUUtils.AngleTo(player.Center, NPC.Center) + MathHelper.PiOver2, MathHelper.Pi / 120 * (1f - tractorBeamLength / TRACTOR_MAX_LENGTH));
+            NPC.velocity += Vector2.Normalize(Reaper.Center + RestingOffset().RotatedBy(Reaper.rotation) - NPC.Center);
             NPC.velocity *= 0.95f;
 
             for (int i = 0; i < tractorBeamLength; i++)
@@ -406,12 +407,13 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            Texture2D texture = ModContent.Request<Texture2D>("ChaoticUprising/Assets/Textures/BlankTexture").Value;
             if (NPC.ai[1] > 600 && NPC.ai[1] < 900)
             {
-                spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>("ChaoticUprising/Assets/Textures/BlankTexture"), new Rectangle((int)NPC.Center.X - (int)Main.screenPosition.X, (int)NPC.Center.Y - (int)Main.screenPosition.Y, tractorBeamLength, 1), new Rectangle(0, 0, 16, 16), Color.Cyan, NPC.rotation - MathHelper.PiOver2, Vector2.Zero, SpriteEffects.None, 0);
+                spriteBatch.Draw(texture, new Rectangle((int)NPC.Center.X - (int)Main.screenPosition.X, (int)NPC.Center.Y - (int)Main.screenPosition.Y, tractorBeamLength, 1), new Rectangle(0, 0, 16, 16), Color.Cyan, NPC.rotation - MathHelper.PiOver2, Vector2.Zero, SpriteEffects.None, 0);
             }
 
-            if (NPC.ai[1] > 1140)
+            if (NPC.ai[1] > 1140 && !CUUtils.InvalidTarget(Reaper.target))
             {
                 Vector2 fingertip = NPC.Center + new Vector2(-10, -35).RotatedBy(NPC.rotation);
                 for (int i = 0; i < Main.maxProjectiles; i++)
@@ -419,7 +421,8 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
                     Projectile p = Main.projectile[i];
                     if (p.type == ModContent.ProjectileType<DarkMatterEnergyBall>() && p.active)
                     {
-                        spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>("ChaoticUprising/Assets/Textures/BlankTexture"), new Rectangle((int)fingertip.X - (int)Main.screenPosition.X, (int)fingertip.Y - (int)Main.screenPosition.Y, (int)p.Distance(fingertip), 1), new Rectangle(0, 0, 16, 16), Color.Cyan * 0.5f, (p.Center - fingertip).ToRotation(), Vector2.Zero, SpriteEffects.None, 0);
+                        spriteBatch.Draw(texture, new Rectangle((int)fingertip.X - (int)Main.screenPosition.X, (int)fingertip.Y - (int)Main.screenPosition.Y, (int)p.Distance(fingertip), 1), new Rectangle(0, 0, 16, 16), Color.Cyan * 0.5f, (p.Center - fingertip).ToRotation(), Vector2.Zero, SpriteEffects.None, 0);
+                        spriteBatch.Draw(texture, new Rectangle((int)p.Center.X - (int)Main.screenPosition.X, (int)p.Center.Y - (int)Main.screenPosition.Y, 1600, 1), new Rectangle(0, 0, 16, 16), Color.Red * 0.5f, (Main.player[Reaper.target].Center - p.Center).ToRotation(), Vector2.Zero, SpriteEffects.None, 0);
                     }
                 }
             }
