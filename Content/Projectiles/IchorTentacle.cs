@@ -4,6 +4,7 @@ using System;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using ChaoticUprising.Content.Buffs;
 
 namespace ChaoticUprising.Content.Projectiles
 {
@@ -22,12 +23,9 @@ namespace ChaoticUprising.Content.Projectiles
             Projectile.penetrate = -1;
         }
 
-        float m = 0;
 
         public override void AI()
         {
-            if (m == 0)
-                m = Main.rand.Next(48, 512);
             if (Projectile.ai[1] == 0)
                 Projectile.ai[1] = Projectile.timeLeft;
             Projectile.ai[0]++;
@@ -37,7 +35,7 @@ namespace ChaoticUprising.Content.Projectiles
             {
                 float r = Projectile.ai[0] / Projectile.ai[1] * MathHelper.Pi;
                 Vector2 player = Main.player[Main.myPlayer].Center;
-                Vector2 mouse = m * Vector2.Normalize(new Vector2(Main.mouseX, Main.mouseY) - new Vector2(Main.screenWidth, Main.screenHeight) / 2);
+                Vector2 mouse = 256 * Vector2.Normalize(new Vector2(Main.mouseX, Main.mouseY) - new Vector2(Main.screenWidth, Main.screenHeight) / 2);
                 Projectile.position = player + (mouse * (float)Math.Sin(r)) + (mouse.RotatedBy(Math.PI / 2) * (float)Math.Sin(2 * r)) * 0.2f;
             }
 
@@ -68,12 +66,7 @@ namespace ChaoticUprising.Content.Projectiles
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.AddBuff(BuffID.Ichor, 300);
-        }
-
-        public override void OnHitPvp(Player target, int damage, bool crit)
-        {
-            target.AddBuff(BuffID.Ichor, 300);
+            target.AddBuff(ModContent.BuffType<ConcentratedIchorDebuff>(), 60);
         }
 
         public override bool PreDraw(ref Color lightColor)
