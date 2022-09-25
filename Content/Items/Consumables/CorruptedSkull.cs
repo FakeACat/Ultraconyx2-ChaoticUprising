@@ -56,18 +56,10 @@ namespace ChaoticUprising.Content.Items.Consumables
         }
 
         public override void AddRecipes() => CreateRecipe()
-            .AddIngredient(ItemID.SoulofFlight, 3)
-            .AddIngredient(ItemID.SoulofFright, 3)
-            .AddIngredient(ItemID.SoulofLight, 3)
-            .AddIngredient(ItemID.SoulofMight, 30)
-            .AddIngredient(ItemID.SoulofNight, 30)
-            .AddIngredient(ItemID.SoulofSight, 3)
-            .AddIngredient(ItemID.Vertebrae, 10)
+            .AddIngredient(ItemID.SoulofNight, 45)
+            .AddIngredient(ItemID.Vertebrae, 15)
             .AddIngredient(ItemID.Ichor, 30)
-            .AddIngredient(ItemID.DemoniteBar, 20)
-            .AddIngredient(ItemID.DarkShard, 2)
-            .AddIngredient(ItemID.LivingFireBlock, 40)
-            .AddIngredient(ItemID.LunarBar, 5)
+            .AddIngredient(ItemID.LunarBar, 15)
             .AddTile(TileID.LunarCraftingStation)
             .Register();
     }
