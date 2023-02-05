@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.ID;
 //using SubworldLibrary;
 using Microsoft.Xna.Framework.Graphics;
+using ChaoticUprising.Common;
 
 namespace ChaoticUprising.Content.NPCs
 {
@@ -48,16 +49,7 @@ namespace ChaoticUprising.Content.NPCs
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            float layers = 20;
-            float maxScale = 25;
-            float rotation = NPC.rotation;
-            for (int i = 1; i < layers; i++)
-            {
-                float scale = maxScale - i * maxScale / layers;
-                Color colour = new Color(scale / maxScale, scale / maxScale, scale / maxScale);
-                rotation *= 0.8f;
-                spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>("ChaoticUprising/Content/NPCs/Wormhole"), NPC.Center - Main.screenPosition, null, colour * ((float)i / layers) * 0.5f, rotation, new Vector2(32, 32), scale, SpriteEffects.None, 0);
-            }
+            CUUtils.DrawWormhole(ModContent.Request<Texture2D>(Texture).Value, spriteBatch, NPC.Center);
             return false;
         }
     }

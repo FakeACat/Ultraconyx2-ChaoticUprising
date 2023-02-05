@@ -1,6 +1,7 @@
 ﻿using ChaoticUprising.Common;
 using ChaoticUprising.Common.Systems;
 using ChaoticUprising.Content.Biomes.Darkness;
+using ChaoticUprising.Content.Items.Materials;
 using ChaoticUprising.Content.Items.Pets;
 using ChaoticUprising.Content.Projectiles;
 using Microsoft.Xna.Framework;
@@ -14,7 +15,6 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Utilities;
 
 namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
 {
@@ -73,6 +73,9 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
         float jawRotation = 0;
 
         bool crawling = true;
+        int deathrayCooldown = 600;
+
+        private static SoundStyle[][] legacyArrayedStylesMapping;
 
         public override void AI()
         {
@@ -94,52 +97,83 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
                 }
             }
 
-            if (NPC.ai[1] == 0)
+            if (NPC.ai[1] == 0 || NPC.ai[1] == 3)
             {
                 float d = NPC.Distance(Target.Center);
-                NPC.rotation = (Target.Center - NPC.Center).ToRotation() + MathHelper.PiOver2;
+                NPC.rotation = NPC.rotation.AngleTowards(CUUtils.AngleTo(Target.Center, NPC.Center) + MathHelper.PiOver2, MathHelper.Pi / 30);
                 if (crawling)
                 {
-                    NPC.velocity = NPC.velocity * 0.95f + Vector2.Normalize(Target.Center - NPC.Center) * (d - 400) / 20 * 0.05f;
-                    if (d < 500)
+                    NPC.velocity = NPC.velocity * 0.95f + Vector2.Normalize(Target.Center - NPC.Center) * (d - 750) / 20 * 0.05f;
+                    if (d < 750)
                         crawling = false;
                 }
                 else
                 {
                     NPC.velocity *= 0.98f;
-                    if (d > 600 || d < 400)
+                    if (d > 960 || d < 200)
                         crawling = true;
                 }
-
-                if (NPC.life < NPC.lifeMax * 0.45f)
+                if (NPC.ai[1] == 3)
+                {
+                    if (jawRotation > 0)
+                        jawRotation -= 0.05f;
+                }
+                else if (NPC.life < NPC.lifeMax * 0.45f)
                     NPC.ai[1] = 1;
             }
             else if (NPC.ai[1] == 1)
             {
                 NPC.velocity *= 0.97f;
-                jawRotation += 0.05f;
+                if (jawRotation == 0)
+                    SoundEngine.PlaySound(SoundID.Roar, NPC.position);
+                jawRotation += 0.0125f;
+                if (Main.netMode != NetmodeID.Server)
+                {
+                    Vector2 dustStart = NPC.Center + (NPC.rotation - MathHelper.PiOver2).ToRotationVector2() * 96 + new Vector2(Main.rand.Next(-64, 65), Main.rand.Next(-64, 65));
+                    for (int i = 0; i < jawRotation * 4; i++)
+                    {
+                        int d = Dust.NewDust(dustStart, 0, 0, DustID.BlueTorch, 0, 0, 0, default, 3.0f);
+                        Main.dust[d].noGravity = true;
+                        Main.dust[d].velocity = (NPC.Center - Main.dust[d].position) / 30;
+                    }
+                }
                 if (jawRotation >= 1.0f)
                 {
+                    SoundEngine.PlaySound(SoundID.Zombie104, NPC.position);
                     NPC.ai[1] = 2;
                     NPC.damage = NPC.defDamage * 2;
-                    SoundEngine.PlaySound(SoundID.Roar, NPC.position);
                 }
             }
-            else
+            else if (NPC.ai[1] == 2)
             {
-                NPC.rotation = NPC.velocity.ToRotation() + MathHelper.PiOver2;
+                NPC.rotation = NPC.rotation.AngleTowards(CUUtils.AngleTo(Target.Center, NPC.Center) + MathHelper.PiOver2, MathHelper.Pi / 200);
+                float d = NPC.DistanceSQ(Target.Center);
+                if (d > DeathrayLengthInPixels * DeathrayLengthInPixels)
+                    NPC.velocity = Vector2.Normalize(Target.Center - NPC.Center) * 16;
+                else
+                    NPC.velocity *= 0.975f;
 
-                NPC.velocity += Vector2.Normalize(Target.Center - NPC.Center) * 0.5f;
-                NPC.velocity *= 0.95f;
-
-                if (deathrayStrength < 1.0f)
-                    deathrayStrength += 0.0125f;
+                deathrayCooldown++;
+                if (deathrayCooldown > 1000)
+                {
+                    deathrayStrength -= 0.05f;
+                    if (deathrayStrength <= 0.0f)
+                    {
+                        //deathrayCooldown = 0;
+                        NPC.ai[1] = 3;
+                    }
+                }
                 else
                 {
-                    Player player = Main.player[NPC.target];
-                    if (Collision.CheckAABBvLineCollision(player.position, new Vector2(player.width, player.height), NPC.Center, NPC.Center + (NPC.rotation - MathHelper.PiOver2).ToRotationVector2() * DeathrayLengthInPixels))
+                    if (deathrayStrength < 1.0f && deathrayCooldown > 600)
+                        deathrayStrength += 0.005f;
+                    else if (deathrayStrength >= 1.0f)
                     {
-                        player.Hurt(PlayerDeathReason.ByNPC(NPC.whoAmI), NPC.damage, 0);
+                        Player player = Main.player[NPC.target];
+                        if (Collision.CheckAABBvLineCollision(player.position, new Vector2(player.width, player.height), NPC.Center, NPC.Center + (NPC.rotation - MathHelper.PiOver2).ToRotationVector2() * DeathrayLengthInPixels))
+                        {
+                            player.Hurt(PlayerDeathReason.ByNPC(NPC.whoAmI), NPC.damage, 0);
+                        }
                     }
                 }
 
@@ -159,6 +193,7 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<NightmareChitin>(), 1, 40, 60));
             npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<ReaperEssence>(), 4));
         }
 
@@ -184,12 +219,17 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
 
             if (deathrayStrength > 0)
             {
-                spriteBatch.Draw(deathray, mouthPos + offset * 50, new Rectangle(0, 56, 40, 26), Color.White * deathrayStrength, NPC.rotation, new Vector2(20, 13), NPC.scale, SpriteEffects.None, 0);
+                Color colour1 = deathrayStrength >= 1.0f ? Color.Red : Color.White;
+                spriteBatch.Draw(deathray, mouthPos + offset * 50, new Rectangle(0, 56, 40, 26), colour1 * deathrayStrength, NPC.rotation, new Vector2(20, 13), NPC.scale, SpriteEffects.None, 0);
                 for (int i = 1; i < deathrayLength; i++)
                 {
-                    spriteBatch.Draw(deathray, mouthPos + offset * (50 + 26 * i), new Rectangle(0, 28, 40, 26), Color.White * deathrayStrength, NPC.rotation, new Vector2(20, 13), NPC.scale, SpriteEffects.None, 0);
+                    float num1 = 1.0f - (float)(i / 100.0f);
+                    float num2 = (float)(deathrayStrength / num1);
+                    if (deathrayStrength >= num1)
+                        colour1 = Color.Red;
+                    spriteBatch.Draw(deathray, mouthPos + offset * (50 + 26 * i), new Rectangle(0, 28, 40, 26), colour1 * num2, NPC.rotation, new Vector2(20, 13), NPC.scale, SpriteEffects.None, 0);
                 }
-                spriteBatch.Draw(deathray, mouthPos + offset * (50 + 26 * deathrayLength), new Rectangle(0, 0, 40, 26), Color.White * deathrayStrength, NPC.rotation, new Vector2(20, 13), NPC.scale, SpriteEffects.None, 0);
+                spriteBatch.Draw(deathray, mouthPos + offset * (50 + 26 * deathrayLength), new Rectangle(0, 0, 40, 26), colour1, NPC.rotation, new Vector2(20, 13), NPC.scale, SpriteEffects.None, 0);
             }
 
             return false;
@@ -233,6 +273,8 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
 
         public abstract Vector2 Shoulder();
 
+        public abstract int TimeToMove();
+
         public override bool PreAI()
         {
             if (Reaper == null || !Reaper.active)
@@ -244,11 +286,25 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
             return true;
         }
 
+        private int moveTime = 0;
+        public const int CRAWL_CYCLE_LENGTH = 30;
+        private const int HAND_MOVE_TIME = 12;
         public override void AI()
         {
             NPC.rotation = Reaper.rotation;
-            NPC.velocity += Vector2.Normalize(Reaper.Center + RestingOffset().RotatedBy(Reaper.rotation) - NPC.Center);
-            NPC.velocity *= 0.95f;
+
+            NPC.ai[2]++;
+            if (NPC.ai[2] > CRAWL_CYCLE_LENGTH)
+                NPC.ai[2] = 0;
+
+            if (NPC.ai[2] == TimeToMove())
+            {
+                moveTime = HAND_MOVE_TIME;
+                NPC.velocity = (Reaper.Center + RestingOffset().RotatedBy(Reaper.rotation) - NPC.Center) / HAND_MOVE_TIME;
+            }
+            moveTime--;
+            if (moveTime < 0)
+                NPC.velocity = Vector2.Zero;
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
@@ -322,14 +378,19 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
         public override Texture2D ArmGlowmask() => (Texture2D)ModContent.Request<Texture2D>("ChaoticUprising/Content/NPCs/Minibosses/NightmareReaper/NightmareRightArmGlowmask");
         public override Texture2D HandGlowmask() => (Texture2D)ModContent.Request<Texture2D>("ChaoticUprising/Content/NPCs/Minibosses/NightmareReaper/NightmareRightHandGlowmask");
 
-        public override Vector2 RestingOffset() => new(160, -80);
+        public override Vector2 RestingOffset() => new(160, -160);
 
         public override Vector2 Shoulder() => new(40, 40);
+
+        public override int TimeToMove() => 0;
 
         public override void AI()
         {
             if (!CUUtils.InvalidTarget(Reaper.target))
             {
+                if (NPC.ai[3] > 0)
+                    NPC.ai[3]--;
+
                 NPC.ai[1]++;
                 if (NPC.ai[1] > 600 && NPC.ai[1] < 900)
                 {
@@ -346,42 +407,48 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
 
                 if (Main.expertMode)
                     NPC.ai[1] += 2;
+
             }
             base.AI();
         }
-
-        int tractorBeamLength = 0;
-        const int TRACTOR_MAX_LENGTH = 800;
-
+        readonly int tractorBeamLength = 3200;
+        Vector2 aimPos = Vector2.Zero;
         private void Succ()
         {
-            float progressAsAngle = (NPC.ai[1] - 600) / 300 * MathHelper.TwoPi;
-            tractorBeamLength = Math.Abs((int)(Math.Sin(progressAsAngle * 1.5f) * TRACTOR_MAX_LENGTH));
-            Player player = Main.player[Reaper.target];
-            NPC.rotation = NPC.rotation.AngleTowards(CUUtils.AngleTo(player.Center, NPC.Center) + MathHelper.PiOver2, MathHelper.Pi / 120 * (1f - tractorBeamLength / TRACTOR_MAX_LENGTH));
-            NPC.velocity += Vector2.Normalize(Reaper.Center + RestingOffset().RotatedBy(Reaper.rotation) - NPC.Center);
-            NPC.velocity *= 0.95f;
-
-            for (int i = 0; i < tractorBeamLength; i++)
+            Player target = Main.player[Reaper.target];
+            Vector2 targetPos = target.Center + target.velocity * 40;
+            if (aimPos == Vector2.Zero)
             {
-                if (Main.rand.NextBool(15))
+                aimPos = targetPos;
+            }
+            else if (NPC.ai[1] < 720)
+            {
+                float speed = 0.15f;
+                aimPos = aimPos * (1 - speed) + targetPos * speed;
+            }
+            else
+            {
+                float speed = 0.02f;
+                aimPos = aimPos * (1 - speed) + target.Center * speed;
+                if (NPC.ai[3] <= 0 && !target.immune && Collision.CheckAABBvLineCollision(target.position, new Vector2(target.width, target.height), NPC.Center, NPC.Center + (NPC.rotation - MathHelper.PiOver2).ToRotationVector2() * tractorBeamLength))
                 {
-                    Dust.NewDust(NPC.Center + (NPC.rotation - MathHelper.PiOver2).ToRotationVector2() * i, 0, 0, DustID.BlueCrystalShard);
+                    target.velocity = Vector2.Normalize(NPC.Center - target.Center) * 40;
+                    if (target.DistanceSQ(NPC.Center) < 102400)
+                        NPC.velocity = Vector2.Normalize(target.Center - NPC.Center) * 70;
                 }
             }
-
-            if (!player.immune && Collision.CheckAABBvLineCollision(player.position, new Vector2(player.width, player.height), NPC.Center, NPC.Center + (NPC.rotation - MathHelper.PiOver2).ToRotationVector2() * tractorBeamLength))
-            {
-                player.velocity = Vector2.Normalize(NPC.Center - player.Center) * 30;
-
-                if (player.DistanceSQ(NPC.Center) < 102400)
-                    NPC.velocity = Vector2.Normalize(player.Center - NPC.Center) * 70;
-            }
+            NPC.rotation = CUUtils.AngleTo(aimPos, NPC.Center) + MathHelper.PiOver2;
+            NPC.velocity += Vector2.Normalize(Reaper.Center + RestingOffset().RotatedBy(Reaper.rotation) - NPC.Center);
+            NPC.velocity *= 0.95f;
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.velocity += NPC.velocity;
+            if (NPC.ai[3] <= 0)
+            {
+                target.velocity += NPC.velocity;
+                NPC.ai[3] = 120;
+            }
         }
 
         private void Redirect()
@@ -408,10 +475,6 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = ModContent.Request<Texture2D>("ChaoticUprising/Assets/Textures/BlankTexture").Value;
-            if (NPC.ai[1] > 600 && NPC.ai[1] < 900)
-            {
-                spriteBatch.Draw(texture, new Rectangle((int)NPC.Center.X - (int)Main.screenPosition.X, (int)NPC.Center.Y - (int)Main.screenPosition.Y, tractorBeamLength, 1), new Rectangle(0, 0, 16, 16), Color.Cyan, NPC.rotation - MathHelper.PiOver2, Vector2.Zero, SpriteEffects.None, 0);
-            }
 
             if (NPC.ai[1] > 1140 && !CUUtils.InvalidTarget(Reaper.target))
             {
@@ -425,6 +488,22 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
                         spriteBatch.Draw(texture, new Rectangle((int)p.Center.X - (int)Main.screenPosition.X, (int)p.Center.Y - (int)Main.screenPosition.Y, 1600, 1), new Rectangle(0, 0, 16, 16), Color.Red * 0.5f, (Main.player[Reaper.target].Center - p.Center).ToRotation(), Vector2.Zero, SpriteEffects.None, 0);
                     }
                 }
+            }
+            else if (NPC.ai[1] > 600 && NPC.ai[1] < 900)
+            {
+                float progress = Math.Clamp((NPC.ai[1] - 600.0f) / 120.0f, 0.0f, 1.0f);
+                int beams = 32;
+                float maxSpread = MathHelper.Pi / 8;
+                int width = 2;
+                for (int i = 0; i < beams; i++)
+                {
+                    float num1 = Main.GlobalTimeWrappedHourly + MathHelper.TwoPi * i / beams;
+                    spriteBatch.Draw(texture, new Rectangle((int)NPC.Center.X - (int)Main.screenPosition.X, (int)NPC.Center.Y - (int)Main.screenPosition.Y, tractorBeamLength, width), new Rectangle(0, 0, 16, 16), Color.Cyan * progress * (float)((Math.Sin(num1) + 3.0f) / 4.0f), NPC.rotation - MathHelper.PiOver2 + (float)Math.Cos(num1) * (1.0f - progress) * maxSpread, new Vector2(0, width / 2), SpriteEffects.None, 0);
+                }
+                int crosshairLength = 32;
+                int crosshairWidth = 4;
+                spriteBatch.Draw(texture, new Rectangle((int)aimPos.X - (int)Main.screenPosition.X - crosshairLength / 2, (int)aimPos.Y - (int)Main.screenPosition.Y - crosshairWidth / 2, crosshairLength, crosshairWidth), new Rectangle(0, 0, 16, 16), Color.Red, 0.0f, new Vector2(0, 0), SpriteEffects.None, 0);
+                spriteBatch.Draw(texture, new Rectangle((int)aimPos.X - (int)Main.screenPosition.X - crosshairWidth / 2, (int)aimPos.Y - (int)Main.screenPosition.Y - crosshairLength / 2, crosshairWidth, crosshairLength), new Rectangle(0, 0, 16, 16), Color.Red, 0.0f, new Vector2(0, 0), SpriteEffects.None, 0);
             }
             return base.PreDraw(spriteBatch, screenPos, drawColor);
         }
@@ -461,9 +540,11 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
         public override Texture2D ArmGlowmask() => (Texture2D)ModContent.Request<Texture2D>("ChaoticUprising/Content/NPCs/Minibosses/NightmareReaper/NightmareLeftArmGlowmask");
         public override Texture2D HandGlowmask() => (Texture2D)ModContent.Request<Texture2D>("ChaoticUprising/Content/NPCs/Minibosses/NightmareReaper/NightmareLeftHandGlowmask");
 
-        public override Vector2 RestingOffset() => new(-160, -80);
+        public override Vector2 RestingOffset() => new(-160, -160);
 
         public override Vector2 Shoulder() => new(-40, 40);
+
+        public override int TimeToMove() => CRAWL_CYCLE_LENGTH / 2;
 
         public override void AI()
         {
@@ -491,15 +572,16 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
 
         private void VoidHarpoons()
         {
-            Player target = Main.player[Reaper.target];
-            NPC.rotation = (target.Center - NPC.Center).ToRotation() + MathHelper.PiOver2;
+            NPC.rotation = (Reaper.Center - NPC.Center).ToRotation() - MathHelper.PiOver2;
 
-            float d = NPC.Distance(target.Center);
-            NPC.velocity = NPC.velocity * 0.95f + Vector2.Normalize(target.Center - NPC.Center) * d / 20 * 0.05f;
+            float a = ((NPC.ai[1] - 400) / 100) * (float)Math.PI;
+
+            NPC.velocity += Vector2.Normalize(Reaper.Center + RestingOffset().RotatedBy(Reaper.rotation + Math.Abs(Math.Sin(a))) - NPC.Center);
+            NPC.velocity *= 0.95f;
 
             if (NPC.ai[1] % 8 == 0 && (NPC.ai[1] < 475 || NPC.ai[1] > 525) && Main.netMode != NetmodeID.MultiplayerClient)
             {
-                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Normalize(target.Center - NPC.Center) * 5, ModContent.ProjectileType<VoidHarpoon>(), 50, 2);
+                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, (NPC.rotation - MathHelper.PiOver2).ToRotationVector2() * 6, ModContent.ProjectileType<VoidHarpoon>(), 50, 2);
             }
         }
 

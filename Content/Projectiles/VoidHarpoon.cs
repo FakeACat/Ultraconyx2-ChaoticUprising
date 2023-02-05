@@ -14,7 +14,7 @@ namespace ChaoticUprising.Content.Projectiles
             Projectile.friendly = false;
             Projectile.penetrate = 1;
             Projectile.hostile = true;
-            Projectile.timeLeft = 300;
+            Projectile.timeLeft = 500;
             Projectile.light = 1f;
             Projectile.extraUpdates = 1;
             Projectile.ignoreWater = true;
@@ -23,7 +23,8 @@ namespace ChaoticUprising.Content.Projectiles
 
         public override void AI()
         {
-            Projectile.velocity *= 1.02f;
+            if (Projectile.timeLeft < 410)
+                Projectile.velocity *= 1.01f;
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
             Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<VoidHarpoonDust>(), Projectile.velocity.X, Projectile.velocity.Y, 0, default, 1);
         }

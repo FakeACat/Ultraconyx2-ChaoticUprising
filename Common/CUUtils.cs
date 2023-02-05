@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
+using Terraria.ModLoader;
 
 namespace ChaoticUprising.Common
 {
@@ -164,6 +165,20 @@ namespace ChaoticUprising.Common
         public static float AngleTo(Vector2 destination, Vector2 centre)
         {
             return (float)Math.Atan2(destination.Y - centre.Y, destination.X - centre.X);
+        }
+
+        public static void DrawWormhole(Texture2D texture, SpriteBatch spriteBatch, Vector2 position, float scaleMultiplier = 1.0f, float alphaMultiplier = 0.5f, float rotationMultiplier = 1.0f, bool inWorld = true)
+        {
+            float layers = 20;
+            float maxScale = 25;
+            float rotation = Main.GlobalTimeWrappedHourly * -rotationMultiplier;
+            for (int i = 1; i < layers; i++)
+            {
+                float scale = maxScale - i * maxScale / layers;
+                Color colour = new(scale / maxScale, scale / maxScale, scale / maxScale);
+                rotation *= 0.8f;
+                spriteBatch.Draw(texture, position - (inWorld ? Main.screenPosition : Vector2.Zero), null, colour * (i / layers) * alphaMultiplier, rotation, new Vector2(32, 32), scale * scaleMultiplier, SpriteEffects.None, 0);
+            }
         }
     }
 }
