@@ -2,7 +2,9 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
-using Terraria.ModLoader;
+using Terraria.ID;
+using Terraria.Chat;
+using Terraria.Localization;
 
 namespace ChaoticUprising.Common
 {
@@ -178,6 +180,25 @@ namespace ChaoticUprising.Common
                 Color colour = new(scale / maxScale, scale / maxScale, scale / maxScale);
                 rotation *= 0.8f;
                 spriteBatch.Draw(texture, position - (inWorld ? Main.screenPosition : Vector2.Zero), null, colour * (i / layers) * alphaMultiplier, rotation, new Vector2(32, 32), scale * scaleMultiplier, SpriteEffects.None, 0);
+            }
+        }
+
+        public static void Text(string message, Color? colour = null)
+        {
+            if (Main.netMode == NetmodeID.SinglePlayer)
+                Main.NewText(message, colour);
+            else if (Main.netMode == NetmodeID.Server)
+                ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(message), (Color)(colour == null ? Color.White : colour));
+        }
+
+        public static void Ore(int tileID, int veinSize, int chanceDenominator)
+        {
+            for (int i = 0; i < Main.maxTilesX * Main.maxTilesY / chanceDenominator; i++)
+            {
+                int x = Main.rand.Next(1, Main.maxTilesX - 1);
+                int y = Main.rand.Next((int)WorldGen.rockLayerLow, Main.maxTilesY - 1);
+                if (Main.tile[x, y].TileType == TileID.Stone || Main.tile[x, y].TileType == TileID.Dirt || Main.tile[x, y].TileType == TileID.Ebonstone || Main.tile[x, y].TileType == TileID.Crimstone || Main.tile[x, y].TileType == TileID.Pearlstone)
+                    WorldGen.TileRunner(x, y, veinSize, 15, tileID);
             }
         }
     }

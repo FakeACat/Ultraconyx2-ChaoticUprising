@@ -24,6 +24,7 @@ namespace ChaoticUprising.Common.Systems
         public static bool chaosMode = false;
         public static float difficulty = 0.0f;
         public const float MAXIMUM_DIFFICULTY = 7.0f;
+        public static int brokenMonolithBlocks = 0;
 
         public override void Load()
         {
@@ -204,11 +205,13 @@ namespace ChaoticUprising.Common.Systems
         public override void OnWorldLoad()
         {
             chaosMode = false;
+            brokenMonolithBlocks = 0;
         }
 
         public override void OnWorldUnload()
         {
             chaosMode = false;
+            brokenMonolithBlocks = 0;
         }
 
         public override void SaveWorldData(TagCompound tag)
@@ -217,6 +220,7 @@ namespace ChaoticUprising.Common.Systems
             {
                 tag["chaosMode"] = true;
                 tag["chaosDifficulty"] = difficulty;
+                tag["brokenMonolithBlocks"] = brokenMonolithBlocks;
             }
         }
 
@@ -225,6 +229,8 @@ namespace ChaoticUprising.Common.Systems
             chaosMode = tag.ContainsKey("chaosMode");
             if (tag.ContainsKey("chaosDifficulty"))
                 difficulty = tag.GetFloat("chaosDifficulty");
+            if (tag.ContainsKey("brokenMonolithBlocks"))
+                brokenMonolithBlocks = tag.GetInt("brokenMonolithBlocks");
         }
 
         public override void NetSend(BinaryWriter writer)

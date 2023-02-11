@@ -1,4 +1,4 @@
-﻿using ChaoticUprising.Content.Tiles;
+﻿using ChaoticUprising.Content.Tiles.Ores;
 using ChaoticUprising.Content.Walls;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
@@ -41,6 +41,12 @@ namespace ChaoticUprising.Common.Systems
             }
             darknessX = x;
             darknessY = innerDarknessSize;
+
+            int num1 = Main.maxTilesY / 8;
+            for (int i = 0; i < num1 * 2 * ((int)Main.worldSurface - darknessY) / 10000; i++)
+            {
+                WorldGen.TileRunner(darknessX + WorldGen.genRand.Next(-num1, num1 + 1), WorldGen.genRand.Next(darknessY, (int)Main.worldSurface) + num1, 25, 15, ModContent.TileType<TelekineOre>());
+            }
 
             for (int X = darknessX - outerDarknessSize; X < darknessX + outerDarknessSize; X++)
             {
