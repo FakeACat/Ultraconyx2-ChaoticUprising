@@ -18,8 +18,8 @@ namespace ChaoticUprising.Content.Items.Placeables
 
 			Item.width = 38;
 			Item.height = 52;
-			Item.maxStack = 99;
-			Item.rare = ItemRarityID.Master;
+            Item.maxStack = 9999;
+            Item.rare = ItemRarityID.Master;
 			Item.master = true;
 			Item.value = Item.buyPrice(0, 5);
 		}

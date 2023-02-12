@@ -13,7 +13,7 @@ namespace ChaoticUprising.Content.Items.Placeables.Banners
         {
             Item.DefaultToPlaceableTile(ModContent.TileType<Tiles.Banners.TerraSlimeBanner>(), 0);
             Item.rare = ItemRarityID.Blue;
-            Item.maxStack = 99;
+            Item.maxStack = 9999;
             Item.width = 12;
             Item.height = 28;
         }

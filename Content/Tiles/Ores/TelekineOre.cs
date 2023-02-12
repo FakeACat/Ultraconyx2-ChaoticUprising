@@ -25,6 +25,11 @@ namespace ChaoticUprising.Content.Tiles.Ores
             DustType = DustID.Electric;
         }
 
+        public override bool CanExplode(int i, int j)
+        {
+            return false;
+        }
+
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
             float offset = i + (float)Math.Sin(j / 20.0f + Main.GlobalTimeWrappedHourly / 15.0f) * 20;

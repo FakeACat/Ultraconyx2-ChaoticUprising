@@ -14,8 +14,8 @@ namespace ChaoticUprising.Content.Items.Materials
             Item.width = 24;
             Item.height = 28;
             Item.rare = ModContent.RarityType<EarlyChaos>();
-            Item.maxStack = 9999;
             Item.value = Item.sellPrice(0, 0, 75);
+            Item.maxStack = 9999;
         }
 
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)

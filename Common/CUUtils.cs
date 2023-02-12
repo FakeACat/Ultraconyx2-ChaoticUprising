@@ -197,7 +197,15 @@ namespace ChaoticUprising.Common
             {
                 int x = Main.rand.Next(1, Main.maxTilesX - 1);
                 int y = Main.rand.Next((int)WorldGen.rockLayerLow, Main.maxTilesY - 1);
-                if (Main.tile[x, y].TileType == TileID.Stone || Main.tile[x, y].TileType == TileID.Dirt || Main.tile[x, y].TileType == TileID.Ebonstone || Main.tile[x, y].TileType == TileID.Crimstone || Main.tile[x, y].TileType == TileID.Pearlstone)
+                if (Main.tile[x, y].TileType == TileID.Stone || 
+                    Main.tile[x, y].TileType == TileID.Dirt || 
+                    Main.tile[x, y].TileType == TileID.Ebonstone || 
+                    Main.tile[x, y].TileType == TileID.Crimstone || 
+                    Main.tile[x, y].TileType == TileID.Pearlstone ||
+                    Main.tile[x, y].TileType == TileID.Sand ||
+                    Main.tile[x, y].TileType == TileID.Mud ||
+                    Main.tile[x, y].TileType == TileID.SnowBlock ||
+                    Main.tile[x, y].TileType == TileID.IceBlock)
                     WorldGen.TileRunner(x, y, veinSize, 15, tileID);
             }
         }

@@ -16,7 +16,7 @@ namespace ChaoticUprising.Content.Items.Placeables
 
             Item.width = 32;
             Item.height = 34;
-            Item.maxStack = 99;
+            Item.maxStack = 9999;
             Item.rare = ItemRarityID.Blue;
             Item.value = Terraria.Item.buyPrice(0, 1);
         }

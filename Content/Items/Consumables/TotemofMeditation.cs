@@ -19,7 +19,7 @@ namespace ChaoticUprising.Content.Items.Consumables
         {
             Item.width = 34;
             Item.height = 42;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
             Item.rare = ModContent.RarityType<EarlyChaos>();
             Item.useAnimation = 45;
             Item.useTime = 45;

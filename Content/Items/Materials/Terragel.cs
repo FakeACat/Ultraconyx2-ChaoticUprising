@@ -11,7 +11,7 @@ namespace ChaoticUprising.Content.Items.Materials
             Item.width = 20;
             Item.height = 22;
             Item.rare = ModContent.RarityType<VeryEarlyChaos>();
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
             Item.value = Item.sellPrice(0, 0, 25);
         }
     }
