@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace ChaoticUprising.Content.SceneEffects
 {
-    public class NightmareSceneEffect : ModSceneEffect
+    public class ChaosModeSceneEffect : ModSceneEffect
     {
         public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 
@@ -24,9 +24,9 @@ namespace ChaoticUprising.Content.SceneEffects
 
         public override void SpecialVisuals(Player player, bool isActive)
         {
-            if (!SkyManager.Instance["ChaoticUprising:NightmareReaper"].IsActive())
+            if (!SkyManager.Instance["ChaoticUprising:ChaosMode"].IsActive())
             {
-                SkyManager.Instance.Activate("ChaoticUprising:NightmareReaper");
+                SkyManager.Instance.Activate("ChaoticUprising:ChaosMode");
             }
         }
     }

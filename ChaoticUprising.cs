@@ -25,7 +25,7 @@ namespace ChaoticUprising
             {
                 SkyManager.Instance["ChaoticUprising:AbyssalChaos"] = new AbyssalChaosSky();
                 SkyManager.Instance["ChaoticUprising:Darkness"] = new DarknessSky();
-                SkyManager.Instance["ChaoticUprising:NightmareReaper"] = new NightmareReaperSky();
+                SkyManager.Instance["ChaoticUprising:ChaosMode"] = new ChaosModeSky();
             }
         }
 
