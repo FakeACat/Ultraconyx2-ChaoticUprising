@@ -12,6 +12,8 @@ namespace ChaoticUprising.Common.GlobalNPCs
 
         public bool trail = false;
 
+        public int blackHole = 0;
+
         public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             if (trail)
@@ -28,7 +30,29 @@ namespace ChaoticUprising.Common.GlobalNPCs
                     Main.spriteBatch.Draw(texture, new Vector2(npc.oldPos[i].X - Main.screenPosition.X + (npc.width / 2) - texture.Width * npc.scale / 2f + Vector.X * npc.scale, npc.oldPos[i].Y - Main.screenPosition.Y + npc.height - texture.Height * npc.scale / Main.npcFrameCount[npc.type] + 4f + Vector.Y * npc.scale), new Microsoft.Xna.Framework.Rectangle?(npc.frame), Colour, npc.rotation, Vector, npc.scale, npc.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
                 }
             }
+            if (blackHole > 0)
+            {
+                float scale = 1.0f;
+                float opacity = 1.0f;
+                if (blackHole < 60)
+                {
+                    float p = blackHole / 60.0f;
+                    scale = 2.0f - p;
+                    opacity = p;
+                } 
+                CUUtils.DrawWormhole(ModContent.Request<Texture2D>("ChaoticUprising/Assets/Textures/MiniBlackHole").Value, spriteBatch, npc.Center, 0.25f * scale, 0.5f * opacity, 6.0f);
+            }
             return base.PreDraw(npc, spriteBatch, screenPos, drawColor);
+        }
+
+        public override void AI(NPC npc)
+        {
+            if (blackHole > 0)
+            {
+                blackHole--;
+                CUUtils.Succ(npc.Center, 1600, 1.0f, true, true, false, false);
+            }
+            base.AI(npc);
         }
     }
 }

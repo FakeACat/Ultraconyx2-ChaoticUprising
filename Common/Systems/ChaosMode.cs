@@ -1,5 +1,6 @@
 ﻿using ChaoticUprising.Content.Items.Consumables;
 using ChaoticUprising.Content.Items.Weapons;
+using ChaoticUprising.Content.Items.Weapons.AbyssalChaos;
 using ChaoticUprising.Content.UI;
 using Microsoft.Xna.Framework;
 using System;

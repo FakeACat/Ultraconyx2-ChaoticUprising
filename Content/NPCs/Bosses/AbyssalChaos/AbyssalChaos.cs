@@ -14,9 +14,9 @@ using Terraria.GameContent.ItemDropRules;
 using ChaoticUprising.Common;
 using ChaoticUprising.Content.Items.Consumables;
 using ChaoticUprising.Content.Items.Vanity;
-using ChaoticUprising.Content.Items.Weapons;
 using ChaoticUprising.Common.Systems;
 using ChaoticUprising.Content.Items.Pets;
+using ChaoticUprising.Content.Items.Weapons.AbyssalChaos;
 
 namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
 {
@@ -83,7 +83,7 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
             notExpertLoot.OnSuccess(ItemDropRule.Common(ModContent.ItemType<RavenousBlaster>(), 3));
             notExpertLoot.OnSuccess(ItemDropRule.Common(ModContent.ItemType<InfernalBlade>(), 3));
             notExpertLoot.OnSuccess(ItemDropRule.Common(ModContent.ItemType<BloodlustWand>(), 3));
-            notExpertLoot.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.Vertebrae>(), 3));
+            notExpertLoot.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.AbyssalChaos.Vertebrae>(), 3));
         }
 
         public override void OnKill()

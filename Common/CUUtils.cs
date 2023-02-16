@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.Chat;
 using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace ChaoticUprising.Common
 {
@@ -207,6 +208,74 @@ namespace ChaoticUprising.Common
                     Main.tile[x, y].TileType == TileID.SnowBlock ||
                     Main.tile[x, y].TileType == TileID.IceBlock)
                     WorldGen.TileRunner(x, y, veinSize, 15, tileID);
+            }
+        }
+
+        public static void Succ(Vector2 position, int range, float strength, bool projectiles = true, bool magicOnly = false, bool npcs = true, bool items = true)
+        {
+            int rangeSquared = range * range;
+            if (npcs)
+            {
+                for (int i = 0; i < Main.maxNPCs; i++)
+                {
+                    NPC npc = Main.npc[i];
+                    if (npc.active)
+                    {
+                        int dist = (int)Vector2.DistanceSquared(npc.Center, position);
+                        if (dist < rangeSquared)
+                        {
+                            npc.velocity += Vector2.Normalize(position - npc.Center) * strength;
+                            int d = Dust.NewDust(npc.position, npc.width, npc.height, DustID.Shadowflame, 0, 0, 0, default);
+                            //Main.dust[d].velocity = Vector2.Normalize(position - npc.Center) * 16;
+                        }
+                    }
+                }
+            }
+            if (projectiles)
+            {
+                for (int i = 0; i < Main.maxProjectiles; i++)
+                {
+                    Projectile projectile = Main.projectile[i];
+                    if (projectile.active && (!magicOnly || (projectile.DamageType == DamageClass.Magic && projectile.friendly && !projectile.hostile)))
+                    {
+                        int dist = (int)Vector2.DistanceSquared(projectile.Center, position);
+                        if (dist < rangeSquared)
+                        {
+                            projectile.velocity += Vector2.Normalize(position - projectile.Center) * strength;
+                            int d = Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Shadowflame, 0, 0, 0, default);
+                            //Main.dust[d].velocity = Vector2.Normalize(position - projectile.Center) * 16;
+                        }
+                    }
+                }
+            }
+            for (int i = 0; i < Main.maxDust; i++)
+            {
+                Dust dust = Main.dust[i];
+                if (dust.active)
+                {
+                    int dist = (int)Vector2.DistanceSquared(dust.position, position);
+                    if (dist < rangeSquared)
+                    {
+                        dust.velocity += Vector2.Normalize(position - dust.position) * strength;
+                    }
+                }
+            }
+            if (items)
+            {
+                for (int i = 0; i < Main.maxItems; i++)
+                {
+                    Item item = Main.item[i];
+                    if (item.active)
+                    {
+                        int dist = (int)Vector2.DistanceSquared(item.Center, position);
+                        if (dist < rangeSquared)
+                        {
+                            item.velocity += Vector2.Normalize(position - item.Center) * strength;
+                            int d = Dust.NewDust(item.position, item.width, item.height, DustID.Shadowflame, 0, 0, 0, default);
+                            //Main.dust[d].velocity = Vector2.Normalize(position - item.Center) * 16;
+                        }
+                    }
+                }
             }
         }
     }

@@ -3,7 +3,7 @@ using ChaoticUprising.Content.Rarities;
 using Terraria;
 using Terraria.ModLoader;
 
-namespace ChaoticUprising.Content.Items.Weapons
+namespace ChaoticUprising.Content.Items.Weapons.AbyssalChaos
 {
     public class Vertebrae : ModItem
     {

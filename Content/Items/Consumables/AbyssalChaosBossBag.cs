@@ -1,6 +1,6 @@
 ﻿using ChaoticUprising.Content.Items.Accessories;
 using ChaoticUprising.Content.Items.Vanity;
-using ChaoticUprising.Content.Items.Weapons;
+using ChaoticUprising.Content.Items.Weapons.AbyssalChaos;
 using ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos;
 using Terraria;
 using Terraria.ModLoader;
