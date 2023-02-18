@@ -14,8 +14,8 @@ namespace ChaoticUprising.Common.GlobalNPCs
             if (ChaosMode.chaosMode)
             {
                 int difficulty = (int)ChaosMode.GetDifficulty();
-                spawnRate = (int)(spawnRate * Math.Pow(0.8d, difficulty));
-                maxSpawns = (int)(maxSpawns * Math.Pow(1.2d, difficulty));
+                spawnRate = (int)(spawnRate * Math.Pow(0.9d, difficulty));
+                maxSpawns = (int)(maxSpawns * Math.Pow(1.1d, difficulty));
             }
         }
     }
