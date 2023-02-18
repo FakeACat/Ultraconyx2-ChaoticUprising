@@ -1,7 +1,10 @@
-﻿using ChaoticUprising.Common.Systems;
+﻿using ChaoticUprising.Common;
+using ChaoticUprising.Common.Systems;
 using ChaoticUprising.Content.Items.Materials;
 using ChaoticUprising.Content.Items.Placeables.Banners;
+using ChaoticUprising.Content.Projectiles;
 using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -57,6 +60,16 @@ namespace ChaoticUprising.Content.NPCs
                 {
                     NPC.velocity.Y = -16;
                     NPC.velocity.X = Vector2.Normalize(Main.player[NPC.target].Center - NPC.Center).X * 12;
+
+                    int numProj = 6;
+                    float speed = 30;
+                    for (int i = 0; i < numProj; i++)
+                    {
+                        int type = ModContent.ProjectileType<TerraTentacle>();
+                        int damage = 50;
+                        float rotation = (MathHelper.PiOver4 / (numProj - 1) * i) - MathHelper.Pi / 8 + (float)Math.Atan2(NPC.Center.Y - (Main.player[NPC.target].position.Y + (Main.player[NPC.target].height * 0.5f)), NPC.Center.X - (Main.player[NPC.target].position.X + (Main.player[NPC.target].width * 0.5f)));
+                        Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X, NPC.Center.Y, (float)(Math.Cos(rotation) * speed * -1) / 5, (float)(Math.Sin(rotation) * speed * -1) / 5, type, damage, 1.0f);
+                    }
                 }
                 NPC.velocity.X += Vector2.Normalize(Main.player[NPC.target].Center - NPC.Center).X / 8;
                 NPC.velocity *= 0.97f;
