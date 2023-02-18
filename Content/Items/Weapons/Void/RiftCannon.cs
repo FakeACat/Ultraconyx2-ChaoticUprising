@@ -1,4 +1,5 @@
-﻿using ChaoticUprising.Content.Items.Abstract;
+﻿using ChaoticUprising.Common.GlobalProjectiles;
+using ChaoticUprising.Content.Items.Abstract;
 using ChaoticUprising.Content.Items.Materials;
 using ChaoticUprising.Content.Projectiles;
 using ChaoticUprising.Content.Rarities;
@@ -27,7 +28,7 @@ namespace ChaoticUprising.Content.Items.Weapons.Void
             Item.mana = 15;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.autoReuse = true;
-            Item.UseSound = SoundID.Item11;
+            Item.UseSound = SoundID.Item20;
             Item.DamageType = DamageClass.Magic;
             Item.damage = 420;
             Item.knockBack = 3.0f;
@@ -35,6 +36,12 @@ namespace ChaoticUprising.Content.Items.Weapons.Void
             Item.shootSpeed = 10.0f;
             Item.shoot = ModContent.ProjectileType<VoidHarpoonFriendly>();
             Item.value = Item.sellPrice(0, 45);
+        }
+
+        public override void ModifyManaCost(Player player, ref float reduce, ref float mult)
+        {
+            if (player.altFunctionUse == 2)
+                mult = 2.0f;
         }
 
         public override bool AltFunctionUse(Player player)
@@ -46,14 +53,18 @@ namespace ChaoticUprising.Content.Items.Weapons.Void
         {
             if (player.altFunctionUse == 2)
             {
-                Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 1);
+                int p = Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 1);
+                Main.projectile[p].alpha = 255;
                 return false;
             }
-            for (int i = 0; i < 3; i++)
+            float angleBetweenProjectiles = MathHelper.Pi / 12;
+            int numProjectiles = 4;
+            for (int i = 0; i < numProjectiles; i++)
             {
-                Projectile.NewProjectile(source, position, velocity + new Vector2(Main.rand.Next(-50, 51), Main.rand.Next(-50, 51)) / 10.0f, type, damage, knockback, player.whoAmI);
+                Vector2 v = velocity.RotatedBy(angleBetweenProjectiles * (i - numProjectiles / 2 + 0.5f));
+                Projectile.NewProjectile(source, position, v, type, damage, knockback, player.whoAmI);
             }
-            return true;
+            return false;
         }
 
         public override void AddRecipes() => CreateRecipe()

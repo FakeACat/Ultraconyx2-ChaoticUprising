@@ -50,7 +50,8 @@ namespace ChaoticUprising.Common.GlobalNPCs
             if (blackHole > 0)
             {
                 blackHole--;
-                CUUtils.Succ(npc.Center, 1600, 1.0f, true, true, false, false);
+                float strength = blackHole < 60 ? blackHole / 60.0f : 1.0f;
+                CUUtils.Succ(npc.Center, 1600, strength, true, true, false, false, 0.98f);
             }
             base.AI(npc);
         }

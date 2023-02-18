@@ -211,7 +211,7 @@ namespace ChaoticUprising.Common
             }
         }
 
-        public static void Succ(Vector2 position, int range, float strength, bool projectiles = true, bool magicOnly = false, bool npcs = true, bool items = true)
+        public static void Succ(Vector2 position, int range, float strength, bool projectiles = true, bool magicOnly = false, bool npcs = true, bool items = true, float slow = 1.0f)
         {
             int rangeSquared = range * range;
             if (npcs)
@@ -224,9 +224,9 @@ namespace ChaoticUprising.Common
                         int dist = (int)Vector2.DistanceSquared(npc.Center, position);
                         if (dist < rangeSquared)
                         {
+                            npc.velocity *= slow;
                             npc.velocity += Vector2.Normalize(position - npc.Center) * strength;
-                            int d = Dust.NewDust(npc.position, npc.width, npc.height, DustID.Shadowflame, 0, 0, 0, default);
-                            //Main.dust[d].velocity = Vector2.Normalize(position - npc.Center) * 16;
+                            Dust.NewDust(npc.position, npc.width, npc.height, DustID.Shadowflame, 0, 0, 0, default);
                         }
                     }
                 }
@@ -241,9 +241,9 @@ namespace ChaoticUprising.Common
                         int dist = (int)Vector2.DistanceSquared(projectile.Center, position);
                         if (dist < rangeSquared)
                         {
+                            projectile.velocity *= slow;
                             projectile.velocity += Vector2.Normalize(position - projectile.Center) * strength;
-                            int d = Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Shadowflame, 0, 0, 0, default);
-                            //Main.dust[d].velocity = Vector2.Normalize(position - projectile.Center) * 16;
+                            Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Shadowflame, 0, 0, 0, default);
                         }
                     }
                 }
@@ -256,6 +256,7 @@ namespace ChaoticUprising.Common
                     int dist = (int)Vector2.DistanceSquared(dust.position, position);
                     if (dist < rangeSquared)
                     {
+                        dust.velocity *= slow;
                         dust.velocity += Vector2.Normalize(position - dust.position) * strength;
                     }
                 }
@@ -270,9 +271,9 @@ namespace ChaoticUprising.Common
                         int dist = (int)Vector2.DistanceSquared(item.Center, position);
                         if (dist < rangeSquared)
                         {
+                            item.velocity *= slow;
                             item.velocity += Vector2.Normalize(position - item.Center) * strength;
-                            int d = Dust.NewDust(item.position, item.width, item.height, DustID.Shadowflame, 0, 0, 0, default);
-                            //Main.dust[d].velocity = Vector2.Normalize(position - item.Center) * 16;
+                            Dust.NewDust(item.position, item.width, item.height, DustID.Shadowflame, 0, 0, 0, default);
                         }
                     }
                 }

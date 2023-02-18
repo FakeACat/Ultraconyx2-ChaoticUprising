@@ -1,6 +1,5 @@
 ﻿using ChaoticUprising.Common;
 using ChaoticUprising.Common.GlobalNPCs;
-using ChaoticUprising.Content.Dusts;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -24,7 +23,14 @@ namespace ChaoticUprising.Content.Projectiles
 
         public override void AI()
         {
-            if (Projectile.ai[0] != 1)
+            if (Projectile.ai[0] == 1)
+            {
+                if (Projectile.alpha > 0)
+                {
+                    Projectile.alpha -= 5;
+                }
+            }
+            else
             {
                 base.AI();
             }
@@ -34,7 +40,7 @@ namespace ChaoticUprising.Content.Projectiles
         {
             if (Projectile.ai[0] == 1)
             {
-                CUUtils.DrawWormhole(ModContent.Request<Texture2D>("ChaoticUprising/Assets/Textures/MiniBlackHole").Value, Main.spriteBatch, Projectile.Center, 0.1f, 0.5f, 6.0f);
+                CUUtils.DrawWormhole(ModContent.Request<Texture2D>("ChaoticUprising/Assets/Textures/MiniBlackHole").Value, Main.spriteBatch, Projectile.Center, 0.1f, 0.5f * (255.0f - Projectile.alpha) / 255.0f, 6.0f);
                 return false;
             }
             return true;
