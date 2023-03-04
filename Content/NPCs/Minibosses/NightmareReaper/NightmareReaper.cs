@@ -46,7 +46,7 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
             NPC.aiStyle = -1;
             NPC.noGravity = true;
             NPC.noTileCollide = true;
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<Darkness>().Type };
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<Biomes.Darkness.Darkness>().Type };
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
