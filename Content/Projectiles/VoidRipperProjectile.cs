@@ -5,7 +5,7 @@
         protected override float HoldoutRangeMax => 240.0f;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Void Ripper");
+            // DisplayName.SetDefault("Void Ripper");
         }
     }
 }

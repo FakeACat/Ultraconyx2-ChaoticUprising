@@ -1,0 +1,276 @@
+"Keybinds.Chaos Mode Difficulty UI.DisplayName": Chaos Mode Difficulty UI
+
+Reusable: {
+	Banner: {
+		DisplayName: "{0} Banner"
+		Tooltip: Nearby players get a bonus against: {0}
+	}
+
+	TreasureBag: {
+		DisplayName: Treasure Bag ({0})
+		Tooltip: Right Click to open
+	}
+}
+
+Biomes: {
+	Darkness: {
+		DisplayName: The Darkness
+		TownNPCDialogueName: The Darkness
+	}
+
+	InnerDarkness: {
+		DisplayName: Inner Darkness
+		TownNPCDialogueName: the inner Darkness
+	}
+}
+
+Tiles: {
+	ImbuedCrimeraBanner.MapEntry: Banner
+	ImbuedEaterBanner.MapEntry: Banner
+	NightmareToadBanner.MapEntry: Banner
+	SlimePraetorianBanner.MapEntry: Banner
+	TerraSlimeBanner.MapEntry: Banner
+	AbyssalChaosMusicBox.MapEntry: Music Box
+	Monolith.MapEntry: Monolith
+	TelekineOre.MapEntry: Telekine
+}
+
+NPCs: {
+	AbyssalChaos: {
+		DisplayName: Abyssal Chaos
+		BossChecklistIntegration.SpawnInfo:
+			'''
+			Use a [i:5540].
+			[c/63445c:Activates Chaos Mode.]
+			'''
+	}
+
+	NightmareReaper: {
+		DisplayName: Void-dropped Nightmare
+
+		BossChecklistIntegration: {
+			EntryName: Void-dropped Nightmare
+			SpawnInfo: Enter the Darkness biome in Chaos Mode.
+		}
+	}
+
+	AbyssalShade.DisplayName: Abyssal Shade
+	BloodlustEye.DisplayName: Bloodlust Eye
+	RavenousEye.DisplayName: Ravenous Eye
+	NightmareToad.DisplayName: Nightmare Toad
+	ImbuedCrimera.DisplayName: Imbued Crimera
+	ImbuedEater.DisplayName: Imbued Eater
+	NightmareLeftHand.DisplayName: Nightmare Left Hand
+	NightmareRightHand.DisplayName: Nightmare Right Hand
+	SlimePraetorian.DisplayName: Slime Praetorian
+	TerraSlime.DisplayName: Terra Slime
+	Wormhole.DisplayName: Wormhole
+}
+
+Buffs: {
+	AbyssalFlamesDebuff: {
+		DisplayName: Void Flames
+		Description: Your soul burns...
+	}
+
+	ConcentratedIchorDebuff: {
+		DisplayName: Concentrated Ichor
+		Description: You are defenseless.
+	}
+
+	MiniShadeBuff: {
+		DisplayName: Miniature Abyssal Shade
+		Description: A small Abyssal Shade is following you.
+	}
+
+	MiracleDebuff: {
+		DisplayName: Miracle
+		Description: Not indestructable, just undying
+	}
+
+	MiracleSickness: {
+		DisplayName: Miracle Sickness
+		Description: You cannot be revived by the Miracle.
+	}
+
+	NightmareReaperBuff: {
+		DisplayName: Baby Nightmare Reaper
+		Description: A baby Nightmare Reaper is following you.
+	}
+}
+
+Items: {
+	MiracleMind: {
+		DisplayName: Miracle Mind
+		Tooltip:
+			'''
+			Revives the user from death
+			Inflicts the Miracle debuff on revive
+			Players that take damage while affected by the Miracle debuff will die instantly after it runs out
+			Players that survive the Miracle debuff cannot be revived for 25 seconds
+			'''
+	}
+
+	CorruptedSkull: {
+		DisplayName: Corrupted Skull
+		Tooltip:
+			'''
+			Summons the Abyssal Chaos
+			Requires the world to be in Hardmode
+			Not consumable
+			'''
+	}
+
+	LifeforceRelic: {
+		DisplayName: Lifeforce Relic
+		Tooltip: Permanently increases maximum life by {0}
+	}
+
+	TotemofAnguish: {
+		DisplayName: Totem of Anguish
+		Tooltip: Increases the difficulty
+	}
+
+	TotemofMeditation: {
+		DisplayName: Totem of Meditation
+		Tooltip: Reduces the difficulty
+	}
+
+	NightmareChitin: {
+		DisplayName: Nightmare Chitin
+		Tooltip: ""
+	}
+
+	TelekineBar: {
+		DisplayName: Telekine Bar
+		Tooltip: ""
+	}
+
+	Terragel: {
+		DisplayName: Terragel
+		Tooltip: ""
+	}
+
+	AbyssalSkull: {
+		DisplayName: Abyssal Skull
+		Tooltip: Summons a miniature Abyssal Shade
+	}
+
+	ReaperEssence: {
+		DisplayName: Reaper's Essence
+		Tooltip: Summons a baby Nightmare Reaper
+	}
+
+	AbyssalChaosMusicBox: {
+		DisplayName: Music Box (Abyssal Chaos)
+		Tooltip: Hellish Intent by ENNWAY
+	}
+
+	AbyssalChaosRelic: {
+		DisplayName: Abyssal Chaos Relic
+		Tooltip: ""
+	}
+
+	AbyssalChaosTrophy: {
+		DisplayName: Abyssal Chaos Trophy
+		Tooltip: ""
+	}
+
+	NightRock: {
+		DisplayName: Night Rock
+		Tooltip: ""
+	}
+
+	TelekineOreItem: {
+		DisplayName: Telekine Ore
+		Tooltip: ""
+	}
+
+	AbyssalChaosMask: {
+		DisplayName: Abyssal Chaos Mask
+		Tooltip: ""
+	}
+
+	BloodlustWand: {
+		DisplayName: Bloodlust Wand
+		Tooltip:
+			'''
+			Launches a barrage of homing abyssal fireballs
+			Right-click to summon an abyssal fireball portal
+			'''
+	}
+
+	InfernalBlade: {
+		DisplayName: Infernal Blade
+		Tooltip:
+			'''
+			Launches abyssal fireballs
+			Right-click to launch a slow disc of penetrating abyssal fireballs
+			'''
+	}
+
+	RavenousBlaster: {
+		DisplayName: Ravenous Blaster
+		Tooltip:
+			'''
+			Converts rockets into extremely fast fireballs
+			Right-click to launch slow homing fireballs
+			'''
+	}
+
+	Vertebrae: {
+		DisplayName: Vertebrae
+		Tooltip:
+			'''
+			Your summons will focus struck enemies
+			Each hit permanently increases the damage dealt by minions and whips to the struck enemy by {0}%
+			'''
+	}
+
+	BladeofFlesh: {
+		DisplayName: Blade of Flesh
+		Tooltip:
+			'''
+			Ichor tentacles briefly reduce their target's defense and dramatically increase the amount of damage it takes from all attacks
+			'Feels like it's alive...'
+			'''
+	}
+
+	RiftCannon: {
+		DisplayName: Rift Cannon
+		Tooltip:
+			'''
+			Launches a spread of void harpoons
+			Right-click to launch a black hole
+			Black holes stick to enemies for 6 seconds, pulling in all magic projectiles
+			'''
+	}
+
+	VoidRipper: {
+		DisplayName: Void Ripper
+		Tooltip: Right-click to redirect dark energy
+	}
+}
+
+Projectiles: {
+	AbyssalFlames.DisplayName: Abyssal Flames
+	AbyssalFlamesBig.DisplayName: Abyssal Flames
+	AbyssalPortal.DisplayName: Abyssal Portal
+	BladeFlames.DisplayName: Blade Flames
+	BlasterFireball.DisplayName: Blaster Fireball
+	DarkMatterEnergyBall.DisplayName: Dark Matter Energy Ball
+	DarkMatterEnergyBallFriendly.DisplayName: Dark Matter Energy Ball
+	Fireball.DisplayName: Fireball
+	IchorTentacle.DisplayName: Ichor Tentacle
+	LightRay.DisplayName: Light Ray
+	BabyNightmareReaper.DisplayName: Baby Nightmare Reaper
+	MiniShade.DisplayName: Mini Shade
+	TerraTentacle.DisplayName: Terra Tentacle
+	Vertebrae.DisplayName: Vertebrae
+	VoidHarpoon.DisplayName: Void Harpoon
+	VoidHarpoonFriendly.DisplayName: Void Harpoon
+	VoidRipperAltProjectile.DisplayName: Void Ripper
+	VoidRipperProjectile.DisplayName: Void Ripper
+	WandFlames.DisplayName: Wand Flames
+	TeleportationBeam.DisplayName: Teleportation Beam
+}

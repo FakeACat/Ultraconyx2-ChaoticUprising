@@ -64,13 +64,15 @@ namespace ChaoticUprising.Content.Projectiles
             Projectile.position = targetPos - new Vector2(Projectile.width, Projectile.height) / 2;
         }
 
-
-        public override void OnHitPvp(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
-            target.AddBuff(ModContent.BuffType<AbyssalFlamesDebuff>(), 180);
+            if (info.PvP)
+            {
+                target.AddBuff(ModContent.BuffType<AbyssalFlamesDebuff>(), 180);
+            }
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(ModContent.BuffType<AbyssalFlamesDebuff>(), 180);
         }

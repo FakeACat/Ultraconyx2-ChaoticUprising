@@ -8,9 +8,6 @@ namespace ChaoticUprising.Content.Items.Placeables
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Music Box (Abyssal Chaos)");
-            Tooltip.SetDefault("Hellish Intent by ENNWAY");
-
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
             MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Assets/Music/Hellish Intent"), ModContent.ItemType<AbyssalChaosMusicBox>(), ModContent.TileType<Tiles.Furniture.AbyssalChaosMusicBox>());
         }

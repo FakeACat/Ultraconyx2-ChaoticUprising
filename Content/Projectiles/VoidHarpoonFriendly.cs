@@ -1,5 +1,5 @@
-﻿using ChaoticUprising.Common;
-using ChaoticUprising.Common.GlobalNPCs;
+﻿using ChaoticUprising.Common.GlobalNPCs;
+using ChaoticUprising.Common.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -11,7 +11,7 @@ namespace ChaoticUprising.Content.Projectiles
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Void Harpoon");
+            // DisplayName.SetDefault("Void Harpoon");
         }
 
         public override void SetDefaults()
@@ -46,7 +46,7 @@ namespace ChaoticUprising.Content.Projectiles
             return true;
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Projectile.ai[0] == 1)
             {
@@ -57,7 +57,6 @@ namespace ChaoticUprising.Content.Projectiles
                 }
                 target.GetGlobalNPC<NPCEffects>().blackHole = 360;
             }
-            base.OnHitNPC(target, damage, knockback, crit);
         }
 
         public override string Texture => "ChaoticUprising/Content/Projectiles/VoidHarpoon";

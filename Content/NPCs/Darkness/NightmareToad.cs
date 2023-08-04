@@ -1,5 +1,5 @@
-﻿using ChaoticUprising.Common;
-using ChaoticUprising.Common.Systems;
+﻿using ChaoticUprising.Common.Systems;
+using ChaoticUprising.Common.Utils;
 using ChaoticUprising.Content.Items.Placeables.Banners;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

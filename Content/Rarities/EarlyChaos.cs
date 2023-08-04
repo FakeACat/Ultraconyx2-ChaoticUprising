@@ -1,4 +1,4 @@
-﻿using ChaoticUprising.Common;
+﻿using ChaoticUprising.Common.Utils;
 using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
 

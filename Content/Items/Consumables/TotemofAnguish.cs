@@ -9,11 +9,6 @@ namespace ChaoticUprising.Content.Items.Consumables
 {
     public class TotemofAnguish : ModItem
     {
-        public override void SetStaticDefaults()
-        {
-            Tooltip.SetDefault("Increases the difficulty");
-            DisplayName.SetDefault("Totem of Anguish");
-        }
         public override void SetDefaults()
         {
             Item.width = 34;

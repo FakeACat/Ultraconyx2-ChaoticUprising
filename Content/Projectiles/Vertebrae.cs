@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace ChaoticUprising.Content.Projectiles
 {
-    public class Vertebrae : AbstractWhipProjectile
+    public class Vertebrae : WhipProjectile
     {
         public override Color Colour()
         {
@@ -31,10 +31,9 @@ namespace ChaoticUprising.Content.Projectiles
             return -1;
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.GetGlobalNPC<VertebraeDamageBonusNPC>().timesHit++;
-            base.OnHitNPC(target, damage, knockback, crit);
         }
     }
 
@@ -51,11 +50,11 @@ namespace ChaoticUprising.Content.Projectiles
             timesHit = 0;
         }
 
-        public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref NPC.HitModifiers modifiers)
         {
             if (projectile.DamageType == DamageClass.Summon || projectile.DamageType == DamageClass.SummonMeleeSpeed || projectile.DamageType == DamageClass.MagicSummonHybrid)
             {
-                damage = (int)(damage * (1.0f + PERCENT_INCREASE_PER_HIT / 100 * timesHit));
+                modifiers.SourceDamage *= 1.0f + PERCENT_INCREASE_PER_HIT / 100.0f * timesHit;
             }
         }
     }

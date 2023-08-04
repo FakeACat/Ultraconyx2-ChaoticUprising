@@ -20,7 +20,7 @@ namespace ChaoticUprising.Common.Systems
         public const int innerDarknessSize = 120;
         public const int outerDarknessSize = 180;
 
-        public override void ModifyWorldGenTasks(List<GenPass> tasks, ref float totalWeight)
+        public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
         {
             int CleanupIndex = tasks.FindIndex(genPass => genPass.Name.Equals("Final Cleanup"));
             tasks.Insert(CleanupIndex + 1, new PassLegacy("Chaotic Uprising Darkness Biome", Darkness));

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -17,8 +18,7 @@ namespace ChaoticUprising.Content.Tiles.Furniture
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Music Box");
+            LocalizedText name = CreateMapEntryName();
             AddMapEntry(new Color(200, 200, 200), name);
         }
 

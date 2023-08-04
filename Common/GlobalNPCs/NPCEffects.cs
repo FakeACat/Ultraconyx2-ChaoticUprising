@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using ChaoticUprising.Common.Utils;
+using ChaoticUprising.Common.Utils;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameContent;

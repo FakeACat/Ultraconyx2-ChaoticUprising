@@ -4,6 +4,7 @@ using ChaoticUprising.Content.Tiles.Ores;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace ChaoticUprising.Content.Tiles
@@ -18,8 +19,7 @@ namespace ChaoticUprising.Content.Tiles
             HitSound = SoundID.Tink;
             MineResist = 10;
             MinPick = 225;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Monolith");
+            LocalizedText name = CreateMapEntryName();
             AddMapEntry(new Color(17, 30, 57), name);
             DustType = DustID.Obsidian;
         }

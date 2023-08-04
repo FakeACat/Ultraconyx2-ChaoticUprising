@@ -50,16 +50,19 @@ namespace ChaoticUprising.Content.Projectiles
             Projectile.rotation += 0.3f * Projectile.direction;
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(BuffID.OnFire, 600);
             Expand();
         }
 
-        public override void OnHitPvp(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
-            target.AddBuff(BuffID.OnFire, 600);
-            Expand();
+            if (info.PvP)
+            {
+                target.AddBuff(BuffID.OnFire, 600);
+                Expand();
+            }
         }
 
         void Expand()

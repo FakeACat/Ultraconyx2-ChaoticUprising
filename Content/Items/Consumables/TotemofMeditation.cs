@@ -10,11 +10,6 @@ namespace ChaoticUprising.Content.Items.Consumables
 {
     public class TotemofMeditation : ModItem
     {
-        public override void SetStaticDefaults()
-        {
-            Tooltip.SetDefault("Reduces the difficulty");
-            DisplayName.SetDefault("Totem of Meditation");
-        }
         public override void SetDefaults()
         {
             Item.width = 34;

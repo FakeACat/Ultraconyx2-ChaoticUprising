@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
-using ChaoticUprising.Content.Projectiles;
 using ChaoticUprising.Common.Systems;
 using Terraria.ModLoader.Utilities;
 using Terraria.GameContent.Bestiary;

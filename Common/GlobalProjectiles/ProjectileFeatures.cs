@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using ChaoticUprising.Common.Utils;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 

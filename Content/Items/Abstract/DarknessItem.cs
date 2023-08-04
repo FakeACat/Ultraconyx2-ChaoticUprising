@@ -1,4 +1,4 @@
-﻿using ChaoticUprising.Common;
+﻿using ChaoticUprising.Common.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.ModLoader;
@@ -15,7 +15,7 @@ namespace ChaoticUprising.Content.Items.Abstract
 
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
-            CUUtils.DrawWormhole(ModContent.Request<Texture2D>("ChaoticUprising/Assets/Textures/MiniBlackHole").Value, spriteBatch, position + new Vector2(Item.width / 2, Item.height / 2) * scale, 0.045f, 0.5f, 6.0f, false);
+            CUUtils.DrawWormhole(ModContent.Request<Texture2D>("ChaoticUprising/Assets/Textures/MiniBlackHole").Value, spriteBatch, position, 0.045f, 0.5f, 6.0f, false);
             return true;
         }
     }

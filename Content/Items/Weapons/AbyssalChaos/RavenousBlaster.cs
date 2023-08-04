@@ -14,7 +14,6 @@ namespace ChaoticUprising.Content.Items.Weapons.AbyssalChaos
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Converts rockets into extremely fast fireballs\nRight-click to launch slow homing fireballs");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 

@@ -1,6 +1,5 @@
-﻿using ChaoticUprising.Common;
-using ChaoticUprising.Common.Systems;
-using ChaoticUprising.Content.Biomes.Darkness;
+﻿using ChaoticUprising.Common.Systems;
+using ChaoticUprising.Common.Utils;
 using ChaoticUprising.Content.Items.Materials;
 using ChaoticUprising.Content.Items.Pets;
 using ChaoticUprising.Content.Projectiles;
@@ -22,7 +21,6 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Void-dropped Nightmare");
             NPCID.Sets.MPAllowedEnemies[Type] = true;
             NPCID.Sets.MustAlwaysDraw[Type] = true;
 
@@ -442,7 +440,7 @@ namespace ChaoticUprising.Content.NPCs.Minibosses.NightmareReaper
             NPC.velocity *= 0.95f;
         }
 
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
         {
             if (NPC.ai[3] <= 0)
             {

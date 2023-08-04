@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -23,8 +24,7 @@ namespace ChaoticUprising.Content.Tiles.Banners
 			TileObjectData.newTile.AnchorTop = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide | AnchorType.SolidBottom, TileObjectData.newTile.Width, 0);
 			TileObjectData.addTile(Type);
 			DustType = -1;
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Banner");
+			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(13, 88, 130), name); 
 			TileID.Sets.DisableSmartCursor[Type] = true;
 		}

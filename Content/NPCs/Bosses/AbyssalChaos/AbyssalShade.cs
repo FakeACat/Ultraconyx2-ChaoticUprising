@@ -4,10 +4,10 @@ using Terraria;
 using Terraria.ID;
 using System;
 using ChaoticUprising.Common.GlobalNPCs;
-using ChaoticUprising.Common;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 using System.Collections.Generic;
+using ChaoticUprising.Common.Utils;
 
 namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
 {
@@ -53,7 +53,7 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
             potionType = ItemID.SuperHealingPotion;
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0 && NPC.AnyNPCs(ModContent.NPCType<AbyssalChaos>()))
             {

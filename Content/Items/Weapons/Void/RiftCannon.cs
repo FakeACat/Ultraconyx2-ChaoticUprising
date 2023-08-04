@@ -1,5 +1,4 @@
-﻿using ChaoticUprising.Common.GlobalProjectiles;
-using ChaoticUprising.Content.Items.Abstract;
+﻿using ChaoticUprising.Content.Items.Abstract;
 using ChaoticUprising.Content.Items.Materials;
 using ChaoticUprising.Content.Projectiles;
 using ChaoticUprising.Content.Rarities;
@@ -13,11 +12,6 @@ namespace ChaoticUprising.Content.Items.Weapons.Void
 {
     public class RiftCannon : DarknessItem
     {
-        public override void SetStaticDefaults()
-        {
-            Tooltip.SetDefault("Launches a spread of void harpoons\nRight-click to launch a black hole\nBlack holes stick to enemies for 6 seconds, pulling in all magic projectiles");
-        }
-
         public override void SetDefaults()
         {
             Item.width = 62;

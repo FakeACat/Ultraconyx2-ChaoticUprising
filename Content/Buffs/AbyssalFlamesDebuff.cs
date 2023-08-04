@@ -10,8 +10,6 @@ namespace ChaoticUprising.Content.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Void Flames");
-            Description.SetDefault("Your soul burns...");
             Main.debuff[Type] = true;
             Main.pvpBuff[Type] = true;
             Main.buffNoSave[Type] = true;

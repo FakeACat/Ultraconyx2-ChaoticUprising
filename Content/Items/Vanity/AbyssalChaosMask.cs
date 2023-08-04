@@ -9,7 +9,6 @@ namespace ChaoticUprising.Content.Items.Vanity
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Abyssal Chaos Mask");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults()

@@ -10,7 +10,7 @@ namespace ChaoticUprising.Common.Systems
 {
     public class MonolithGeneration : ModSystem
     {
-        public override void ModifyWorldGenTasks(List<GenPass> tasks, ref float totalWeight)
+        public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
         {
             int CleanupIndex = tasks.FindIndex(genPass => genPass.Name.Equals("Life Crystals"));
             tasks.Insert(CleanupIndex + 1, new PassLegacy("Chaotic Uprising Monoliths", Monoliths));

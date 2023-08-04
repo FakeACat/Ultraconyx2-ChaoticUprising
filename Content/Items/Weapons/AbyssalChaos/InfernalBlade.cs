@@ -14,7 +14,6 @@ namespace ChaoticUprising.Content.Items.Weapons.AbyssalChaos
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Launches abyssal fireballs\nRight-click to launch a slow disc of penetrating abyssal fireballs");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 

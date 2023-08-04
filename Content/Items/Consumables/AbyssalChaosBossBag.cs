@@ -2,33 +2,39 @@
 using ChaoticUprising.Content.Items.Vanity;
 using ChaoticUprising.Content.Items.Weapons.AbyssalChaos;
 using ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos;
-using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ModLoader;
 
 namespace ChaoticUprising.Content.Items.Consumables
 {
-    public class AbyssalChaosBossBag : AbstractBossBag
+    public class AbyssalChaosBossBag : BossBag
     {
-        public override int BossBagNPC => ModContent.NPCType<AbyssalChaos>();
-
-        public override string BossName() => "Abyssal Chaos";
-
-        public override void OpenBossBag(Player player)
+        public override int BossID()
         {
-            var source = player.GetSource_OpenItem(Type);
-            if (Main.rand.NextBool(7))
-                player.QuickSpawnItem(source, ModContent.ItemType<AbyssalChaosMask>());
-
-            if (Main.rand.NextBool(3))
-                player.QuickSpawnItem(source, ModContent.ItemType<RavenousBlaster>());
-            if (Main.rand.NextBool(3))
-                player.QuickSpawnItem(source, ModContent.ItemType<InfernalBlade>());
-            if (Main.rand.NextBool(3))
-                player.QuickSpawnItem(source, ModContent.ItemType<BloodlustWand>());
-            if (Main.rand.NextBool(3))
-                player.QuickSpawnItem(source, ModContent.ItemType<Vertebrae>());
-
-            player.QuickSpawnItem(source, ModContent.ItemType<MiracleMind>());
+            return ModContent.NPCType<AbyssalChaos>();
         }
-	}
+
+        public override int ExpertItem()
+        {
+            return ModContent.ItemType<MiracleMind>();
+        }
+
+        public override IItemDropRule[] ExtraDrops() => new IItemDropRule[]
+        {
+            ItemDropRule.Common(ModContent.ItemType<RavenousBlaster>(), 3),
+            ItemDropRule.Common(ModContent.ItemType<InfernalBlade>(), 3),
+            ItemDropRule.Common(ModContent.ItemType<BloodlustWand>(), 3),
+            ItemDropRule.Common(ModContent.ItemType<Vertebrae>(), 3)
+        };
+
+        public override int Mask()
+        {
+            return ModContent.ItemType<AbyssalChaosMask>();
+        }
+
+        public override bool PreHardmode()
+        {
+            return false;
+        }
+    }
 }

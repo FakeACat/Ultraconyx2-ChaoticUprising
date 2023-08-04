@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using System;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace ChaoticUprising.Content.Tiles.Ores
@@ -15,12 +16,10 @@ namespace ChaoticUprising.Content.Tiles.Ores
             Main.tileMergeDirt[Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = true;
-            ItemDrop = ModContent.ItemType<TelekineOreItem>();
             HitSound = SoundID.Tink;
             MineResist = 5;
             MinPick = 110;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Telekine");
+            LocalizedText name = CreateMapEntryName();
             AddMapEntry(new Color(15, 149, 183), name);
             DustType = DustID.Electric;
         }

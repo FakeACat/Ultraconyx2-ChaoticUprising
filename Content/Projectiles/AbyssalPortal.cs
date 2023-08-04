@@ -11,7 +11,7 @@ namespace ChaoticUprising.Content.Projectiles
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Abyssal Flames");
+            // DisplayName.SetDefault("Abyssal Flames");
             Main.projFrames[Type] = 6;
         }
 

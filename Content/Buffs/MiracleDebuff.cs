@@ -8,8 +8,6 @@ namespace ChaoticUprising.Content.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Miracle");
-            Description.SetDefault("'Not indestructable, just undying'");
             Main.debuff[Type] = true;
         }
 

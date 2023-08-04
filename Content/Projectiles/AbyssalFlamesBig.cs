@@ -12,7 +12,7 @@ namespace ChaoticUprising.Content.Projectiles
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Abyssal Flames");
+            // DisplayName.SetDefault("Abyssal Flames");
             Main.projFrames[Type] = 5;
         }
 
@@ -50,7 +50,7 @@ namespace ChaoticUprising.Content.Projectiles
         }
 
 
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             target.AddBuff(ModContent.BuffType<AbyssalFlamesDebuff>(), 180);
         }

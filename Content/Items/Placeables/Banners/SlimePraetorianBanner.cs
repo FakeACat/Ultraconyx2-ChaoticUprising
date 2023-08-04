@@ -1,21 +1,11 @@
-﻿using Terraria.ID;
-using Terraria.ModLoader;
+﻿using ChaoticUprising.IDs;
 
 namespace ChaoticUprising.Content.Items.Placeables.Banners
 {
-    public class SlimePraetorianBanner : ModItem
+    public class SlimePraetorianBanner : Banner
     {
-        public override void SetStaticDefaults()
-        {
-            Tooltip.SetDefault("Nearby players get a bonus against: Slime Praetorian");
-        }
-        public override void SetDefaults()
-        {
-            Item.DefaultToPlaceableTile(ModContent.TileType<Tiles.Banners.SlimePraetorianBanner>(), 0);
-            Item.rare = ItemRarityID.Blue;
-            Item.maxStack = 9999;
-            Item.width = 12;
-            Item.height = 28;
-        }
+        public override int NPCID() => CUNPCID.SlimePraetorian;
+
+        public override int TileID() => CUTileID.SlimePraetorianBanner;
     }
 }

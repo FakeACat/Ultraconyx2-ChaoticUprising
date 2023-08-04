@@ -57,7 +57,7 @@ namespace ChaoticUprising.Content.Projectiles
                 Projectile.alpha = 255 - (int)(5.1f * Projectile.timeLeft);
         }
 
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             target.AddBuff(BuffID.OnFire, 600);
         }

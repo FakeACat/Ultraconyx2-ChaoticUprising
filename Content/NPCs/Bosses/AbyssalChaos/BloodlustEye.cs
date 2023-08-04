@@ -8,7 +8,7 @@ using ChaoticUprising.Common.GlobalProjectiles;
 using ChaoticUprising.Projectiles;
 using Terraria.GameContent.Bestiary;
 using System.Collections.Generic;
-using ChaoticUprising.Common;
+using ChaoticUprising.Common.Utils;
 
 namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
 {

@@ -1,8 +1,7 @@
 ﻿using Terraria.ModLoader;
 using Terraria;
 using Terraria.ID;
-using ChaoticUprising.Common.GlobalNPCs;
-using ChaoticUprising.Common;
+using ChaoticUprising.Common.Utils;
 
 namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
 {
@@ -26,7 +25,7 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
             Main.npcFrameCount[NPC.type] = 4;
             NPC.boss = true;
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0 && NPC.AnyNPCs(ModContent.NPCType<AbyssalChaos>()))
             {

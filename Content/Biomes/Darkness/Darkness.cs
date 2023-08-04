@@ -15,10 +15,6 @@ namespace ChaoticUprising.Content.Biomes.Darkness
         public virtual int SizeSQ => DarknessGeneration.outerDarknessSize * DarknessGeneration.outerDarknessSize * 256;
         public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
         public override int Music => MusicLoader.GetMusicSlot(Mod, "Assets/Music/Absent");
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("The Darkness");
-        }
 
         public override bool IsBiomeActive(Player player)
         {
@@ -42,7 +38,7 @@ namespace ChaoticUprising.Content.Biomes.Darkness
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                         NPC.SpawnOnPlayer(player.whoAmI, type);
                     else
-                        NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
+                        NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: type);
                 }
             }
         }

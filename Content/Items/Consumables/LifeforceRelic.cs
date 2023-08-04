@@ -1,4 +1,5 @@
 ﻿using ChaoticUprising.Content.Rarities;
+using Humanizer;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -18,14 +19,10 @@ namespace ChaoticUprising.Content.Items.Consumables
         public const int Life = 20;
         public const int Max = 20;
 
-        public override void SetStaticDefaults()
-        {
-            Tooltip.SetDefault("Permanently increases maximum life by " + Life);
-        }
-
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
 			bool full = Main.LocalPlayer.GetModPlayer<LifeforceRelicPlayer>().lifeforceRelics == Max;
+			tooltips[2].Text = tooltips[2].Text.FormatWith(Life);
 			tooltips[1].Text = (full ? "" : "Consumable\n") + Main.LocalPlayer.GetModPlayer<LifeforceRelicPlayer>().lifeforceRelics + "/" + Max;
 			tooltips[1].OverrideColor = full ? new Color(0, 255, 0) : Color.White;
 		}

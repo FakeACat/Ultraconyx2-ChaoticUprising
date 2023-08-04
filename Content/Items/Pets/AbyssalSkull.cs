@@ -13,8 +13,6 @@ namespace ChaoticUprising.Content.Items.Pets
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Abyssal Skull");
-            Tooltip.SetDefault("Summons a miniature Abyssal Shade");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 

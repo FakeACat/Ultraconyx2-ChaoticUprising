@@ -8,10 +8,6 @@ namespace ChaoticUprising.Content.Items.Accessories
 {
     public class MiracleMind : ModItem
     {
-        public override void SetStaticDefaults()
-        {
-            Tooltip.SetDefault("Revives the user from death\nInflicts the Miracle debuff on revive\nPlayers that take damage while affected by the Miracle debuff will die instantly after it runs out\nPlayers that survive the Miracle debuff cannot be revived for 25 seconds");
-        }
         public override void SetDefaults()
         {
             Item.maxStack = 1;
@@ -60,11 +56,11 @@ namespace ChaoticUprising.Content.Items.Accessories
             return true;
         }
 
-        public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
+        public override void ModifyHurt(ref Player.HurtModifiers modifiers)/* tModPorter Override ImmuneTo, FreeDodge or ConsumableDodge instead to prevent taking damage */
         {
             if (miracle && !diedDuringMiracle)
                 diedDuringMiracle = true;
-            return true;
+            return;
         }
 
         public override void PreUpdate()

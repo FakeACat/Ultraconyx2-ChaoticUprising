@@ -17,8 +17,6 @@ namespace ChaoticUprising.Content.Items.Weapons.Void
         public const float ALT_USE_TIME_MULTIPLIER = 1.5f;
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Right-click to redirect dark energy");
-
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
             ItemID.Sets.Spears[Item.type] = true;
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;

@@ -8,7 +8,7 @@ namespace ChaoticUprising.Content.Projectiles
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            DisplayName.SetDefault("Dark Matter Energy Ball");
+            // DisplayName.SetDefault("Dark Matter Energy Ball");
         }
         public override void SetDefaults()
         {

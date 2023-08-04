@@ -6,8 +6,9 @@ using Terraria.ID;
 using Terraria.Chat;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.WorldBuilding;
 
-namespace ChaoticUprising.Common
+namespace ChaoticUprising.Common.Utils
 {
     public class CUUtils
     {
@@ -68,11 +69,11 @@ namespace ChaoticUprising.Common
             return new Color(colour1.R + colour2.R, colour1.G + colour2.G, colour1.B + colour2.B);
         }
 
-        public static void DrawSpecialWorm(SpriteBatch spriteBatch, 
-            NPC npc, 
-            Texture2D head, 
-            Texture2D body, 
-            Texture2D tail, 
+        public static void DrawSpecialWorm(SpriteBatch spriteBatch,
+            NPC npc,
+            Texture2D head,
+            Texture2D body,
+            Texture2D tail,
             Color drawColor,
             int segmentCount,
             Vector2[] segmentPos,
@@ -197,11 +198,11 @@ namespace ChaoticUprising.Common
             for (int i = 0; i < Main.maxTilesX * Main.maxTilesY / chanceDenominator; i++)
             {
                 int x = Main.rand.Next(1, Main.maxTilesX - 1);
-                int y = Main.rand.Next((int)WorldGen.rockLayerLow, Main.maxTilesY - 1);
-                if (Main.tile[x, y].TileType == TileID.Stone || 
-                    Main.tile[x, y].TileType == TileID.Dirt || 
-                    Main.tile[x, y].TileType == TileID.Ebonstone || 
-                    Main.tile[x, y].TileType == TileID.Crimstone || 
+                int y = Main.rand.Next((int)GenVars.rockLayerLow, Main.maxTilesY - 1);
+                if (Main.tile[x, y].TileType == TileID.Stone ||
+                    Main.tile[x, y].TileType == TileID.Dirt ||
+                    Main.tile[x, y].TileType == TileID.Ebonstone ||
+                    Main.tile[x, y].TileType == TileID.Crimstone ||
                     Main.tile[x, y].TileType == TileID.Pearlstone ||
                     Main.tile[x, y].TileType == TileID.Sand ||
                     Main.tile[x, y].TileType == TileID.Mud ||
@@ -236,7 +237,7 @@ namespace ChaoticUprising.Common
                 for (int i = 0; i < Main.maxProjectiles; i++)
                 {
                     Projectile projectile = Main.projectile[i];
-                    if (projectile.active && (!magicOnly || (projectile.DamageType == DamageClass.Magic && projectile.friendly && !projectile.hostile)))
+                    if (projectile.active && (!magicOnly || projectile.DamageType == DamageClass.Magic && projectile.friendly && !projectile.hostile))
                     {
                         int dist = (int)Vector2.DistanceSquared(projectile.Center, position);
                         if (dist < rangeSquared)

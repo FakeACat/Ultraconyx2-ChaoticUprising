@@ -11,12 +11,12 @@ using Terraria.Graphics.Effects;
 using Terraria.GameContent.Bestiary;
 using System.Collections.Generic;
 using Terraria.GameContent.ItemDropRules;
-using ChaoticUprising.Common;
 using ChaoticUprising.Content.Items.Consumables;
 using ChaoticUprising.Content.Items.Vanity;
 using ChaoticUprising.Common.Systems;
 using ChaoticUprising.Content.Items.Pets;
 using ChaoticUprising.Content.Items.Weapons.AbyssalChaos;
+using ChaoticUprising.Common.Utils;
 
 namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
 {
@@ -95,7 +95,7 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
             NPC.SetEventFlagCleared(ref ChaosMode.chaosMode, -1);
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0) 
                 DeathEffects(NPC);
@@ -427,7 +427,7 @@ namespace ChaoticUprising.Content.NPCs.Bosses.AbyssalChaos
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                     NPC.SpawnOnPlayer(p.whoAmI, type);
                 else
-                    NetMessage.SendData(MessageID.SpawnBoss, number: p.whoAmI, number2: type);
+                    NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: p.whoAmI, number2: type);
             }
         }
 

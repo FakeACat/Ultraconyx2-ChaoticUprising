@@ -13,8 +13,6 @@ namespace ChaoticUprising.Content.Items.Pets
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Reaper's Essence");
-            Tooltip.SetDefault("Summons a baby Nightmare Reaper");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
             Main.RegisterItemAnimation(Type, new DrawAnimationVertical(6, 5));
         }

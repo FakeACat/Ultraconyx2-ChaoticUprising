@@ -10,7 +10,7 @@ namespace ChaoticUprising.Content.Projectiles.Pets
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Miniature Abyssal Shade");
+            // DisplayName.SetDefault("Miniature Abyssal Shade");
             Main.projFrames[Type] = 8;
             Main.projPet[Projectile.type] = true;
         }

@@ -9,9 +9,6 @@ namespace ChaoticUprising.Content.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Miniature Abyssal Shade");
-            Description.SetDefault("A small Abyssal Shade is following you.");
-
             Main.buffNoTimeDisplay[Type] = true;
             Main.vanityPet[Type] = true;
         }

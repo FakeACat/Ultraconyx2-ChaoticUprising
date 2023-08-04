@@ -10,7 +10,7 @@ namespace ChaoticUprising.Content.Projectiles
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Void Ripper");
+            // DisplayName.SetDefault("Void Ripper");
         }
 
         public override void SetDefaults()

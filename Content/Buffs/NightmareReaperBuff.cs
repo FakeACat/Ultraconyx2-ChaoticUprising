@@ -9,8 +9,8 @@ namespace ChaoticUprising.Content.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Baby Nightmare Reaper");
-            Description.SetDefault("A baby Nightmare Reaper is following you.");
+            // DisplayName.SetDefault("Baby Nightmare Reaper");
+            // Description.SetDefault("A baby Nightmare Reaper is following you.");
 
             Main.buffNoTimeDisplay[Type] = true;
             Main.vanityPet[Type] = true;

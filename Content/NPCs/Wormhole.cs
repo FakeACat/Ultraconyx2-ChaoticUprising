@@ -4,7 +4,7 @@ using Terraria;
 using Terraria.ID;
 //using SubworldLibrary;
 using Microsoft.Xna.Framework.Graphics;
-using ChaoticUprising.Common;
+using ChaoticUprising.Common.Utils;
 
 namespace ChaoticUprising.Content.NPCs
 {

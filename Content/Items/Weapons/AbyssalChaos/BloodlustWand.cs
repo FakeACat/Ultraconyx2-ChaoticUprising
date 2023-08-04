@@ -14,7 +14,6 @@ namespace ChaoticUprising.Content.Items.Weapons.AbyssalChaos
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Launches a barrage of homing abyssal fireballs\nRight-click to summon an abyssal fireball portal");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 

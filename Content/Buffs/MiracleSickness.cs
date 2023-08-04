@@ -8,8 +8,6 @@ namespace ChaoticUprising.Content.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Miracle Sickness");
-            Description.SetDefault("You cannot be revived by the Miracle");
             Main.debuff[Type] = true;
         }
 

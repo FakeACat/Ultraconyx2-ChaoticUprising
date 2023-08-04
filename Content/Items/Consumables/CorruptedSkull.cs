@@ -11,7 +11,6 @@ namespace ChaoticUprising.Content.Items.Consumables
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Summons the Abyssal Chaos\nRequires the world to be in Hardmode\nNot consumable");
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
@@ -39,7 +38,7 @@ namespace ChaoticUprising.Content.Items.Consumables
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                     NPC.SpawnOnPlayer(player.whoAmI, type);
                 else
-                    NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
+                    NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: type);
             }
 
             return true;

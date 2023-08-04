@@ -28,7 +28,7 @@ namespace ChaoticUprising.Content.Projectiles
             Main.dust[d].noGravity = true;
             Projectile.rotation += 0.3f * Projectile.direction;
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             target.AddBuff(ModContent.BuffType<AbyssalFlamesDebuff>(), 120);
         }

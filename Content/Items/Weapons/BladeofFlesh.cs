@@ -4,8 +4,6 @@ using Terraria;
 using ChaoticUprising.Content.Rarities;
 using ChaoticUprising.Content.Projectiles;
 using Terraria.GameContent.Creative;
-using Terraria.DataStructures;
-using Microsoft.Xna.Framework;
 
 namespace ChaoticUprising.Content.Items.Weapons
 {
@@ -13,8 +11,6 @@ namespace ChaoticUprising.Content.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Blade of Flesh");
-            Tooltip.SetDefault("Ichor tentacles briefly reduce their target's defense and dramatically increase the amount of damage it takes from all attacks\n'Feels like it's alive...'");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 

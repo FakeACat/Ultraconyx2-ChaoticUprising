@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 using Terraria;
 using Terraria.DataStructures;
 using ReLogic.Content;
-using ChaoticUprising.Common;
+using ChaoticUprising.Common.Utils;
 
 namespace ChaoticUprising.Content.Projectiles.Pets
 {
@@ -13,7 +13,7 @@ namespace ChaoticUprising.Content.Projectiles.Pets
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Baby Nightmare Reaper");
+            // DisplayName.SetDefault("Baby Nightmare Reaper");
             Main.projPet[Projectile.type] = true;
         }
 

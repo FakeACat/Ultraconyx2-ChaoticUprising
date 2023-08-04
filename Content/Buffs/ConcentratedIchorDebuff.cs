@@ -7,8 +7,8 @@ namespace ChaoticUprising.Content.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Concentrated Ichor");
-            Description.SetDefault("You are defenseless");
+            // DisplayName.SetDefault("Concentrated Ichor");
+            // Description.SetDefault("You are defenseless");
             Main.debuff[Type] = true;
             Main.buffNoSave[Type] = true;
         }
@@ -31,16 +31,16 @@ namespace ChaoticUprising.Content.Buffs
             concentratedIchor = false;
         }
 
-        public override void ModifyHitByItem(NPC npc, Player player, Item item, ref int damage, ref float knockback, ref bool crit)
+        public override void ModifyHitByItem(NPC npc, Player player, Item item, ref NPC.HitModifiers modifiers)
         {
             if (concentratedIchor)
-                damage = (int)(damage * 1.75f);
+                modifiers.SourceDamage.Scale(1.75f);
         }
 
-        public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref NPC.HitModifiers modifiers)
         {
             if (concentratedIchor)
-                damage = (int)(damage * 1.75f);
+                modifiers.SourceDamage.Scale(1.75f);
         }
     }
 }
