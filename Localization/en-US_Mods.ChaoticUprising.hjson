@@ -250,6 +250,37 @@ Items: {
 		DisplayName: Void Ripper
 		Tooltip: Right-click to redirect dark energy
 	}
+
+	VoidTrespasserHelmet: {
+		SetBonus: Mods.ChaoticUprising.Items.VoidTrespasserHelmet.SetBonus
+		DisplayName: Void Trespasser Helmet
+		Tooltip:
+			'''
+			14% increased damage
+			12% increased critical strike chance
+			Grants night vision
+			'''
+	}
+
+	VoidTrespasserChestplate: {
+		DisplayName: Void Trespasser Chestplate
+		Tooltip:
+			'''
+			14% increased damage
+			9% increased critical strike chance
+			10% damage reduction
+			'''
+	}
+
+	VoidTrespasserGreaves: {
+		DisplayName: Void Trespasser Greaves
+		Tooltip:
+			'''
+			14% increased damage
+			9% increased critical strike chance
+			20% increased acceleration
+			'''
+	}
 }
 
 Projectiles: {
