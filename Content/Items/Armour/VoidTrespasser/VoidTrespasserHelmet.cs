@@ -1,6 +1,10 @@
-﻿using ChaoticUprising.Content.Items.Abstract;
+﻿using ChaoticUprising.Common.ModPlayers;
+using ChaoticUprising.Content.Items.Abstract;
 using ChaoticUprising.Content.Items.Materials;
+using ChaoticUprising.Content.Projectiles;
 using ChaoticUprising.IDs;
+using Microsoft.Xna.Framework;
+using System.Drawing.Drawing2D;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -33,7 +37,7 @@ namespace ChaoticUprising.Content.Items.Armour.VoidTrespasser
         public override void UpdateArmorSet(Player player)
         {
             player.setBonus = SetBonusText.Value;
-
+            player.GetModPlayer<SetBonusPlayer>().voidTrespasser = true;
         }
 
         public override void UpdateEquip(Player player)
@@ -52,10 +56,5 @@ namespace ChaoticUprising.Content.Items.Armour.VoidTrespasser
                 .AddTile(TileID.LunarCraftingStation)
                 .Register();
         }
-    }
-
-    internal class VoidTrespasserPlayer : ModPlayer
-    {
-
     }
 }

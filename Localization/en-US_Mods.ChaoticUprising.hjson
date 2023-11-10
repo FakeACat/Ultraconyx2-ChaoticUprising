@@ -252,7 +252,11 @@ Items: {
 	}
 
 	VoidTrespasserHelmet: {
-		SetBonus: Mods.ChaoticUprising.Items.VoidTrespasserHelmet.SetBonus
+		SetBonus:
+			'''
+			Using a healing item grants immunity for 4 seconds
+			You can instantly switch between items
+			'''
 		DisplayName: Void Trespasser Helmet
 		Tooltip:
 			'''
@@ -304,4 +308,5 @@ Projectiles: {
 	VoidRipperProjectile.DisplayName: Void Ripper
 	WandFlames.DisplayName: Wand Flames
 	TeleportationBeam.DisplayName: Teleportation Beam
+	VoidImp.DisplayName: Void Imp
 }

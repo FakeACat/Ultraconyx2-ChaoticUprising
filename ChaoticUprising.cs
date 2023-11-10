@@ -4,6 +4,8 @@ using Terraria.Graphics.Effects;
 using ChaoticUprising.Content.Items.Consumables;
 using System.IO;
 using ChaoticUprising.Content.Skies;
+using ChaoticUprising.Common;
+using ChaoticUprising.Content;
 
 namespace ChaoticUprising
 {
@@ -11,12 +13,16 @@ namespace ChaoticUprising
 	{
         public override void Load()
         {
+            CUILEdits.Load();
             if (!Main.dedServ)
             {
                 SkyManager.Instance["ChaoticUprising:AbyssalChaos"] = new AbyssalChaosSky();
                 SkyManager.Instance["ChaoticUprising:Darkness"] = new DarknessSky();
                 SkyManager.Instance["ChaoticUprising:ChaosMode"] = new ChaosModeSky();
+
+                Effects.Load();
             }
+
         }
 
         internal enum PacketType : byte

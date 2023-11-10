@@ -12,6 +12,9 @@ namespace ChaoticUprising.Common.Utils
 {
     public class CUUtils
     {
+        public static bool Client => Main.netMode != NetmodeID.Server;
+        public static bool Server => Main.netMode == NetmodeID.Server;
+        public static bool Singleplayer => Main.netMode == NetmodeID.SinglePlayer;
         public static int ConvenientBossHealth(int normalHealth, int expertHealth)
         {
             if (Main.masterMode)
@@ -164,6 +167,19 @@ namespace ChaoticUprising.Common.Utils
         {
             Player target2 = Main.player[target];
             return target < 0 || target >= 255 || target2.dead || !target2.active;
+        }
+
+        public static bool TryFindTarget(NPC npc)
+        {
+            if (InvalidTarget(npc.target))
+            {
+                npc.TargetClosest(false);
+                if (InvalidTarget(npc.target))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         public static float AngleTo(Vector2 destination, Vector2 centre)

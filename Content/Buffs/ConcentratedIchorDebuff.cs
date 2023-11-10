@@ -7,8 +7,6 @@ namespace ChaoticUprising.Content.Buffs
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Concentrated Ichor");
-            // Description.SetDefault("You are defenseless");
             Main.debuff[Type] = true;
             Main.buffNoSave[Type] = true;
         }

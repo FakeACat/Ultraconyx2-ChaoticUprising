@@ -8,11 +8,6 @@ namespace ChaoticUprising.Content.Projectiles
 {
     public class VoidRipperAltProjectile : ModProjectile
     {
-        public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault("Void Ripper");
-        }
-
         public override void SetDefaults()
         {
             Projectile.width = 136;
